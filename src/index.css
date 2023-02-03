@@ -1,13 +1,69 @@
-body {
+@font-face {
+  font-family: "HelveticaNeue";
+  src: url("./assets/fonts/HelveticaNeue.ttc");
+}
+*,
+*:before,
+*:after {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+*:focus {
+  outline: none;
+}
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 1000s;
+  -webkit-text-fill-color: var(--main-bg-color) !important;
+}
+:root {
+  /* COLOR */
+  --main-bg-color: #f8f8f8;
+  --card-color: #f1f1f1;
+  --success-color: #98e37e;
+  --error-color: #ef5050;
+  --border-color: #bcbcbc;
+  --border-focused: #bcbcbc;
+  --purple-dark: #512faf;
+  --purple-md: #6b40e3;
+  --purple-pale: #7949ff;
+  --pale-white-5: rgba(255, 255, 255, 0.5);
+  --input-color: #000000;
+  --pl-holder-color: hsla(0, 0%, 0%, 0.6);
+  --label-color: #000000;
+  --off-black: #1a1a1a;
+  --choice-color: #c3dcee;
+  --pale-blue: #62a1eb;
+  --cl-red: #f93b1d;
+  /* FONT-SIZE */
+  --font-sm: 1.6rem;
+  --lh-small: 2.1rem;
+  --font-md: 2.4rem;
+  --lh-md: 2.9rem;
+  /* other */
+  --box-width-sm: 37.1rem;
+  --box-width-lg: 79.8rem;
+  --box-height-sm: 4.8rem;
+}
+body {
+  margin: 0 auto;
+  min-height: 100vh;
+  max-width: 100vw;
+  font-family: "HelveticaNeue";
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fffffff3;
+  overflow-x: hidden !important;
+  scroll-behavior: smooth;
+  transition: background-color 0.5s ease;
 }
