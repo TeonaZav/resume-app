@@ -28,6 +28,8 @@ const Home = () => {
   );
 };
 const Wrapper = styled.div`
+  width: 100vw;
+  height: 100vh;
   .home {
     width: 100vw;
     height: 100vh;
@@ -41,7 +43,7 @@ const Wrapper = styled.div`
     background-position: 50% 50%;
     position: relative;
     .hompage-header {
-      width: 178rem;
+      width: 92.7%;
       height: 8.9rem;
       display: flex;
       flex-direction: row;
