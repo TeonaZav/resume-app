@@ -67,3 +67,15 @@ body {
   scroll-behavior: smooth;
   transition: background-color 0.5s ease;
 }
+.btn,
+.btn:link,
+.btn:visited {
+  display: inline-block;
+  font-weight: 500;
+  letter-spacing: 0.1rem;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.3s;
+}
