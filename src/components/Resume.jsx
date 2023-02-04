@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import ResumeSection from "./ResumeSection";
 const Resume = () => {
   return (
     <Wrapper>
@@ -60,7 +60,7 @@ const Wrapper = styled.div`
           line-height: 4.2rem;
           font-weight: 700;
           font-size: 2rem;
-          font-family: "BPG Nino Mtavruli Bold", sans-serif;
+          font-family: "BPG Nino Mtavruli Bold", monospace;
         }
         .contact-info-ct {
           display: flex;
