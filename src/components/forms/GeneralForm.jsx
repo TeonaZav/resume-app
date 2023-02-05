@@ -4,8 +4,11 @@ import styled from "styled-components";
 import TextField from "./TextField";
 import TextArea from "./TextArea";
 import FormHeader from "./FormHeader";
+import useGeneral from "../../hooks/useGeneral";
 import { schemaGeneral } from "../schemas/schema";
 const GeneralForm = () => {
+  const { generalsState, handleFirstName, handleLastName } = useGeneral();
+  console.log(generalsState);
   return (
     <Wrapper>
       <div className="form-ct">
@@ -27,6 +30,7 @@ const GeneralForm = () => {
           <VStack as={Form} className="form">
             <div className="info-part1">
               <TextField
+                onChange={(e) => handleFirstName(e)}
                 name="name"
                 placeholder="ანზორ"
                 autoComplete="off"
@@ -36,6 +40,7 @@ const GeneralForm = () => {
                 size="sm"
               />
               <TextField
+                onChange={(e) => handleLastName(e)}
                 name="surname"
                 placeholder="მუმლაძე"
                 autoComplete="off"
