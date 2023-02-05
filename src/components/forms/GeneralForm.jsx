@@ -2,6 +2,7 @@ import { Button, VStack } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import styled from "styled-components";
 import TextField from "./TextField";
+import TextArea from "./TextArea";
 import FormHeader from "./FormHeader";
 import { schemaGeneral } from "../schemas/schema";
 const GeneralForm = () => {
@@ -11,18 +12,22 @@ const GeneralForm = () => {
         <FormHeader />
         <Formik
           initialValues={{
-            firstName: "",
-            lastName: "",
-            about: "",
+            name: "",
+            surname: "",
             email: "",
-            mobile: "",
+            about_me: "",
+            phone_number: "",
           }}
           validationSchema={schemaGeneral}
+          onSubmit={(values) => {
+            const vals = { ...values };
+            console.log(vals);
+          }}
         >
           <VStack as={Form} className="form">
             <div className="info-part1">
               <TextField
-                name="firstName"
+                name="name"
                 placeholder="ანზორ"
                 autoComplete="off"
                 label="სახელი"
@@ -31,7 +36,7 @@ const GeneralForm = () => {
                 size="sm"
               />
               <TextField
-                name="lastName"
+                name="surname"
                 placeholder="მუმლაძე"
                 autoComplete="off"
                 label="გვარი"
@@ -41,12 +46,11 @@ const GeneralForm = () => {
               />
             </div>
             <div className="info-part2">
-              <TextField
-                name="about"
+              <TextArea
+                name="about_me"
                 placeholder="ზოგადი ინფო შენ შესახებ"
-                autoComplete="off"
                 label="ჩემ შესახებ (არასავალდებულო)"
-                size="lg-lg"
+                size="xlg"
               />
               <TextField
                 name="email"
@@ -57,7 +61,7 @@ const GeneralForm = () => {
                 size="lg"
               />
               <TextField
-                name="mobile"
+                name="phone_number"
                 placeholder="+995 551 12 34 56"
                 autoComplete="off"
                 label="მობილურის ნომერი"
@@ -106,6 +110,17 @@ const Wrapper = styled.div`
     position: absolute;
     bottom: 8.8rem;
     right: 15rem;
+  }
+  .label {
+    color: #2e2e2e;
+    font-size: 1.4rem;
+    line-height: var(--lh-small);
+    font-weight: 600;
+    font-weight: bold;
+    margin-bottom: 0.8rem;
+  }
+  .label.label-error {
+    color: var(--error-color);
   }
 `;
 export default GeneralForm;

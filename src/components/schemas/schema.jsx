@@ -6,15 +6,15 @@ const mobileIndexes = [
 ];
 
 export const schemaGeneral = Yup.object({
-  firstName: Yup.string()
+  name: Yup.string()
     .min(2, "სახელი ძალიან მოკლეა")
     .matches(geoSymbols, "გთხოვთ მიუთითოთ ქართული სიმბოლოები")
     .required("სახელის მითითება სავალდებულოა!"),
-  lastName: Yup.string()
+  surname: Yup.string()
     .min(2, "გვარი ძალიან მოკლეა")
     .matches(geoSymbols, "გთხოვთ მიუთითოთ ქართული სიმბოლოები")
     .required("გვარის მითითება სავალდებულოა!"),
-  about: Yup.string().notRequired(),
+  about_me: Yup.string().notRequired(),
   email: Yup.string()
     .email("არასწორი ფორმატი")
     .required("ელ. ფოსტის მითითება სავალდებულოა")
@@ -23,7 +23,7 @@ export const schemaGeneral = Yup.object({
       "მითითებული მისამართი არასწორია",
       (val) => `${val}`.slice(-12) === "@redberry.ge"
     ),
-  mobile: Yup.string()
+  phone_number: Yup.string()
     .test((val) => `${val}`.slice(0, -8) === "+9955")
     .test((val) => `${val}`.slice(-6).match(/^[0-9]+$/g))
     .test((val) => mobileIndexes.includes(Number(`${val}`.slice(5, 7))))

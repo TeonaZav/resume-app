@@ -116,18 +116,6 @@ const Wrapper = styled.div`
       top: 50%;
       transform: translateY(-25%);
     }
-
-    .label {
-      color: #2e2e2e;
-      font-size: 1.4rem;
-      line-height: var(--lh-small);
-      font-weight: 600;
-      font-weight: bold;
-      margin-bottom: 0.8rem;
-    }
-    .label.label-error {
-      color: var(--error-color);
-    }
     .hint {
       color: #2e2e2e;
       font-weight: 300;
@@ -142,11 +130,6 @@ const Wrapper = styled.div`
   .box-lg {
     width: 79.8rem;
     height: 4.8rem;
-  }
-  .box-xlg {
-    width: 79.8rem;
-    height: 4.8rem;
-    height: 10.3rem;
   }
 `;
 export default TextField;
