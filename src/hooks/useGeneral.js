@@ -8,7 +8,7 @@ const useGeneral = () => {
     phone_number: "",
   });
   /*================
- Handle Name Change
+ Handle Firstname Change
   ================== */
   const handleFirstName = (e) => {
     const name = e.target.value;
@@ -18,11 +18,47 @@ const useGeneral = () => {
     });
     console.log(e);
   };
+  /*================
+ Handle Lastname Change
+  ================== */
   const handleLastName = (e) => {
-    const name = e.target.value;
+    const surname = e.target.value;
     setGeneralsState({
       ...generalsState,
-      name,
+      surname,
+    });
+    console.log(e);
+  };
+  /*================
+ Handle Email Change
+  ================== */
+  const handleEmail = (e) => {
+    const email = e.target.value;
+    setGeneralsState({
+      ...generalsState,
+      email,
+    });
+    console.log(e);
+  };
+  /*================
+ Handle About Info
+  ================== */
+  const handleAbout = (e) => {
+    const about = e.target.value;
+    setGeneralsState({
+      ...generalsState,
+      about_me: about,
+    });
+    console.log(e);
+  };
+  /*================
+ Handle Phone Number Change
+  ================== */
+  const handlePhone = (e) => {
+    const tel = e.target.value;
+    setGeneralsState({
+      ...generalsState,
+      phone_number: tel,
     });
     console.log(e);
   };
@@ -30,6 +66,9 @@ const useGeneral = () => {
     generalsState,
     handleFirstName,
     handleLastName,
+    handleEmail,
+    handleAbout,
+    handlePhone,
   };
 };
 

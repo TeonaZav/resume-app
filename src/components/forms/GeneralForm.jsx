@@ -6,14 +6,24 @@ import TextArea from "./TextArea";
 import FormHeader from "./FormHeader";
 import useGeneral from "../../hooks/useGeneral";
 import { schemaGeneral } from "../schemas/schema";
+
 const GeneralForm = () => {
-  const { generalsState, handleFirstName, handleLastName } = useGeneral();
+  const {
+    generalsState,
+    handleFirstName,
+    handleLastName,
+    handleEmail,
+    handleAbout,
+    handlePhone,
+  } = useGeneral();
   console.log(generalsState);
+
   return (
     <Wrapper>
       <div className="form-ct">
         <FormHeader />
         <Formik
+          enableReinitialize
           initialValues={{
             name: "",
             surname: "",
@@ -30,7 +40,9 @@ const GeneralForm = () => {
           <VStack as={Form} className="form">
             <div className="info-part1">
               <TextField
+                enableReinitialize
                 onChange={(e) => handleFirstName(e)}
+                value={generalsState.name}
                 name="name"
                 placeholder="ანზორ"
                 autoComplete="off"
@@ -38,9 +50,11 @@ const GeneralForm = () => {
                 type="text"
                 hint="მინიმუმ 2 ასო, ქართული ასოები"
                 size="sm"
+                changedVal={generalsState.name}
               />
               <TextField
                 onChange={(e) => handleLastName(e)}
+                value={generalsState.surname}
                 name="surname"
                 placeholder="მუმლაძე"
                 autoComplete="off"
@@ -48,24 +62,33 @@ const GeneralForm = () => {
                 type="text"
                 hint="მინიმუმ 2 ასო, ქართული ასოები"
                 size="sm"
+                changedVal={generalsState.surname}
               />
             </div>
             <div className="info-part2">
               <TextArea
+                onChange={(e) => handleAbout(e)}
+                value={generalsState.about_me}
                 name="about_me"
                 placeholder="ზოგადი ინფო შენ შესახებ"
                 label="ჩემ შესახებ (არასავალდებულო)"
                 size="xlg"
+                changedVal={generalsState.about_me}
               />
               <TextField
+                onChange={(e) => handleEmail(e)}
+                value={generalsState.email}
                 name="email"
                 placeholder="anzorr666@redberry.ge"
                 autoComplete="off"
                 label="ელ.ფოსტა"
                 hint="უნდა მთავრდებოდეს @redberry.ge-ით"
                 size="lg"
+                changedVal={generalsState.email}
               />
               <TextField
+                onChange={(e) => handlePhone(e)}
+                value={generalsState.phone_number}
                 name="phone_number"
                 placeholder="+995 551 12 34 56"
                 autoComplete="off"
@@ -73,6 +96,7 @@ const GeneralForm = () => {
                 type="text"
                 hint="უნდა აკმაყოფილებდეს ქართული მობილურის ნომრის ფორმატს"
                 size="lg"
+                changedVal={generalsState.phone_number}
               />
             </div>
 

@@ -8,10 +8,9 @@ import {
 } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
 import { Field, useField } from "formik";
-
-const TextField = ({ hint, size, label, ...props }) => {
-  const [field, meta] = useField(props);
-  console.log(field);
+const TextField = ({ hint, size, label, changedVal, ...props }) => {
+  const [field, meta, helpers] = useField(props);
+  const { setValue } = helpers;
   return (
     <Wrapper>
       <FormControl
@@ -29,6 +28,7 @@ const TextField = ({ hint, size, label, ...props }) => {
           as={Field}
           {...field}
           {...props}
+          onKeyUp={() => setValue(changedVal)}
           className={`${
             size === "sm" ? "box-sm" : size === "lg" ? "box-lg" : "box-xlg"
           } input-field  ${
