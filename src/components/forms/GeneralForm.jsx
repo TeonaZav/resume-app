@@ -1,4 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Button, VStack } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import styled from "styled-components";
@@ -17,7 +18,7 @@ const GeneralForm = () => {
     handlePhone,
   } = useGeneral();
   console.log(generalsState);
-
+  const navigate = useNavigate();
   return (
     <Wrapper>
       <div className="form-ct">
@@ -35,6 +36,9 @@ const GeneralForm = () => {
           onSubmit={(values) => {
             const vals = { ...values };
             console.log(vals);
+            window.setTimeout(() => {
+              navigate("/experience");
+            }, 2000);
           }}
         >
           <VStack as={Form} className="form">
