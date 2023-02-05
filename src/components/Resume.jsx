@@ -1,24 +1,35 @@
+import React, { useContext } from "react";
 import styled from "styled-components";
 import ResumeSection from "./ResumeSection";
+import { ResumeContext } from "../context/context";
+
 const Resume = () => {
+  const { firstN, lastN, emailAd, aboutG, phoneN } = useContext(ResumeContext);
   return (
     <Wrapper>
       <div className="resume">
-        <section className="section-about">
+        <section
+          className={`${
+            firstN && lastN && emailAd && aboutG && phoneN
+              ? "section-about b-bottom"
+              : "section-about"
+          }`}
+        >
           <div className="about-text-ct">
             <div className="name-wrap">
-              <h2 className="name"> ანზორ მუმლაძე</h2>
+              <h2 className="name">
+                {" "}
+                {firstN} {lastN}
+              </h2>
             </div>
             <div className="contact-info-ct">
-              <p className="email">@anzorr666@redberry.ge</p>
-              <p className="tel">+995 597 63 45 16</p>
+              <p className="email">{emailAd}</p>
+              <p className="tel">{phoneN}</p>
             </div>
             <div className="about-textbox">
-              <h4 className="resume-section-title">ᲩᲔᲛ ᲨᲔᲡᲐᲮᲔᲑ</h4>
-              <p className="resume-text">
-                ძალიან მიყვარს დიზაინის კეთება. დილით ადრე რომ ავდგები
-                გამამხნევებელი ვარჯიშების მაგიერ დიზაინს ვაკეთებ.{" "}
-              </p>
+              {aboutG && <h4 className="resume-section-title">ᲩᲔᲛ ᲨᲔᲡᲐᲮᲔᲑ</h4>}
+
+              <p className="resume-text">{aboutG}</p>
             </div>
           </div>
           <div className="img-ct">
@@ -47,7 +58,6 @@ const Wrapper = styled.div`
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid #c8c8c8;
       padding-bottom: 3.2rem;
       .about-text-ct {
         display: flex;
@@ -90,6 +100,9 @@ const Wrapper = styled.div`
         width: 100%;
         height: 100%;
       }
+    }
+    .b-bottom {
+      border-bottom: 1px solid #c8c8c8;
     }
   }
 `;

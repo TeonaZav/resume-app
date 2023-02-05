@@ -2,9 +2,9 @@ import styled from "styled-components";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Textarea } from "@chakra-ui/react";
 import { useField } from "formik";
-const TextArea = ({ hint, size, label, value, ...props }) => {
-  const [field, meta] = useField(props);
-
+const TextArea = ({ hint, size, label, value, changedVal, ...props }) => {
+  const [field, meta, helpers] = useField(props);
+  const { setValue } = helpers;
   return (
     <Wrapper>
       <FormControl>
@@ -12,6 +12,7 @@ const TextArea = ({ hint, size, label, value, ...props }) => {
         <Textarea
           {...field}
           {...props}
+          onKeyUp={() => setValue(changedVal)}
           className={`box-xlg text-field  ${meta.touched && value && "valid"}`}
         />
       </FormControl>

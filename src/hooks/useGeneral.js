@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { ResumeContext } from "../context/context";
 const useGeneral = () => {
   const [generalsState, setGeneralsState] = useState({
     name: "",
@@ -7,6 +8,18 @@ const useGeneral = () => {
     about_me: "",
     phone_number: "",
   });
+  const {
+    firstN,
+    setFirstN,
+    lastN,
+    setLastN,
+    emailAd,
+    setEmailAd,
+    aboutG,
+    setAboutG,
+    phoneN,
+    setPhoneN,
+  } = useContext(ResumeContext);
   /*================
  Handle Firstname Change
   ================== */
@@ -17,6 +30,7 @@ const useGeneral = () => {
       name,
     });
     console.log(e);
+    setFirstN(name);
   };
   /*================
  Handle Lastname Change
@@ -28,6 +42,7 @@ const useGeneral = () => {
       surname,
     });
     console.log(e);
+    setLastN(surname);
   };
   /*================
  Handle Email Change
@@ -39,6 +54,7 @@ const useGeneral = () => {
       email,
     });
     console.log(e);
+    setEmailAd(email);
   };
   /*================
  Handle About Info
@@ -50,6 +66,7 @@ const useGeneral = () => {
       about_me: about,
     });
     console.log(e);
+    setAboutG(about);
   };
   /*================
  Handle Phone Number Change
@@ -61,6 +78,7 @@ const useGeneral = () => {
       phone_number: tel,
     });
     console.log(e);
+    setPhoneN(tel);
   };
   return {
     generalsState,

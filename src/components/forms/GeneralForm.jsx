@@ -1,3 +1,4 @@
+import React, { useContext } from "react";
 import { Button, VStack } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import styled from "styled-components";
@@ -6,7 +7,6 @@ import TextArea from "./TextArea";
 import FormHeader from "./FormHeader";
 import useGeneral from "../../hooks/useGeneral";
 import { schemaGeneral } from "../schemas/schema";
-
 const GeneralForm = () => {
   const {
     generalsState,
@@ -40,7 +40,6 @@ const GeneralForm = () => {
           <VStack as={Form} className="form">
             <div className="info-part1">
               <TextField
-                enableReinitialize
                 onChange={(e) => handleFirstName(e)}
                 value={generalsState.name}
                 name="name"
