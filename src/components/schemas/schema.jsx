@@ -31,3 +31,9 @@ export const schemaGeneral = Yup.object({
     .max(13)
     .required(""),
 });
+
+export const schemaExperience = Yup.object({
+  position: Yup.string().min(2, "").required(""),
+  employer: Yup.string().min(2, "").required(""),
+  description: Yup.string().required(""),
+});

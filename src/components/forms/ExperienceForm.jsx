@@ -5,7 +5,7 @@ import styled from "styled-components";
 import TextField from "./TextField";
 import TextArea from "./TextArea";
 import FormHeader from "./FormHeader";
-import { schemaGeneral } from "../schemas/schema";
+import { schemaExperience } from "../schemas/schema";
 const ExperienceForm = () => {
   return (
     <Wrapper>
@@ -20,7 +20,7 @@ const ExperienceForm = () => {
             due_date: "",
             description: "",
           }}
-          validationSchema={schemaGeneral}
+          validationSchema={schemaExperience}
           onSubmit={(values) => {
             const vals = { ...values };
             console.log(vals);
