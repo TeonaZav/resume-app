@@ -2,11 +2,13 @@ import { Button, VStack } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import styled from "styled-components";
 import TextField from "./TextField";
+import FormHeader from "./FormHeader";
 import { schemaGeneral } from "../schemas/schema";
 const GeneralForm = () => {
   return (
     <Wrapper>
       <div className="form-ct">
+        <FormHeader />
         <Formik
           initialValues={{
             firstName: "",
