@@ -41,6 +41,7 @@ const ExperienceForm = () => {
                 type="text"
                 hint="მინიმუმ 2 სიმბოლო"
                 size="sm"
+                changedVal={experienceState.position}
               />
               <TextField
                 onChange={(e) => handleEmployer(e)}
@@ -52,6 +53,7 @@ const ExperienceForm = () => {
                 type="text"
                 hint="მინიმუმ 2 სიმბოლო"
                 size="sm"
+                changedVal={experienceState.employer}
               />
             </div>
 
@@ -63,6 +65,7 @@ const ExperienceForm = () => {
                 placeholder="როლი თანამდებობაზე და ზოგადი აღწერა"
                 label="აღწერა"
                 size="lg"
+                changedVal={experienceState.description}
               />
             </div>
 

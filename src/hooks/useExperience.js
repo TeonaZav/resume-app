@@ -20,7 +20,7 @@ const useExperience = () => {
   /*================
  Handle Employer Change
   ================== */
-  const handlEmployer = (e) => {
+  const handleEmployer = (e) => {
     const employer = e.target.value;
     setExperienceState({
       ...experienceState,
@@ -30,7 +30,7 @@ const useExperience = () => {
   /*================
  Handle DandlDescription Change
   ================== */
-  const handlDescription = (e) => {
+  const handleDescription = (e) => {
     const description = e.target.value;
     setExperienceState({
       ...experienceState,
@@ -40,8 +40,8 @@ const useExperience = () => {
   return {
     experienceState,
     handlePosition,
-    handlEmployer,
-    handlDescription,
+    handleEmployer,
+    handleDescription,
   };
 };
 
