@@ -6,7 +6,10 @@ import TextField from "./TextField";
 import TextArea from "./TextArea";
 import FormHeader from "./FormHeader";
 import { schemaExperience } from "../schemas/schema";
+import useExperience from "../../hooks/useExperience";
 const ExperienceForm = () => {
+  const { experienceState, handlePosition, handleEmployer, handleDescription } =
+    useExperience();
   return (
     <Wrapper>
       <div className="form-ct">
@@ -29,6 +32,8 @@ const ExperienceForm = () => {
           <VStack as={Form} className="form">
             <div className="info-part1">
               <TextField
+                onChange={(e) => handlePosition(e)}
+                value={experienceState.position}
                 name="position"
                 placeholder="დეველოპერი, დიზაინერი, ა.შ."
                 autoComplete="off"
@@ -38,6 +43,8 @@ const ExperienceForm = () => {
                 size="sm"
               />
               <TextField
+                onChange={(e) => handleEmployer(e)}
+                value={experienceState.employer}
                 name="employer"
                 placeholder="დამსაქმებელი"
                 autoComplete="off"
@@ -50,6 +57,8 @@ const ExperienceForm = () => {
 
             <div className="info-part2">
               <TextArea
+                onChange={(e) => handleDescription(e)}
+                value={experienceState.description}
                 name="description"
                 placeholder="როლი თანამდებობაზე და ზოგადი აღწერა"
                 label="აღწერა"
