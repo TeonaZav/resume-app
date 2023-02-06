@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { ResumeContext } from "../context/context";
+import { formatPhoneNumber } from "../utils/HelperFunctions";
 const useGeneral = () => {
   const [generalsState, setGeneralsState] = useState({
     name: "",
@@ -72,14 +73,15 @@ const useGeneral = () => {
  Handle Phone Number Change
   ================== */
   const handlePhone = (e) => {
-    const tel = e.target.value;
+    formatPhoneNumber(e.target);
     setGeneralsState({
       ...generalsState,
-      phone_number: tel,
+      phone_number: e.target.value,
     });
-    console.log(e);
-    setPhoneN(tel);
+    setPhoneN(e.target.value);
+    console.log(e.target.value.length);
   };
+
   return {
     generalsState,
     handleFirstName,

@@ -17,7 +17,7 @@ const GeneralForm = () => {
     handleAbout,
     handlePhone,
   } = useGeneral();
-  console.log(generalsState);
+  // console.log(generalsState);
   const navigate = useNavigate();
   return (
     <Wrapper>
@@ -39,6 +39,10 @@ const GeneralForm = () => {
             window.setTimeout(() => {
               navigate("/experience");
             }, 2000);
+          }}
+          onChange={(values) => {
+            const vals = { ...values };
+            console.log(vals);
           }}
         >
           <VStack as={Form} className="form">
