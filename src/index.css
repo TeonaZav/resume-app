@@ -120,3 +120,6 @@ body {
   height: 108rem;
   background-color: #f9f9f9f9;
 }
+.hidden {
+  visibility: hidden;
+}

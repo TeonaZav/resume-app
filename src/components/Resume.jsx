@@ -23,8 +23,23 @@ const Resume = () => {
               </h2>
             </div>
             <div className="contact-info-ct">
-              <p className="email">{emailAd}</p>
-              <p className="tel">{phoneN}</p>
+              <div className="email-ct">
+                <img
+                  src={process.env.PUBLIC_URL + "/assets/email-icon.png"}
+                  alt="profile"
+                  className={`${emailAd ? "email-icon" : "email-icon hidden"}`}
+                />
+                <p className="email">{emailAd}</p>
+              </div>
+
+              <div className="phone-n-ct">
+                <img
+                  src={process.env.PUBLIC_URL + "/assets/phone-icon.png"}
+                  alt="profile"
+                  className={`${phoneN ? "phone-icon" : "phone-icon hidden"}`}
+                />
+                <p className="tel">{phoneN}</p>
+              </div>
             </div>
             <div className="about-textbox">
               {aboutG && <h2 className="resume-section-title">ᲩᲔᲛ ᲨᲔᲡᲐᲮᲔᲑ</h2>}
@@ -39,6 +54,11 @@ const Resume = () => {
             />
           </div>
         </section>
+        <img
+          src={process.env.PUBLIC_URL + "/assets/resume-logo.png"}
+          alt="profile"
+          className="resume-logo"
+        />
       </div>
     </Wrapper>
   );
@@ -53,6 +73,7 @@ const Wrapper = styled.div`
     align-items: center;
     background-color: #ffffff;
     padding: 4.8rem 7.5rem 4.4rem 7.8rem;
+    position: relative;
     margin: auto;
     text-align: justify;
     word-break: break-word;
@@ -120,6 +141,20 @@ const Wrapper = styled.div`
     }
     .b-bottom {
       border-bottom: 1px solid #c8c8c8;
+    }
+    .phone-n-ct,
+    .email-ct {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 1rem;
+    }
+    .resume-logo {
+      position: absolute;
+      width: 4.2rem;
+      height: 4.2rem;
+      left: 7.8rem;
+      bottom: 4.4rem;
     }
   }
 `;
