@@ -1,12 +1,12 @@
-import { useState } from "react";
-
+import { useState, useContext } from "react";
+import { ResumeContext } from "../context/context";
 const useExperience = () => {
   const [experienceState, setExperienceState] = useState({
     position: "",
     employer: "",
     description: "",
   });
-
+  const { setPositionN, setEmployerN, setDescr } = useContext(ResumeContext);
   /*================
  Handle Position Change
   ================== */
@@ -16,6 +16,7 @@ const useExperience = () => {
       ...experienceState,
       position,
     });
+    setPositionN(position);
   };
   /*================
  Handle Employer Change
@@ -26,6 +27,7 @@ const useExperience = () => {
       ...experienceState,
       employer,
     });
+    setEmployerN(employer);
   };
   /*================
  Handle DandlDescription Change
@@ -36,6 +38,7 @@ const useExperience = () => {
       ...experienceState,
       description,
     });
+    setDescr(description);
   };
   return {
     experienceState,

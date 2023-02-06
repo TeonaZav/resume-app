@@ -10,6 +10,7 @@ import useExperience from "../../hooks/useExperience";
 const ExperienceForm = () => {
   const { experienceState, handlePosition, handleEmployer, handleDescription } =
     useExperience();
+  console.log(experienceState);
   return (
     <Wrapper>
       <div className="form-ct">

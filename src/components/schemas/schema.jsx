@@ -33,7 +33,7 @@ export const schemaGeneral = Yup.object({
 });
 
 export const schemaExperience = Yup.object({
-  position: Yup.string().min(2, "").required(""),
-  employer: Yup.string().min(2, "").required(""),
-  description: Yup.string().required(""),
+  position: Yup.string().min(2, "მინიმუმ 2 სიმბოლო").required("სავალდებულო"),
+  employer: Yup.string().min(2, "მინიმუმ 2 სიმბოლო").required("სავალდებულო"),
+  description: Yup.string().required("სავალდებულო"),
 });
