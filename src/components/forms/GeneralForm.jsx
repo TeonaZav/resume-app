@@ -22,7 +22,7 @@ const GeneralForm = () => {
   return (
     <Wrapper>
       <div className="form-ct">
-        <FormHeader />
+        <FormHeader heading={"ᲞᲘᲠᲐᲓᲘ ᲘᲜᲤᲝ"} />
         <Formik
           enableReinitialize
           initialValues={{

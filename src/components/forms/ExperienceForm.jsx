@@ -14,7 +14,7 @@ const ExperienceForm = () => {
   return (
     <Wrapper>
       <div className="form-ct">
-        <FormHeader />
+        <FormHeader heading={"ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ"} />
         <Formik
           enableReinitialize
           initialValues={{

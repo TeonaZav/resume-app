@@ -1,9 +1,9 @@
 import styled from "styled-components";
-function FormHeader(props) {
+function FormHeader({ heading }) {
   return (
     <Wrapper>
       <div>
-        <h2>ᲞᲘᲠᲐᲓᲘ ᲘᲜᲤᲝ</h2>
+        <h2>{heading}</h2>
       </div>
     </Wrapper>
   );
