@@ -13,6 +13,7 @@ const TextArea = ({ hint, size, label, value, changedVal, ...props }) => {
           {...field}
           {...props}
           onKeyUp={() => setValue(changedVal)}
+          onKeyDown={() => setValue(changedVal)}
           className={`box-xlg text-field  ${meta.touched && value && "valid"}`}
         />
       </FormControl>

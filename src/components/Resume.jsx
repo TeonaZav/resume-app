@@ -27,7 +27,7 @@ const Resume = () => {
               <p className="tel">{phoneN}</p>
             </div>
             <div className="about-textbox">
-              {aboutG && <h4 className="resume-section-title">ᲩᲔᲛ ᲨᲔᲡᲐᲮᲔᲑ</h4>}
+              {aboutG && <h2 className="resume-section-title">ᲩᲔᲛ ᲨᲔᲡᲐᲮᲔᲑ</h2>}
 
               <p className="resume-text">{aboutG}</p>
             </div>
@@ -53,6 +53,17 @@ const Wrapper = styled.div`
     align-items: center;
     background-color: #ffffff;
     padding: 4.8rem 7.5rem 4.4rem 7.8rem;
+    margin: auto;
+    text-align: justify;
+    word-break: break-word;
+    white-space: pre-line;
+    overflow-wrap: break-word;
+    -ms-word-break: break-word;
+    word-break: break-word;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
     .section-about {
       display: flex;
       flex-direction: row;
@@ -64,13 +75,17 @@ const Wrapper = styled.div`
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
+        align-self: flex-start;
+        margin-top: 2rem;
+        width: 43.2rem;
         .name-wrap {
-          height: 4.2rem;
-          color: var(--cl-red);
+          min-height: 4.2rem;
+          color: #f93b1d;
+          font-weight: 900;
+          font-size: 3rem;
           line-height: 4.2rem;
-          font-weight: 700;
-          font-size: 2rem;
-          font-family: "BPG Nino Mtavruli Bold", monospace;
+          letter-spacing: -2.5px;
+          margin-bottom: 1.7rem;
         }
         .contact-info-ct {
           display: flex;
@@ -87,6 +102,7 @@ const Wrapper = styled.div`
         }
         .about-textbox {
           width: 43.2rem;
+          padding: 0.2rem;
         }
       }
 
@@ -95,6 +111,7 @@ const Wrapper = styled.div`
         height: 24.6rem;
         border-radius: 50%;
         overflow: hidden;
+        align-self: flex-start;
       }
       .img-ct img {
         width: 100%;
