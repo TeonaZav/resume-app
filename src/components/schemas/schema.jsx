@@ -7,12 +7,12 @@ const mobileIndexes = [
 
 export const schemaGeneral = Yup.object({
   name: Yup.string()
-    .min(2, "სახელი ძალიან მოკლეა")
-    .matches(geoSymbols, "გთხოვთ მიუთითოთ ქართული სიმბოლოები")
+    .min(2, "მინიმუმ 2 ასო")
+    .matches(geoSymbols, "ქართული ასოები")
     .required("სახელის მითითება სავალდებულოა!"),
   surname: Yup.string()
-    .min(2, "გვარი ძალიან მოკლეა")
-    .matches(geoSymbols, "გთხოვთ მიუთითოთ ქართული სიმბოლოები")
+    .min(2, "მინიმუმ 2 ასო")
+    .matches(geoSymbols, "ქართული ასოები")
     .required("გვარის მითითება სავალდებულოა!"),
   about_me: Yup.string().notRequired(),
   email: Yup.string()
@@ -20,15 +20,22 @@ export const schemaGeneral = Yup.object({
     .required("ელ. ფოსტის მითითება სავალდებულოა")
     .test(
       "",
-      "მითითებული მისამართი არასწორია",
+      "უნდა მთავრდებოდეს @redberry.ge-ით",
       (val) => `${val}`.slice(-12) === "@redberry.ge"
     ),
   phone_number: Yup.string()
-    .test((val) => `${val}`.slice(0, -8) === "+9955")
-    .test((val) => `${val}`.slice(-6).match(/^[0-9]+$/g))
-    .test((val) => mobileIndexes.includes(Number(`${val}`.slice(5, 7))))
-    .min(13)
-    .max(13)
+    .test((val) => `${val}`.replace(/\s/g, "").slice(0, -8) === "+9955")
+    .test((val) =>
+      `${val}`
+        .replace(/\s/g, "")
+        .slice(-6)
+        .match(/^[0-9]+$/g)
+    )
+    .test((val) =>
+      mobileIndexes.includes(Number(`${val}`.replace(/\s/g, "").slice(5, 7)))
+    )
+    .min(17)
+    .max(17)
     .required(""),
 });
 
