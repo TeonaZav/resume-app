@@ -86,13 +86,17 @@ body {
   transition: all 0.3s;
   border-radius: 0.4rem;
 }
-.submit-btn {
+.submit-btn,
+.btn-back {
   padding: 1.4rem 3.5rem;
   color: #ffffff;
   background-color: var(--purple-md);
 }
+
 .submit-btn:hover,
-.submit-btn:active {
+.submit-btn:active,
+.btn-back:hover,
+.btn-back:active {
   background-color: var(--purple-pale);
 }
 .resume-section-title {

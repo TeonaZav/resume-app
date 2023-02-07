@@ -8,7 +8,7 @@ import DateInput from "./DateInput";
 import FormHeader from "./FormHeader";
 import { schemaExperience } from "../schemas/schema";
 import useExperience from "../../hooks/useExperience";
-
+import BtnGoBack from "../BtnGoBack";
 const ExperienceForm = () => {
   const {
     experienceState,
@@ -102,6 +102,7 @@ const ExperienceForm = () => {
               />
             </div>
 
+            <BtnGoBack />
             <Button type="submit" className="btn submit-btn">
               ᲨᲔᲛᲓᲔᲒᲘ
             </Button>
@@ -148,10 +149,16 @@ const Wrapper = styled.div`
     flex-direction: row;
     justify-content: space-between;
   }
-  .submit-btn {
+  .submit-btn,
+  .btn-back {
     position: absolute;
     bottom: 8.8rem;
+  }
+  .submit-btn {
     right: 15rem;
+  }
+  .btn-back {
+    left: 15rem;
   }
   .label {
     color: #2e2e2e;
