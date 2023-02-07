@@ -11,6 +11,8 @@ const ResumeProvider = ({ children }) => {
   const [positionN, setPositionN] = useState("");
   const [employerN, setEmployerN] = useState("");
   const [descr, setDescr] = useState("");
+  const [startDate, setStartDate] = useState(new Date());
+  const [dueDate, setDueDate] = useState(new Date());
   return (
     <ResumeContext.Provider
       value={{
@@ -30,6 +32,10 @@ const ResumeProvider = ({ children }) => {
         setEmployerN,
         descr,
         setDescr,
+        startDate,
+        setStartDate,
+        dueDate,
+        setDueDate,
       }}
     >
       {children}

@@ -4,13 +4,22 @@ import { Form, Formik } from "formik";
 import styled from "styled-components";
 import TextField from "./TextField";
 import TextArea from "./TextArea";
+import DateInput from "./DateInput";
 import FormHeader from "./FormHeader";
 import { schemaExperience } from "../schemas/schema";
 import useExperience from "../../hooks/useExperience";
+
 const ExperienceForm = () => {
-  const { experienceState, handlePosition, handleEmployer, handleDescription } =
-    useExperience();
+  const {
+    experienceState,
+    handlePosition,
+    handleEmployer,
+    handleDescription,
+    handleStartDate,
+    handleDueDate,
+  } = useExperience();
   console.log(experienceState);
+
   return (
     <Wrapper>
       <div className="form-ct">
@@ -44,6 +53,7 @@ const ExperienceForm = () => {
                 size="sm"
                 changedVal={experienceState.position}
               />
+
               <TextField
                 onChange={(e) => handleEmployer(e)}
                 value={experienceState.employer}
@@ -57,7 +67,29 @@ const ExperienceForm = () => {
                 changedVal={experienceState.employer}
               />
             </div>
-
+            <div className="info-part1">
+              <DateInput
+                name="start_date"
+                label="დაწყების რიცხვი"
+                start_date={experienceState.start_date}
+                due_date={experienceState.due_date}
+                handleDate={handleStartDate}
+                value={experienceState.start_date}
+                selected={experienceState.start_date}
+                minDate={new Date(5, 13, 1900)}
+                maxDate={experienceState.due_date}
+              />
+              <DateInput
+                name="due-date"
+                label="დამთავრების რიცხვი"
+                start_date={experienceState.start_date}
+                due_date={experienceState.due_date}
+                handleDate={handleDueDate}
+                value={experienceState.due_date}
+                selected={experienceState.due_date}
+                minDate={experienceState.start_date}
+              />
+            </div>
             <div className="info-part2">
               <TextArea
                 onChange={(e) => handleDescription(e)}
@@ -120,6 +152,14 @@ const Wrapper = styled.div`
   }
   .label.label-error {
     color: var(--error-color);
+  }
+  .box-sm {
+    width: 37.1rem;
+    height: 4.8rem;
+  }
+  .box-lg {
+    width: 79.8rem;
+    height: 4.8rem;
   }
 `;
 export default ExperienceForm;

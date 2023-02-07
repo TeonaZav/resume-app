@@ -43,10 +43,12 @@ input:-webkit-autofill:active {
   --pale-white-5: rgba(255, 255, 255, 0.5);
   --input-color: #000000;
   --pl-holder-color: hsla(0, 0%, 0%, 0.349);
+  --pale-black: hsla(0, 0%, 0%, 0.637);
   --label-color: #000000;
   --off-black: #1a1a1a;
   --choice-color: #c3dcee;
   --pale-blue: #62a1eb;
+  --blue: #428ee4;
   --cl-red: #f93b1d;
   /* FONT-SIZE */
   --font-sm: 1.6rem;
@@ -122,4 +124,26 @@ body {
 }
 .hidden {
   visibility: hidden;
+}
+.input {
+  background: #ffffff;
+  border: 0.1rem solid var(--border-color);
+  font-size: var(--font-sm);
+  line-height: var(--lh-small);
+  font-weight: 400;
+  color: var(--input-color);
+  padding: 1.3rem 1.6rem;
+  caret-color: #6499ff;
+  border-radius: 0.4rem;
+  margin-bottom: 0.8rem;
+}
+.input::placeholder {
+  color: var(--pl-holder-color);
+}
+.input:focus {
+  border: 0.1rem solid var(--border-focused);
+  outline: none;
+}
+.input:focus::placeholder {
+  opacity: 0;
 }

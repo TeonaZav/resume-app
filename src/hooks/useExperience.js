@@ -5,8 +5,12 @@ const useExperience = () => {
     position: "",
     employer: "",
     description: "",
+    start_date: null,
+    due_date: null,
   });
-  const { setPositionN, setEmployerN, setDescr } = useContext(ResumeContext);
+
+  const { setPositionN, setEmployerN, setDescr, setStartDate, setDueDate } =
+    useContext(ResumeContext);
   /*================
  Handle Position Change
   ================== */
@@ -30,7 +34,7 @@ const useExperience = () => {
     setEmployerN(employer);
   };
   /*================
- Handle DandlDescription Change
+ Handle Description Change
   ================== */
   const handleDescription = (e) => {
     const description = e.target.value;
@@ -40,11 +44,34 @@ const useExperience = () => {
     });
     setDescr(description);
   };
+  /*================
+ Handle Start Date Change
+  ================== */
+  const handleStartDate = (date) => {
+    setExperienceState({
+      ...experienceState,
+      start_date: date,
+    });
+    setStartDate(date);
+  };
+  /*================
+ Handle Due Date Change
+  ================== */
+  const handleDueDate = (date) => {
+    setExperienceState({
+      ...experienceState,
+      due_date: date,
+    });
+    setDueDate(date);
+  };
+
   return {
     experienceState,
     handlePosition,
     handleEmployer,
     handleDescription,
+    handleStartDate,
+    handleDueDate,
   };
 };
 
