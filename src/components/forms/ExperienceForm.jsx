@@ -9,6 +9,7 @@ import FormHeader from "./FormHeader";
 import { schemaExperience } from "../schemas/schema";
 import useExperience from "../../hooks/useExperience";
 import BtnGoBack from "../BtnGoBack";
+import BtnGoHome from "../BtnGoHome";
 const ExperienceForm = () => {
   const {
     experienceState,
@@ -23,6 +24,7 @@ const ExperienceForm = () => {
   return (
     <Wrapper>
       <div className="form-ct">
+        <BtnGoHome />
         <FormHeader heading={"ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ"} />
         <Formik
           enableReinitialize
