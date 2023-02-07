@@ -112,9 +112,14 @@ const Wrapper = styled.div`
     .error-icon,
     .success-icon {
       position: absolute;
-      right: 1rem;
       top: 50%;
       transform: translateY(-25%);
+    }
+    .success-icon {
+      right: 1rem;
+    }
+    .error-icon {
+      right: -3rem;
     }
     .hint {
       color: #2e2e2e;

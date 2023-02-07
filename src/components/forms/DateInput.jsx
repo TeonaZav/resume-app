@@ -28,19 +28,11 @@ const DateInput = ({
     "November",
     "December",
   ];
-  // const WEEKDAYS_SHORT = ["M", "T", "W", "T", "F", "S", "S"];
-  const WEEKDAYS_SHORT = [
-    ["sun", "s"],
-    ["mon", "m"],
-    ["tue", "t"],
-    ["wed", "w"],
-    ["thu", "t"],
-    ["fri", "f"],
-    ["sat", "s"],
-  ];
+
   return (
     <Wrapper>
-      <div className="date-wrap">
+      <div className="date-wrap ">
+        <label className="label label-md">{label} </label>
         <DatePicker
           renderCustomHeader={({
             date,
@@ -136,11 +128,12 @@ const Wrapper = styled.div`
   }
   .date-wrap {
     position: relative;
+    width: 37.1rem;
   }
   .calendar-icon {
     position: absolute;
     right: 1.4rem;
-    top: 25%;
+    top: 50%;
   }
   .rasta-stripes {
     width: 16rem;
@@ -224,6 +217,9 @@ const Wrapper = styled.div`
     .react-datepicker__input-container {
       margin-bottom: 0;
     }
+  }
+  .label-md {
+    line-height: 3.4rem;
   }
 `;
 export default DateInput;

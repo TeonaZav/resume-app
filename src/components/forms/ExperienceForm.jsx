@@ -50,7 +50,7 @@ const ExperienceForm = () => {
                 label="თანამდებობა"
                 type="text"
                 hint="მინიმუმ 2 სიმბოლო"
-                size="sm"
+                size="lg"
                 changedVal={experienceState.position}
               />
 
@@ -63,11 +63,11 @@ const ExperienceForm = () => {
                 label="დამსაქმებელი"
                 type="text"
                 hint="მინიმუმ 2 სიმბოლო"
-                size="sm"
+                size="lg"
                 changedVal={experienceState.employer}
               />
             </div>
-            <div className="info-part1">
+            <div className="info-part3">
               <DateInput
                 name="start_date"
                 label="დაწყების რიცხვი"
@@ -120,22 +120,33 @@ const Wrapper = styled.div`
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    height: calc(100% - 8.8rem);
+    height: 67.2rem;
     width: 79.8rem;
     gap: 4.6rem;
     padding-top: 6.9rem;
+    border-bottom: 1px solid #c1c1c1;
   }
-  .info-part1 {
+
+  .info-part1,
+  .info-part2,
+  .info-part3 {
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
   }
+  .info-part1 {
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 3.4rem;
+  }
   .info-part2 {
-    width: 100%;
-    display: flex;
     flex-direction: column;
     gap: 2.5rem;
+  }
+  .info-part3 {
+    flex-direction: row;
+    justify-content: space-between;
   }
   .submit-btn {
     position: absolute;
