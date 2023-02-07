@@ -8,6 +8,7 @@ import TextArea from "./TextArea";
 import FormHeader from "./FormHeader";
 import useGeneral from "../../hooks/useGeneral";
 import { schemaGeneral } from "../schemas/schema";
+import BtnGoHome from "../BtnGoHome";
 const GeneralForm = () => {
   const {
     generalsState,
@@ -22,7 +23,8 @@ const GeneralForm = () => {
   return (
     <Wrapper>
       <div className="form-ct">
-        <FormHeader heading={"ᲞᲘᲠᲐᲓᲘ ᲘᲜᲤᲝ"} />
+        <BtnGoHome />
+        <FormHeader heading={"ᲞᲘᲠᲐᲓᲘ ᲘᲜᲤᲝ"} pageN={"1 / 3"} />
         <Formik
           enableReinitialize
           initialValues={{

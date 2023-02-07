@@ -25,7 +25,7 @@ const ExperienceForm = () => {
     <Wrapper>
       <div className="form-ct">
         <BtnGoHome />
-        <FormHeader heading={"ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ"} />
+        <FormHeader heading={"ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ"} pageN={"2 / 3"} />
         <Formik
           enableReinitialize
           initialValues={{
