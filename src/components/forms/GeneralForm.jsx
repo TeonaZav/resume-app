@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, VStack } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
@@ -8,6 +7,7 @@ import TextArea from "./TextArea";
 import FormHeader from "./FormHeader";
 import useGeneral from "../../hooks/useGeneral";
 import { schemaGeneral } from "../schemas/schema";
+import ImgInput from "./ImgInput";
 import BtnGoHome from "../BtnGoHome";
 const GeneralForm = () => {
   const {
@@ -18,8 +18,9 @@ const GeneralForm = () => {
     handleAbout,
     handlePhone,
   } = useGeneral();
-  // console.log(generalsState);
+  console.log(generalsState);
   const navigate = useNavigate();
+
   return (
     <Wrapper>
       <div className="form-ct">
@@ -33,6 +34,7 @@ const GeneralForm = () => {
             email: "",
             about_me: "",
             phone_number: "",
+            image: "",
           }}
           validationSchema={schemaGeneral}
           onSubmit={(values) => {
@@ -74,6 +76,7 @@ const GeneralForm = () => {
                 changedVal={generalsState.surname}
               />
             </div>
+            <ImgInput />
             <div className="info-part2">
               <TextArea
                 onChange={(e) => handleAbout(e)}

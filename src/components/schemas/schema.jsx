@@ -4,7 +4,8 @@ const mobileIndexes = [
   59, 58, 57, 55, 52, 51, 14, 11, 99, 98, 96, 95, 93, 91, 77, 79, 68, 71, 70,
   74, 92, 97,
 ];
-
+const SUPPORTED_FORMATS = ["image/jpg", "image/png", "image/jpeg", "image/gif"];
+// const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/gif"];
 export const schemaGeneral = Yup.object({
   name: Yup.string()
     .min(2, "მინიმუმ 2 ასო")
@@ -37,6 +38,7 @@ export const schemaGeneral = Yup.object({
     .min(17)
     .max(17)
     .required(""),
+  image: Yup.mixed().required("Required Field"),
 });
 
 export const schemaExperience = Yup.object({

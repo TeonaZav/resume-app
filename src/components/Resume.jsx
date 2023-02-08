@@ -1,10 +1,22 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import styled from "styled-components";
 import ResumeSection from "./ResumeSection";
 import { ResumeContext } from "../context/context";
 
 const Resume = () => {
-  const { firstN, lastN, emailAd, aboutG, phoneN } = useContext(ResumeContext);
+  const { firstN, lastN, emailAd, aboutG, phoneN, img } =
+    useContext(ResumeContext);
+  console.log(img);
+  const [preview, setPreview] = useState(null);
+
+  useEffect(() => {
+    const reader = new FileReader();
+    img && reader.readAsDataURL(img);
+
+    reader.onload = () => {
+      setPreview(reader.result);
+    };
+  }, [img]);
   return (
     <Wrapper>
       <div className="resume">
@@ -49,7 +61,8 @@ const Resume = () => {
           </div>
           <div className="img-ct">
             <img
-              src={process.env.PUBLIC_URL + "/assets/profile-picture.png"}
+              // src={process.env.PUBLIC_URL + "/assets/profile-picture.png"}
+              src={preview}
               alt="profile"
             />
           </div>

@@ -8,6 +8,7 @@ const useGeneral = () => {
     email: "",
     about_me: "",
     phone_number: "",
+    image: "",
   });
   const {
     firstN,
@@ -20,6 +21,7 @@ const useGeneral = () => {
     setAboutG,
     phoneN,
     setPhoneN,
+    setImg,
   } = useContext(ResumeContext);
   /*================
  Handle Firstname Change
@@ -79,9 +81,20 @@ const useGeneral = () => {
       phone_number: e.target.value,
     });
     setPhoneN(e.target.value);
-    console.log(e.target.value.length);
+    console.log(e.target.value);
   };
-
+  /*================
+ Handle Phone Number Change
+  ================== */
+  const handleImage = (e) => {
+    setGeneralsState({
+      ...generalsState,
+      image: e.target.files[0],
+    });
+    setImg(e.target.files[0]);
+    console.log(e.target.value);
+    console.log("HI I'm here");
+  };
   return {
     generalsState,
     handleFirstName,
@@ -89,6 +102,7 @@ const useGeneral = () => {
     handleEmail,
     handleAbout,
     handlePhone,
+    handleImage,
   };
 };
 
