@@ -1,9 +1,11 @@
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, VStack } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import styled from "styled-components";
 import TextField from "./TextField";
 import TextArea from "./TextArea";
+
 import FormHeader from "./FormHeader";
 import useGeneral from "../../hooks/useGeneral";
 import { schemaGeneral } from "../schemas/schema";
@@ -17,6 +19,7 @@ const GeneralForm = () => {
     handleEmail,
     handleAbout,
     handlePhone,
+    handleImage,
   } = useGeneral();
   console.log(generalsState);
   const navigate = useNavigate();
@@ -40,6 +43,17 @@ const GeneralForm = () => {
           onSubmit={(values) => {
             const vals = { ...values };
             console.log(vals);
+            localStorage.setItem(
+              "generals",
+              JSON.stringify({
+                name: vals.name,
+                surname: vals.surname,
+                email: vals.email,
+                about_me: vals.about_me,
+                phone_number: vals.phone_number,
+                image: vals.image,
+              })
+            );
             window.setTimeout(() => {
               navigate("/experience");
             }, 2000);

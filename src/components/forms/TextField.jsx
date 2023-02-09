@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import {
   FormControl,
@@ -6,11 +6,14 @@ import {
   FormLabel,
   FormHelperText,
 } from "@chakra-ui/form-control";
+import useGeneral from "../../hooks/useGeneral";
 import { Input } from "@chakra-ui/input";
 import { Field, useField } from "formik";
 const TextField = ({ hint, size, label, changedVal, ...props }) => {
   const [field, meta, helpers] = useField(props);
   const { setValue } = helpers;
+  const { generalsState } = useGeneral();
+  const [blurControl, setBlurControl] = useState(false);
   return (
     <Wrapper>
       <FormControl
@@ -19,7 +22,11 @@ const TextField = ({ hint, size, label, changedVal, ...props }) => {
       >
         <FormLabel
           className={`label  ${
-            meta.touched && meta.error ? "label-error" : null
+            meta.touched && meta.error
+              ? "label-error"
+              : !meta.touched && meta.error && blurControl
+              ? "label-error"
+              : null
           }`}
         >
           {label}
@@ -28,24 +35,47 @@ const TextField = ({ hint, size, label, changedVal, ...props }) => {
           as={Field}
           {...field}
           {...props}
-          onKeyUp={() => setValue(changedVal)}
+          onBlur={() => {
+            setValue(changedVal);
+            setBlurControl(true);
+          }}
+          onKeyUp={() => {
+            setValue(changedVal);
+          }}
           className={`${
             size === "sm" ? "box-sm" : size === "lg" ? "box-lg" : "box-xlg"
           } input-field  ${
-            meta.touched && meta.error
+            meta.touched && meta.error && !blurControl
+              ? "is-invalid"
+              : !meta.touched && meta.error && blurControl
               ? "is-invalid"
               : meta.touched && !meta.error && meta.value
+              ? "valid"
+              : !meta.touched && !meta.error && meta.value && blurControl
               ? "valid"
               : null
           }`}
         />
+        {console.log(meta)}
         {meta.touched && meta.error ? (
           <img
             src={process.env.PUBLIC_URL + "/assets/error-icon.png"}
             className="error-icon"
             alt="error icon"
           />
+        ) : !meta.touched && meta.error && blurControl ? (
+          <img
+            src={process.env.PUBLIC_URL + "/assets/error-icon.png"}
+            className="error-icon"
+            alt="error icon"
+          />
         ) : meta.touched && !meta.error && meta.value ? (
+          <img
+            src={process.env.PUBLIC_URL + "/assets/success-icon.png"}
+            className="success-icon"
+            alt="success icon"
+          />
+        ) : !meta.touched && !meta.error && meta.value && blurControl ? (
           <img
             src={process.env.PUBLIC_URL + "/assets/success-icon.png"}
             className="success-icon"

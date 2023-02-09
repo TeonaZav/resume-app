@@ -17,6 +17,7 @@ const Resume = () => {
       setPreview(reader.result);
     };
   }, [img]);
+  console.log(preview);
   return (
     <Wrapper>
       <div className="resume">

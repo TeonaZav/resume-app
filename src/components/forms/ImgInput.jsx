@@ -9,7 +9,7 @@ const ImgInput = ({ ...props }) => {
   const { generalsState, handleImage } = useGeneral();
   const { setFieldValue } = useFormikContext();
   useEffect(() => {
-    console.log(`File ${generalsState.image.name} has been set.`);
+    console.log(`File ${generalsState.image?.name} has been set.`);
   }, [generalsState.image]);
   return (
     <Wrapper>

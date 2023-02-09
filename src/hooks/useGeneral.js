@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { ResumeContext } from "../context/context";
 import { formatPhoneNumber } from "../utils/HelperFunctions";
+import { base64toFile, getBase64 } from "../utils/HelperFunctions";
 const useGeneral = () => {
   const [generalsState, setGeneralsState] = useState({
     name: "",
@@ -10,19 +11,47 @@ const useGeneral = () => {
     phone_number: "",
     image: "",
   });
-  const {
-    firstN,
-    setFirstN,
-    lastN,
-    setLastN,
-    emailAd,
-    setEmailAd,
-    aboutG,
-    setAboutG,
-    phoneN,
-    setPhoneN,
-    setImg,
-  } = useContext(ResumeContext);
+  const { setFirstN, setLastN, setEmailAd, setAboutG, setPhoneN, setImg } =
+    useContext(ResumeContext);
+  useEffect(() => {
+    let data = getLocalGenerals();
+    if (data) {
+      setGeneralsState(data);
+      setGeneralsState({
+        ...data,
+        image: base64toFile(data.image, "recovered.jpg"),
+      });
+      setFirstN(data.name);
+      setLastN(data.surname);
+      setEmailAd(data.email);
+      setAboutG(data.about_me);
+      setPhoneN(data.phone_number);
+      setImg(base64toFile(data.image, "recovered.jpg"));
+    }
+  }, []);
+
+  const getLocalGenerals = () => {
+    saveLocal();
+    const generals = localStorage.getItem("generals");
+    if (generals) {
+      return JSON.parse(generals);
+    }
+  };
+  const saveLocal = (name, key, value) => {
+    let existing = localStorage.getItem(name);
+    existing = existing
+      ? JSON.parse(existing)
+      : {
+          name: "",
+          surname: "",
+          email: "",
+          about_me: "",
+          phone_number: "",
+          image: "",
+        };
+    existing[key] = value;
+    localStorage.setItem(name, JSON.stringify(existing));
+  };
   /*================
  Handle Firstname Change
   ================== */
@@ -32,8 +61,8 @@ const useGeneral = () => {
       ...generalsState,
       name,
     });
-    console.log(e);
     setFirstN(name);
+    saveLocal("generals", "name", e.target.value);
   };
   /*================
  Handle Lastname Change
@@ -44,8 +73,8 @@ const useGeneral = () => {
       ...generalsState,
       surname,
     });
-    console.log(e);
     setLastN(surname);
+    saveLocal("generals", "surname", e.target.value);
   };
   /*================
  Handle Email Change
@@ -56,8 +85,8 @@ const useGeneral = () => {
       ...generalsState,
       email,
     });
-    console.log(e);
     setEmailAd(email);
+    saveLocal("generals", "email", e.target.value);
   };
   /*================
  Handle About Info
@@ -68,8 +97,8 @@ const useGeneral = () => {
       ...generalsState,
       about_me: about,
     });
-    console.log(e);
     setAboutG(about);
+    saveLocal("generals", "about_me", e.target.value);
   };
   /*================
  Handle Phone Number Change
@@ -81,11 +110,12 @@ const useGeneral = () => {
       phone_number: e.target.value,
     });
     setPhoneN(e.target.value);
-    console.log(e.target.value);
+    saveLocal("generals", "phone_number", e.target.value);
   };
   /*================
  Handle Phone Number Change
   ================== */
+
   const handleImage = (e) => {
     setGeneralsState({
       ...generalsState,
@@ -93,7 +123,10 @@ const useGeneral = () => {
     });
     setImg(e.target.files[0]);
     console.log(e.target.value);
-    console.log("HI I'm here");
+    const file = e.target.files[0];
+    getBase64(file).then((base64) => {
+      saveLocal("generals", "image", base64);
+    });
   };
   return {
     generalsState,
