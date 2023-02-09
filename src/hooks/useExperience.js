@@ -2,15 +2,38 @@ import { useState, useContext } from "react";
 import { ResumeContext } from "../context/context";
 const useExperience = () => {
   const [experienceState, setExperienceState] = useState({
-    position: "",
-    employer: "",
-    description: "",
-    start_date: null,
-    due_date: null,
+    experiences: [
+      {
+        position: "",
+        employer: "",
+        description: "",
+        start_date: null,
+        due_date: null,
+      },
+      {
+        position: "",
+        employer: "",
+        description: "",
+        start_date: null,
+        due_date: null,
+      },
+    ],
   });
 
-  const { setPositionN, setEmployerN, setDescr, setStartDate, setDueDate } =
-    useContext(ResumeContext);
+  const {
+    setPositionN,
+    setEmployerN,
+    setDescr,
+    setStartDate,
+    setDueDate,
+    positionN,
+    employerN,
+    descr,
+    startDate,
+    dueDate,
+    img,
+    setImgEmpty,
+  } = useContext(ResumeContext);
   /*================
  Handle Position Change
   ================== */

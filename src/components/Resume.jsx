@@ -1,11 +1,24 @@
 import React, { useContext, useState, useEffect } from "react";
 import styled from "styled-components";
-import ResumeSection from "./ResumeSection";
+import ResumeSection from "./SectionExperience";
+import { convertDataToString } from "../utils/HelperFunctions";
 import { ResumeContext } from "../context/context";
 
 const Resume = () => {
-  const { firstN, lastN, emailAd, aboutG, phoneN, img } =
-    useContext(ResumeContext);
+  const {
+    firstN,
+    lastN,
+    emailAd,
+    aboutG,
+    phoneN,
+    img,
+    positionN,
+    employerN,
+    descr,
+    startDate,
+    dueDate,
+  } = useContext(ResumeContext);
+
   console.log(img);
   const [preview, setPreview] = useState(null);
 
@@ -68,6 +81,14 @@ const Resume = () => {
             />
           </div>
         </section>
+        <ResumeSection
+          position={positionN}
+          employer={employerN}
+          workStart={convertDataToString(startDate, "sv")}
+          workEnd={convertDataToString(dueDate, "sv")}
+          text={descr}
+        />
+        {console.log(convertDataToString(startDate, "en-ZA"))}
         <img
           src={process.env.PUBLIC_URL + "/assets/resume-logo.png"}
           alt="profile"

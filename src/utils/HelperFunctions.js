@@ -44,3 +44,7 @@ export const base64toFile = (dataurl, filename) => {
 //Usage example:
 // var file = dataURLtoFile('data:image/png;base64,......', 'a.png');
 // console.log(file);
+
+export const convertDataToString = (date, countryISO) => {
+  return date.toLocaleDateString(countryISO);
+};

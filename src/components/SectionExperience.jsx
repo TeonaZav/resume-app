@@ -1,11 +1,21 @@
 import styled from "styled-components";
-const ResumeSection = ({ title, position, text, workingPeriod }) => {
+const SectionExperience = ({
+  position,
+  employer,
+  text,
+  workStart,
+  workEnd,
+}) => {
   return (
     <Wrapper>
       <div className="textbox">
-        <h4 className="resume-section-title">{title}</h4>
-        <h6 className="position-title">{position}</h6>
-        <p className="working-period">{workingPeriod}</p>
+        <h4 className="resume-section-title">ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ</h4>
+        <h6 className="position-title">
+          {position}, {employer}
+        </h6>
+        <p className="working-period">
+          {workStart} - {workEnd}
+        </p>
         <p className="resume-text">{text}</p>
       </div>
     </Wrapper>
@@ -30,4 +40,4 @@ const Wrapper = styled.div`
     margin-bottom: 1.6rem;
   }
 `;
-export default ResumeSection;
+export default SectionExperience;
