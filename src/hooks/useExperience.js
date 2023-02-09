@@ -1,24 +1,22 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { ResumeContext } from "../context/context";
 const useExperience = () => {
-  const [experienceState, setExperienceState] = useState({
-    experiences: [
-      {
-        position: "",
-        employer: "",
-        description: "",
-        start_date: null,
-        due_date: null,
-      },
-      {
-        position: "",
-        employer: "",
-        description: "",
-        start_date: null,
-        due_date: null,
-      },
-    ],
-  });
+  const [experienceState, setExperienceState] = useState([
+    {
+      position: "",
+      employer: "",
+      description: "",
+      start_date: null,
+      due_date: null,
+    },
+    {
+      position: "",
+      employer: "",
+      description: "",
+      start_date: null,
+      due_date: null,
+    },
+  ]);
 
   const {
     setPositionN,
@@ -87,7 +85,26 @@ const useExperience = () => {
     });
     setDueDate(date);
   };
+  /*================
+ 
+  ================== */
+  const addExpHandler = () => {
+    setExperienceState((experiences) => [
+      ...experiences,
+      {
+        position: "",
+        employer: "",
+        description: "",
+        start_date: null,
+        due_date: null,
+      },
+    ]);
 
+    console.log(experienceState);
+  };
+  useEffect(() => {
+    console.log(experienceState);
+  }, [experienceState]);
   return {
     experienceState,
     handlePosition,
@@ -95,6 +112,7 @@ const useExperience = () => {
     handleDescription,
     handleStartDate,
     handleDueDate,
+    addExpHandler,
   };
 };
 

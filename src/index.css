@@ -99,6 +99,11 @@ body {
 .btn-back:active {
   background-color: var(--purple-pale);
 }
+.btn-add {
+  background-color: #62a1eb;
+  padding: 1.4rem 2.25rem;
+  color: #ffffff;
+}
 .resume-section-title {
   font-size: 1.8rem;
   color: #f93b1d;

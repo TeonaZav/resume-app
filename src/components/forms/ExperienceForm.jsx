@@ -20,6 +20,7 @@ const ExperienceForm = () => {
     handleDescription,
     handleStartDate,
     handleDueDate,
+    addExpHandler,
   } = useExperience();
   console.log(experienceState);
   const {
@@ -42,9 +43,12 @@ const ExperienceForm = () => {
         <BtnGoHome />
         <FormHeader heading={"ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ"} pageN={"2 / 3"} />
 
-        {experienceState.experiences.map((exp) => {
+        {experienceState.map((exp) => {
           return <ExperienceF />;
         })}
+        <button className="btn btn-add" onClick={addExpHandler}>
+          მეტი გამოცდილების დამატება
+        </button>
       </div>
     </Wrapper>
   );
@@ -52,6 +56,12 @@ const ExperienceForm = () => {
 const Wrapper = styled.div`
   .form-ct {
     position: relative;
+    .btn-add {
+      margin-top: 4.5rem;
+      margin-bottom: 22.7rem;
+      align-self: flex-start;
+      margin-left: 15rem;
+    }
   }
 `;
 export default ExperienceForm;
