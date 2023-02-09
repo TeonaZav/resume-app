@@ -4,17 +4,13 @@ function BtnGoBack() {
   const navigate = useNavigate();
   return (
     <Wrapper>
-      <button
-        type="button"
-        className="btn btn-back"
-        onClick={() => navigate(-1)}
-      >
+      <div className="btn btn-back" onClick={() => navigate(-1)}>
         ᲣᲙᲐᲜ
-      </button>
+      </div>
     </Wrapper>
   );
 }
-const Wrapper = styled.button`
+const Wrapper = styled.div`
   .btn-back {
     left: 15rem;
   }

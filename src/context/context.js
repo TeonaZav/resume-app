@@ -14,7 +14,7 @@ const ResumeProvider = ({ children }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [dueDate, setDueDate] = useState(new Date());
   const [img, setImg] = useState("");
-
+  const [imgEmpty, setImgEmpty] = useState(false);
   return (
     <ResumeContext.Provider
       value={{
@@ -40,6 +40,8 @@ const ResumeProvider = ({ children }) => {
         setDueDate,
         img,
         setImg,
+        imgEmpty,
+        setImgEmpty,
       }}
     >
       {children}

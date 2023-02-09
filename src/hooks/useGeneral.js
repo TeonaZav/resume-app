@@ -17,16 +17,20 @@ const useGeneral = () => {
     let data = getLocalGenerals();
     if (data) {
       setGeneralsState(data);
-      setGeneralsState({
-        ...data,
-        image: base64toFile(data.image, "recovered.jpg"),
-      });
+      if (data.image) {
+        setGeneralsState({
+          ...data,
+          image: base64toFile(data.image, "recovered.jpg"),
+        });
+        setImg(base64toFile(data.image, "recovered.jpg"));
+      } else {
+        setGeneralsState(data);
+      }
       setFirstN(data.name);
       setLastN(data.surname);
       setEmailAd(data.email);
       setAboutG(data.about_me);
       setPhoneN(data.phone_number);
-      setImg(base64toFile(data.image, "recovered.jpg"));
     }
   }, []);
 

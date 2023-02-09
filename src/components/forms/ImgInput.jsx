@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { FormLabel, FormErrorMessage } from "@chakra-ui/form-control";
 import { useField, useFormikContext } from "formik";
 import useGeneral from "../../hooks/useGeneral";
+import { ResumeContext } from "../../context/context";
 const ImgInput = ({ ...props }) => {
   const [meta] = useField(props);
-  const [blur, setBlur] = useState(false);
   const { generalsState, handleImage } = useGeneral();
   const { setFieldValue } = useFormikContext();
+  const { img, imgEmpty } = useContext(ResumeContext);
   useEffect(() => {
     console.log(`File ${generalsState.image?.name} has been set.`);
   }, [generalsState.image]);
@@ -15,9 +16,7 @@ const ImgInput = ({ ...props }) => {
     <Wrapper>
       <div className="image-upload-ct">
         <FormLabel
-          className={`label  ${
-            meta.touched && blur && meta.error.image ? "label-error" : null
-          }`}
+          className={`label  ${!img && imgEmpty ? "label-error" : null}`}
           htmlFor="avatar"
         >
           პირადი ფოტოს ატვირთვა
@@ -33,17 +32,16 @@ const ImgInput = ({ ...props }) => {
             onChange={(e) => {
               handleImage(e);
               setFieldValue("image", e.target.files[0]);
-              setBlur(true);
             }}
             accept="image/*"
           />
-          {meta.touched && blur && meta.error.image ? (
+          {!img && imgEmpty ? (
             <img
               src={process.env.PUBLIC_URL + "/assets/error-icon.png"}
               className="error-icon"
               alt="error icon"
             />
-          ) : meta.touched && !meta.error.image && meta.value.image ? (
+          ) : img ? (
             <img
               src={process.env.PUBLIC_URL + "/assets/success-icon.png"}
               className="success-icon"
@@ -106,14 +104,16 @@ const Wrapper = styled.div`
   .error-icon,
   .success-icon {
     position: absolute;
-    top: 0;
-    transform: translateY(-25%);
+    top: 10%;
   }
   .success-icon {
-    right: 20rem;
+    right: -3rem;
   }
   .error-icon {
     right: -3rem;
+  }
+  .label {
+    margin-bottom: 0;
   }
 `;
 export default ImgInput;

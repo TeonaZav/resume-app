@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, VStack } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
@@ -11,7 +11,22 @@ import useGeneral from "../../hooks/useGeneral";
 import { schemaGeneral } from "../schemas/schema";
 import ImgInput from "./ImgInput";
 import BtnGoHome from "../BtnGoHome";
+import { ResumeContext } from "../../context/context";
 const GeneralForm = () => {
+  const {
+    firstN,
+    lastN,
+    emailAd,
+    aboutG,
+    phoneN,
+    positionN,
+    employerN,
+    descr,
+    startDate,
+    dueDate,
+    img,
+    setImgEmpty,
+  } = useContext(ResumeContext);
   const {
     generalsState,
     handleFirstName,
@@ -32,35 +47,36 @@ const GeneralForm = () => {
         <Formik
           enableReinitialize
           initialValues={{
-            name: "",
-            surname: "",
-            email: "",
-            about_me: "",
-            phone_number: "",
-            image: "",
+            name: firstN,
+            surname: lastN,
+            email: emailAd,
+            about_me: aboutG,
+            phone_number: phoneN,
+            image: img,
           }}
           validationSchema={schemaGeneral}
           onSubmit={(values) => {
             const vals = { ...values };
             console.log(vals);
-            localStorage.setItem(
-              "generals",
-              JSON.stringify({
-                name: vals.name,
-                surname: vals.surname,
-                email: vals.email,
-                about_me: vals.about_me,
-                phone_number: vals.phone_number,
-                image: vals.image,
-              })
-            );
+            // localStorage.setItem(
+            //   "generals",
+            //   JSON.stringify({
+            //     name: vals.name,
+            //     surname: vals.surname,
+            //     email: vals.email,
+            //     about_me: vals.about_me,
+            //     phone_number: vals.phone_number,
+            //     image: vals.image,
+            //   })
+            // );
             window.setTimeout(() => {
               navigate("/experience");
             }, 2000);
           }}
-          onChange={(values) => {
+          onClick={(values) => {
             const vals = { ...values };
             console.log(vals);
+            console.log("hii");
           }}
         >
           <VStack as={Form} className="form">
@@ -126,7 +142,11 @@ const GeneralForm = () => {
               />
             </div>
 
-            <Button type="submit" className="btn submit-btn">
+            <Button
+              type="submit"
+              className="btn submit-btn"
+              onClick={(e) => !img && setImgEmpty(true)}
+            >
               ᲨᲔᲛᲓᲔᲒᲘ
             </Button>
           </VStack>
