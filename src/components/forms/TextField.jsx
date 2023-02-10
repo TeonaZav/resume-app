@@ -11,7 +11,7 @@ import { Input } from "@chakra-ui/input";
 import { Field, useField } from "formik";
 const TextField = ({ hint, size, label, changedVal, ...props }) => {
   const [field, meta, helpers] = useField(props);
-  const { setValue } = helpers;
+  const { setValue, setTouched } = helpers;
   const { generalsState } = useGeneral();
   const [blurControl, setBlurControl] = useState(false);
   return (
@@ -35,47 +35,28 @@ const TextField = ({ hint, size, label, changedVal, ...props }) => {
           as={Field}
           {...field}
           {...props}
-          onBlur={() => {
-            setValue(changedVal);
-            setBlurControl(true);
-          }}
           onKeyUp={() => {
             setValue(changedVal);
           }}
           className={`${
             size === "sm" ? "box-sm" : size === "lg" ? "box-lg" : "box-xlg"
           } input-field  ${
-            meta.touched && meta.error && !blurControl
-              ? "is-invalid"
-              : !meta.touched && meta.error && blurControl
+            meta.touched && meta.error
               ? "is-invalid"
               : meta.touched && !meta.error && meta.value
-              ? "valid"
-              : !meta.touched && !meta.error && meta.value && blurControl
               ? "valid"
               : null
           }`}
         />
         {console.log(meta)}
+        {console.log(blurControl)}
         {meta.touched && meta.error ? (
           <img
             src={process.env.PUBLIC_URL + "/assets/error-icon.png"}
             className="error-icon"
             alt="error icon"
           />
-        ) : !meta.touched && meta.error && blurControl ? (
-          <img
-            src={process.env.PUBLIC_URL + "/assets/error-icon.png"}
-            className="error-icon"
-            alt="error icon"
-          />
         ) : meta.touched && !meta.error && meta.value ? (
-          <img
-            src={process.env.PUBLIC_URL + "/assets/success-icon.png"}
-            className="success-icon"
-            alt="success icon"
-          />
-        ) : !meta.touched && !meta.error && meta.value && blurControl ? (
           <img
             src={process.env.PUBLIC_URL + "/assets/success-icon.png"}
             className="success-icon"

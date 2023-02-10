@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Button, VStack } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import styled from "styled-components";
@@ -37,6 +37,7 @@ const ExperienceForm = () => {
     img,
     setImgEmpty,
   } = useContext(ResumeContext);
+
   return (
     <Wrapper>
       <div className="form-ct">

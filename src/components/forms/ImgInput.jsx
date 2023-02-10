@@ -48,8 +48,6 @@ const ImgInput = ({ ...props }) => {
               alt="success icon"
             />
           ) : null}
-          {console.log(meta)}
-          <FormErrorMessage className="error">{meta.error}</FormErrorMessage>
         </div>
       </div>
     </Wrapper>

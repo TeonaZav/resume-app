@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, VStack } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
@@ -88,7 +88,6 @@ const GeneralForm = () => {
                 placeholder="ანზორ"
                 autoComplete="off"
                 label="სახელი"
-                type="text"
                 hint="მინიმუმ 2 ასო, ქართული ასოები"
                 size="sm"
                 changedVal={generalsState.name}
