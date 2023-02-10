@@ -9,7 +9,7 @@ import DateInput from "./DateInput";
 import useExperience from "../../hooks/useExperience";
 import BtnGoBack from "../BtnGoBack";
 import { ResumeContext } from "../../context/context";
-const ExperienceF = () => {
+const ExperienceF = ({ id, position, employer }) => {
   const {
     experienceState,
     handlePosition,
@@ -18,39 +18,29 @@ const ExperienceF = () => {
     handleStartDate,
     handleDueDate,
   } = useExperience();
-  console.log(experienceState);
-  const {
-    setPositionN,
-    setEmployerN,
-    setDescr,
-    setStartDate,
-    setDueDate,
-    positionN,
-    employerN,
-    descr,
-    startDate,
-    dueDate,
-    img,
-    setImgEmpty,
-  } = useContext(ResumeContext);
+
+  const { exp, setExp, img, setImgEmpty } = useContext(ResumeContext);
   return (
     <Wrapper>
       <Formik
         enableReinitialize
-        initialValues={{
-          position: "",
-          employer: "",
-          start_date: "",
-          due_date: "",
-          description: "",
-        }}
+        initialValues={[
+          {
+            id: id,
+            position: position,
+            employer: employer,
+            start_date: "",
+            due_date: "",
+            description: "",
+          },
+        ]}
         validationSchema={schemaExperience}
         onSubmit={(values) => {
           const vals = { ...values };
           console.log(vals);
         }}
       >
-        <VStack as={Form} className="form">
+        <VStack as={Form} className="form" id={id}>
           <div className="info-part1">
             <TextField
               onChange={(e) => handlePosition(e)}
@@ -89,6 +79,7 @@ const ExperienceF = () => {
               selected={experienceState.start_date}
               minDate={new Date(5, 13, 1900)}
               maxDate={experienceState.due_date}
+              id={id}
             />
             <DateInput
               name="due-date"
@@ -99,6 +90,7 @@ const ExperienceF = () => {
               value={experienceState.due_date}
               selected={experienceState.due_date}
               minDate={experienceState.start_date}
+              id={id}
             />
           </div>
           <div className="info-part2">

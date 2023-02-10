@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ResumeSection from "./SectionExperience";
 import { convertDataToString } from "../utils/HelperFunctions";
 import { ResumeContext } from "../context/context";
-
+import useExperience from "../hooks/useExperience";
 const Resume = () => {
   const {
     firstN,
@@ -18,7 +18,7 @@ const Resume = () => {
     startDate,
     dueDate,
   } = useContext(ResumeContext);
-
+  const { experienceState } = useExperience();
   console.log(img);
   const [preview, setPreview] = useState(null);
 
@@ -81,14 +81,20 @@ const Resume = () => {
             />
           </div>
         </section>
-        <ResumeSection
-          position={positionN}
-          employer={employerN}
-          workStart={convertDataToString(startDate, "sv")}
-          workEnd={convertDataToString(dueDate, "sv")}
-          text={descr}
-        />
-        {console.log(convertDataToString(startDate, "en-ZA"))}
+
+        {/* {experienceState.length > 0 &&
+          experienceState.map((el) => {
+            return (
+              <ResumeSection
+                position={el.position}
+                employer={el.employer}
+                workStart={convertDataToString(el.start_date, "sv")}
+                workEnd={convertDataToString(el.due_date, "sv")}
+                text={descr}
+              />
+            );
+          })} */}
+        {/* {console.log(convertDataToString(startDate, "en-ZA"))} */}
         <img
           src={process.env.PUBLIC_URL + "/assets/resume-logo.png"}
           alt="profile"

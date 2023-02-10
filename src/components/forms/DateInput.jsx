@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import styled from "styled-components";
 
 const DateInput = ({
+  id,
   name,
   label,
   value,
@@ -95,7 +96,7 @@ const DateInput = ({
           selected={value}
           minDate={minDate}
           maxDate={maxDate}
-          onChange={(date) => handleDate(date)}
+          onChange={(date) => handleDate(date, id)}
           className="input box-sm"
           calendarClassName="rasta-stripes"
           dateFormat="MM/dd/yyyy"

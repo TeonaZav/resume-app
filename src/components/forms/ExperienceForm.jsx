@@ -1,51 +1,38 @@
-import React, { useContext, useState } from "react";
-import { Button, VStack } from "@chakra-ui/react";
+import React, { useContext, useEffect, useState } from "react";
+import { Button } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import styled from "styled-components";
-import TextField from "./TextField";
-import TextArea from "./TextArea";
-import DateInput from "./DateInput";
 import FormHeader from "./FormHeader";
-import { schemaExperience } from "../schemas/schema";
 import useExperience from "../../hooks/useExperience";
 import { ResumeContext } from "../../context/context";
 
 import BtnGoHome from "../BtnGoHome";
 import ExperienceF from "./ExperiencesF";
 const ExperienceForm = () => {
-  const {
-    experienceState,
-    handlePosition,
-    handleEmployer,
-    handleDescription,
-    handleStartDate,
-    handleDueDate,
-    addExpHandler,
-  } = useExperience();
-  console.log(experienceState);
-  const {
-    setPositionN,
-    setEmployerN,
-    setDescr,
-    setStartDate,
-    setDueDate,
-    positionN,
-    employerN,
-    descr,
-    startDate,
-    dueDate,
-    img,
-    setImgEmpty,
-  } = useContext(ResumeContext);
+  const { addExpHandler } = useExperience();
 
+  const { exp } = useContext(ResumeContext);
+
+  useEffect(() => {
+    console.log(exp);
+  }, [exp]);
   return (
     <Wrapper>
       <div className="form-ct">
         <BtnGoHome />
         <FormHeader heading={"ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ"} pageN={"2 / 3"} />
 
-        {experienceState.map((exp) => {
-          return <ExperienceF />;
+        {exp.map((el) => {
+          return (
+            <ExperienceF
+              key={el.id}
+              id={el.id}
+              position={el.positionN}
+              employer={el.employerN}
+              start_date={el.startDate}
+              due_date={el.dueDate}
+            />
+          );
         })}
         <button className="btn btn-add" onClick={addExpHandler}>
           მეტი გამოცდილების დამატება

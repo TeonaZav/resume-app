@@ -3,6 +3,7 @@ import { ResumeContext } from "../context/context";
 const useExperience = () => {
   const [experienceState, setExperienceState] = useState([
     {
+      id: 0,
       position: "",
       employer: "",
       description: "",
@@ -10,6 +11,7 @@ const useExperience = () => {
       due_date: null,
     },
     {
+      id: 1,
       position: "",
       employer: "",
       description: "",
@@ -18,72 +20,127 @@ const useExperience = () => {
     },
   ]);
 
-  const {
-    setPositionN,
-    setEmployerN,
-    setDescr,
-    setStartDate,
-    setDueDate,
-    positionN,
-    employerN,
-    descr,
-    startDate,
-    dueDate,
-    img,
-    setImgEmpty,
-  } = useContext(ResumeContext);
+  const { setExp } = useContext(ResumeContext);
   /*================
  Handle Position Change
   ================== */
   const handlePosition = (e) => {
     const position = e.target.value;
-    setExperienceState({
-      ...experienceState,
-      position,
+    const formId = e.target.closest("form").id;
+    setExperienceState((prevExperiences) => {
+      return prevExperiences.map((el) => {
+        if (el.id == formId) {
+          return { ...el, position: position };
+        } else {
+          return el;
+        }
+      });
     });
-    setPositionN(position);
+    setExp((prevExp) => {
+      return prevExp.map((el) => {
+        if (el.id == formId) {
+          return { ...el, positionN: position };
+        } else {
+          return el;
+        }
+      });
+    });
   };
   /*================
  Handle Employer Change
   ================== */
   const handleEmployer = (e) => {
     const employer = e.target.value;
-    setExperienceState({
-      ...experienceState,
-      employer,
+    const formId = e.target.closest("form").id;
+    setExperienceState((prevExperiences) => {
+      return prevExperiences.map((el) => {
+        if (el.id == formId) {
+          return { ...el, employer: employer };
+        } else {
+          return el;
+        }
+      });
     });
-    setEmployerN(employer);
+    setExp((prevExp) => {
+      return prevExp.map((el) => {
+        if (el.id == formId) {
+          return { ...el, employerN: employer };
+        } else {
+          return el;
+        }
+      });
+    });
   };
   /*================
  Handle Description Change
   ================== */
   const handleDescription = (e) => {
     const description = e.target.value;
-    setExperienceState({
-      ...experienceState,
-      description,
+    const formId = e.target.closest("form").id;
+    setExperienceState((prevExperiences) => {
+      return prevExperiences.map((el) => {
+        if (el.id == formId) {
+          return { ...el, description: description };
+        } else {
+          return el;
+        }
+      });
     });
-    setDescr(description);
+    setExp((prevExp) => {
+      return prevExp.map((el) => {
+        if (el.id == formId) {
+          return { ...el, descr: description };
+        } else {
+          return el;
+        }
+      });
+    });
   };
   /*================
  Handle Start Date Change
   ================== */
-  const handleStartDate = (date) => {
-    setExperienceState({
-      ...experienceState,
-      start_date: date,
+  const handleStartDate = (date, id) => {
+    setExperienceState((prevExperiences) => {
+      return prevExperiences.map((el) => {
+        if (el.id == id) {
+          return { ...el, start_date: date };
+        } else {
+          return el;
+        }
+      });
     });
-    setStartDate(date);
+    setExp((prevExp) => {
+      return prevExp.map((el) => {
+        if (el.id == id) {
+          return { ...el, startDate: date };
+        } else {
+          return el;
+        }
+      });
+    });
   };
   /*================
  Handle Due Date Change
   ================== */
-  const handleDueDate = (date) => {
-    setExperienceState({
-      ...experienceState,
-      due_date: date,
+  const handleDueDate = (date, id) => {
+    setExperienceState((prevExperiences) => {
+      return prevExperiences.map((el) => {
+        if (el.id == id) {
+          return { ...el, due_date: date };
+        } else {
+          return el;
+        }
+      });
     });
-    setDueDate(date);
+    setExp((prevExp) => {
+      return prevExp.map((el) => {
+        if (el.id == id) {
+          return { ...el, dueDate: date };
+        } else {
+          return el;
+        }
+      });
+    });
   };
   /*================
  

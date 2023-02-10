@@ -8,13 +8,27 @@ const ResumeProvider = ({ children }) => {
   const [emailAd, setEmailAd] = useState("");
   const [aboutG, setAboutG] = useState("");
   const [phoneN, setPhoneN] = useState("");
-  const [positionN, setPositionN] = useState("");
-  const [employerN, setEmployerN] = useState("");
-  const [descr, setDescr] = useState("");
-  const [startDate, setStartDate] = useState(new Date());
-  const [dueDate, setDueDate] = useState(new Date());
+
   const [img, setImg] = useState("");
   const [imgEmpty, setImgEmpty] = useState(false);
+  const [exp, setExp] = useState([
+    {
+      id: 0,
+      positionN: "",
+      employerN: "",
+      descr: "",
+      startDate: new Date(),
+      dueDate: new Date(),
+    },
+    {
+      id: 1,
+      positionN: "",
+      employerN: "",
+      descr: "",
+      startDate: new Date(),
+      dueDate: new Date(),
+    },
+  ]);
   return (
     <ResumeContext.Provider
       value={{
@@ -28,20 +42,12 @@ const ResumeProvider = ({ children }) => {
         setAboutG,
         phoneN,
         setPhoneN,
-        positionN,
-        setPositionN,
-        employerN,
-        setEmployerN,
-        descr,
-        setDescr,
-        startDate,
-        setStartDate,
-        dueDate,
-        setDueDate,
         img,
         setImg,
         imgEmpty,
         setImgEmpty,
+        exp,
+        setExp,
       }}
     >
       {children}
