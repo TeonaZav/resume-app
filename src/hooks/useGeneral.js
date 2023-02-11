@@ -11,8 +11,28 @@ const useGeneral = () => {
     phone_number: "",
     image: "",
   });
-  const { setFirstN, setLastN, setEmailAd, setAboutG, setPhoneN, setImg } =
-    useContext(ResumeContext);
+  const {
+    setFirstN,
+    setLastN,
+    setEmailAd,
+    setAboutG,
+    setPhoneN,
+    setImg,
+    img,
+
+    imgEmpty,
+    setImgEmpty,
+    exp,
+    setExp,
+    nameInvalid,
+    setNameInvalid,
+    lastnameInvalid,
+    setLastnameInvalid,
+    emailInvalid,
+    setEmailInvalid,
+    telInvalid,
+    setTelInvalid,
+  } = useContext(ResumeContext);
   useEffect(() => {
     let data = getLocalGenerals();
     if (data) {
@@ -132,6 +152,31 @@ const useGeneral = () => {
       saveLocal("generals", "image", base64);
     });
   };
+  const nextHandlerGenerals = (step, setStep) => {
+    !img && setImgEmpty(true);
+    document.querySelectorAll(".input-field").forEach((el) => {
+      el.focus();
+    });
+    document.querySelectorAll(".input-field").forEach((el) => {
+      el.blur();
+    });
+    if (
+      (nameInvalid || lastnameInvalid || emailInvalid || telInvalid || !img) &&
+      step === 0
+    ) {
+      console.log(
+        "nameInvalid:" + nameInvalid,
+        "lastnameInvalid:" + lastnameInvalid,
+        "emailInvalid:" + emailInvalid,
+        "telInvalid:" + telInvalid
+      );
+      return;
+    } else {
+      window.setTimeout(() => {
+        setStep((s) => s + 1);
+      }, 2000);
+    }
+  };
   return {
     generalsState,
     handleFirstName,
@@ -140,6 +185,7 @@ const useGeneral = () => {
     handleAbout,
     handlePhone,
     handleImage,
+    nextHandlerGenerals,
   };
 };
 

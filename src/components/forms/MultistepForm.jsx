@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Button, VStack } from "@chakra-ui/react";
-import { Form, Formik } from "formik";
+import { Form, Formik, useFormikContext } from "formik";
 import styled from "styled-components";
 import TextField from "./TextField";
 import TextArea from "./TextArea";
@@ -20,6 +20,7 @@ export const MultistepForm = () => {
     handleEmail,
     handleAbout,
     handlePhone,
+    nextHandlerGenerals,
   } = useGeneral();
   const {
     experienceState,
@@ -32,7 +33,8 @@ export const MultistepForm = () => {
   } = useExperience();
   console.log(generalsState);
   const { exp } = useContext(ResumeContext);
-
+  const { setNameInvalid, setLastnameInvalid, setEmailInvalid, setTelInvalid } =
+    useContext(ResumeContext);
   return (
     <Wrapper>
       <div className="form-ct">
@@ -49,6 +51,7 @@ export const MultistepForm = () => {
                 hint="მინიმუმ 2 ასო, ქართული ასოები"
                 size="sm"
                 changedVal={generalsState.name}
+                setInvalid={setNameInvalid}
               />
               <TextField
                 onChange={(e) => handleLastName(e)}
@@ -61,6 +64,7 @@ export const MultistepForm = () => {
                 hint="მინიმუმ 2 ასო, ქართული ასოები"
                 size="sm"
                 changedVal={generalsState.surname}
+                setInvalid={setLastnameInvalid}
               />
             </div>
             <ImgInput />
@@ -84,6 +88,7 @@ export const MultistepForm = () => {
                 hint="უნდა მთავრდებოდეს @redberry.ge-ით"
                 size="lg"
                 changedVal={generalsState.email}
+                setInvalid={setEmailInvalid}
               />
               <TextField
                 onChange={(e) => handlePhone(e)}
@@ -96,6 +101,7 @@ export const MultistepForm = () => {
                 hint="უნდა აკმაყოფილებდეს ქართული მობილურის ნომრის ფორმატს"
                 size="lg"
                 changedVal={generalsState.phone_number}
+                setInvalid={setTelInvalid}
               />
             </div>
           </FormikStep>
@@ -186,22 +192,31 @@ export const FormikStep = ({ children }) => {
   return <>{children}</>;
 };
 export const Stepper = ({ children, ...props }) => {
-  const { firstN, lastN, emailAd, aboutG, phoneN, img, setImgEmpty } =
-    useContext(ResumeContext);
+  const {
+    firstN,
+    lastN,
+    emailAd,
+    aboutG,
+    phoneN,
+    img,
+    setImgEmpty,
+    nameInvalid,
+    lastnameInvalid,
+    emailInvalid,
+    telInvalid,
+  } = useContext(ResumeContext);
+  const { nextHandlerGenerals } = useGeneral();
   const arrChildren = React.Children.toArray(children);
   const [step, setStep] = useState(0);
   const currentCh = arrChildren[step];
-  const nextHandler = () => {
-    !img && setImgEmpty(true);
-    window.setTimeout(() => {
-      setStep((s) => s + 1);
-    }, 2000);
-  };
+
   return (
     <Formik
       {...props}
       enableReinitialize
       validationSchema={schema}
+      validateOnChange={true}
+      validateOnBlur={true}
       initialValues={{
         name: firstN,
         surname: lastN,
@@ -227,10 +242,12 @@ export const Stepper = ({ children, ...props }) => {
         window.setTimeout(() => {
           setStep((s) => s + 1);
         }, 2000);
+        console.log(helpers);
       }}
     >
       <VStack as={Form} className="form" autoComplete="off">
         <BtnGoHome />
+
         <FormHeader
           heading={
             step === 0
@@ -258,12 +275,12 @@ export const Stepper = ({ children, ...props }) => {
           <Button
             type="button"
             className="btn submit-btn"
-            onClick={nextHandler}
+            onClick={() => nextHandlerGenerals(step, setStep)}
           >
             ᲨᲔᲛᲓᲔᲒᲘ
           </Button>
         ) : step === 2 ? (
-          <Button type="button" className="btn submit-btn">
+          <Button type="submit" className="btn submit-btn">
             ᲓᲐᲡᲠᲣᲚᲔᲑᲐ
           </Button>
         ) : null}

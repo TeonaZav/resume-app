@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
+import { ResumeContext } from "../../context/context";
 import {
   FormControl,
   FormErrorMessage,
@@ -9,11 +10,12 @@ import {
 import useGeneral from "../../hooks/useGeneral";
 import { Input } from "@chakra-ui/input";
 import { Field, useField } from "formik";
-const TextField = ({ hint, size, label, changedVal, ...props }) => {
+const TextField = ({ hint, size, setInvalid, label, changedVal, ...props }) => {
   const [field, meta, helpers] = useField(props);
   const { setValue, setTouched } = helpers;
   const { generalsState } = useGeneral();
   const [blurControl, setBlurControl] = useState(false);
+
   return (
     <Wrapper>
       <FormControl
@@ -48,6 +50,7 @@ const TextField = ({ hint, size, label, changedVal, ...props }) => {
               : null
           }`}
         />
+        {setInvalid(meta.error)}
         {console.log(meta)}
         {console.log(blurControl)}
         {meta.touched && meta.error ? (
