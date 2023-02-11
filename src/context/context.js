@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-
+import axios from "axios";
 const ResumeContext = React.createContext();
-
+const URL = "https://resume.redberryinternship.ge/api";
 const ResumeProvider = ({ children }) => {
   const [firstN, setFirstN] = useState("");
   const [lastN, setLastN] = useState("");
@@ -27,6 +27,8 @@ const ResumeProvider = ({ children }) => {
       dueDate: null,
     },
   ]);
+  //degrees data
+  const [degrees, setDegrees] = useState([]);
   //errors
   const [nameInvalid, setNameInvalid] = useState(undefined);
   const [lastnameInvalid, setLastnameInvalid] = useState(undefined);
@@ -42,8 +44,20 @@ const ResumeProvider = ({ children }) => {
     );
   }, [nameInvalid, lastnameInvalid, emailInvalid, telInvalid]);
   useEffect(() => {
-    console.log(exp);
+    getDegrees();
   }, []);
+  console.log(degrees);
+  //fetch degrees data
+  const getDegrees = async () => {
+    const response = await axios(`${URL}/degrees`).catch((err) =>
+      console.log(err)
+    );
+    if (response) {
+      setDegrees(response.data);
+    } else {
+      console.log("something went wrong");
+    }
+  };
   return (
     <ResumeContext.Provider
       value={{
