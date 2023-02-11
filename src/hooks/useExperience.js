@@ -252,7 +252,7 @@ const useExperience = () => {
     setExperienceState((experiences) => [
       ...experiences,
       {
-        id: experienceState.length + 1,
+        id: experienceState.length,
         position: "",
         employer: "",
         description: "",
@@ -262,7 +262,7 @@ const useExperience = () => {
     ]);
     const arr = JSON.parse(localStorage.getItem("experiences"));
     arr.push({
-      id: experienceState.length + 1,
+      id: experienceState.length,
       position: "",
       employer: "",
       description: "",
