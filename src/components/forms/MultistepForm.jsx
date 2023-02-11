@@ -109,8 +109,8 @@ export const MultistepForm = () => {
               experienceState.length > 0 &&
               experienceState.map((el, index) => {
                 return (
-                  <div key={index} id={index}>
-                    <div className="info-part1">
+                  <div key={index} id={index} className="form">
+                    <div className="exp-part1">
                       <TextField
                         onChange={(e) => handlePosition(e, index)}
                         value={el.position}
@@ -139,7 +139,7 @@ export const MultistepForm = () => {
                         id={index}
                       />
                     </div>
-                    <div className="info-part3">
+                    <div className="exp-part2">
                       <DateInput
                         name={`experiences.${index}.start_date`}
                         label="დაწყების რიცხვი"
@@ -164,7 +164,7 @@ export const MultistepForm = () => {
                         id={index}
                       />
                     </div>
-                    <div className="info-part2">
+                    <div className="exp-part3">
                       <TextArea
                         onChange={(e) => handleDescription(e, index)}
                         value={el.description}
@@ -289,11 +289,11 @@ const Wrapper = styled.div`
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    height: calc(100% - 8.8rem);
     width: 79.8rem;
     gap: 4.6rem;
-    padding-top: 6.9rem;
+    margin-bottom: 4.5rem;
   }
+
   .info-part1 {
     width: 100%;
     display: flex;
@@ -322,36 +322,22 @@ const Wrapper = styled.div`
   .label.label-error {
     color: var(--error-color);
   }
-  .form {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    min-height: 67.2rem;
-    width: 79.8rem;
-    gap: 4.6rem;
-    padding-top: 6.9rem;
-    border-bottom: 1px solid #c1c1c1;
-  }
 
-  .info-part1,
-  .info-part2,
-  .info-part3 {
+  .exp-part1 {
     width: 100%;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-  .info-part1 {
     flex-direction: column;
-    justify-content: space-between;
     gap: 3.4rem;
   }
-  .info-part2 {
+  .exp-part3 {
+    width: 100%;
+    display: flex;
     flex-direction: column;
     gap: 2.5rem;
   }
-  .info-part3 {
+  .exp-part2 {
+    width: 100%;
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
   }

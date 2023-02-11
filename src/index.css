@@ -103,6 +103,7 @@ body {
   background-color: #62a1eb;
   padding: 1.4rem 2.25rem;
   color: #ffffff;
+  align-self: flex-start;
 }
 .resume-section-title {
   font-size: 1.8rem;
