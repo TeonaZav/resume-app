@@ -1,9 +1,11 @@
+import React, { useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp, faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { getMonth } from "date-fns";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styled from "styled-components";
+import { ResumeContext } from "../../context/context";
 
 const DateInput = ({
   id,
@@ -29,7 +31,7 @@ const DateInput = ({
     "November",
     "December",
   ];
-
+  const { currentEpxId, setCurrentExpId } = useContext(ResumeContext);
   return (
     <Wrapper>
       <div className="date-wrap ">

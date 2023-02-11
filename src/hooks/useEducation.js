@@ -2,17 +2,11 @@ import { useState, useContext, useEffect } from "react";
 import { ResumeContext } from "../context/context";
 import { dateIsValid } from "../utils/HelperFunctions";
 const useEducation = () => {
-  const { setEdu } = useContext(ResumeContext);
+  const { setEdu, setCurrentEduId } = useContext(ResumeContext);
+
   const [educationsState, setEducationsState] = useState([
     {
       id: 0,
-      institute: "",
-      degree_id: 0,
-      description: "",
-      due_date: null,
-    },
-    {
-      id: 1,
       institute: "",
       degree_id: 0,
       description: "",
@@ -64,6 +58,7 @@ const useEducation = () => {
         }
       });
     });
+    setCurrentEduId(index);
     setEdu((prevEdu) => {
       return prevEdu.map((el) => {
         if (el.id == index) {
@@ -97,6 +92,7 @@ const useEducation = () => {
         }
       });
     });
+    setCurrentEduId(index);
     setEdu((prevEdu) => {
       return prevEdu.map((el) => {
         if (el.id == index) {
@@ -129,6 +125,7 @@ const useEducation = () => {
         }
       });
     });
+
     setEdu((prevEdu) => {
       return prevEdu.map((el) => {
         if (el.id == id) {
@@ -138,6 +135,7 @@ const useEducation = () => {
         }
       });
     });
+    setCurrentEduId(id);
     let data = getLocalEducations();
     data &&
       data.forEach((element) => {
@@ -154,6 +152,7 @@ const useEducation = () => {
     setEducationsState((experiences) => [
       ...experiences,
       {
+        id: educationsState.length,
         position: "",
         employer: "",
         description: "",

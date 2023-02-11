@@ -1,6 +1,5 @@
 import { useState, useContext, useEffect } from "react";
 import { ResumeContext } from "../context/context";
-import { dateIsValid } from "../utils/HelperFunctions";
 const useExperience = () => {
   const [experienceState, setExperienceState] = useState([
     {
@@ -8,24 +7,53 @@ const useExperience = () => {
       position: "",
       employer: "",
       description: "",
-      start_date: null,
-      due_date: null,
-    },
-    {
-      id: 1,
-      position: "",
-      employer: "",
-      description: "",
-      start_date: null,
-      due_date: null,
+      start_date: new Date(),
+      due_date: new Date(),
     },
   ]);
-
-  const { setExp } = useContext(ResumeContext);
+  console.log(experienceState);
+  const { exp, setExp, setCurrentExpId } = useContext(ResumeContext);
   useEffect(() => {
     let data = getLocalExperiences();
+    console.log(experienceState);
+    console.log(exp);
     if (data) {
-      setExperienceState(data);
+      data.map((el) => {
+        return setExperienceState((prevExperiences) => {
+          return prevExperiences.map((experience) => {
+            if (el.id == experience.id) {
+              return {
+                ...experience,
+                start_date: new Date(el.start_date),
+                due_date: new Date(el.due_date),
+              };
+            } else {
+              return el;
+            }
+          });
+        });
+      });
+
+      setExperienceState(
+        data.map((el) => {
+          return {
+            ...el,
+            start_date: new Date(el.start_date),
+            due_date: new Date(el.due_date),
+          };
+        })
+      );
+      setExp(
+        data.map((el) => {
+          return {
+            id: el.id,
+            positionN: el.position,
+            descr: el.description,
+            startDate: new Date(el.start_date),
+            dueDate: new Date(el.due_date),
+          };
+        })
+      );
     }
   }, []);
 
@@ -47,8 +75,8 @@ const useExperience = () => {
             position: "",
             employer: "",
             description: "",
-            start_date: null,
-            due_date: null,
+            start_date: new Date(),
+            due_date: new Date(),
           },
         ];
     localStorage.setItem(name, JSON.stringify(existing));
@@ -76,6 +104,7 @@ const useExperience = () => {
         }
       });
     });
+    setCurrentExpId(index);
     let data = getLocalExperiences();
     data &&
       data.forEach((element) => {
@@ -109,6 +138,7 @@ const useExperience = () => {
         }
       });
     });
+    setCurrentExpId(index);
     let data = getLocalExperiences();
     data &&
       data.forEach((element) => {
@@ -141,6 +171,7 @@ const useExperience = () => {
         }
       });
     });
+    setCurrentExpId(index);
     let data = getLocalExperiences();
     data &&
       data.forEach((element) => {
@@ -172,8 +203,7 @@ const useExperience = () => {
         }
       });
     });
-
-    console.log(dateIsValid(date));
+    setCurrentExpId(id);
     let data = getLocalExperiences();
     data &&
       data.forEach((element) => {
@@ -205,6 +235,7 @@ const useExperience = () => {
         }
       });
     });
+    setCurrentExpId(id);
     let data = getLocalExperiences();
     data &&
       data.forEach((element) => {
@@ -221,7 +252,7 @@ const useExperience = () => {
     setExperienceState((experiences) => [
       ...experiences,
       {
-        id: experienceState.length,
+        id: experienceState.length + 1,
         position: "",
         employer: "",
         description: "",
@@ -229,6 +260,19 @@ const useExperience = () => {
         due_date: null,
       },
     ]);
+    const arr = JSON.parse(localStorage.getItem("experiences"));
+    arr.push({
+      id: experienceState.length + 1,
+      position: "",
+      employer: "",
+      description: "",
+      start_date: null,
+      due_date: null,
+    });
+
+    localStorage.setItem("experiences", JSON.stringify(arr));
+
+    console.log(experienceState);
 
     console.log(experienceState);
   };

@@ -42,8 +42,16 @@ export const MultistepForm = () => {
     addEduHandler,
   } = useEducation();
 
-  const { setNameInvalid, setLastnameInvalid, setEmailInvalid, setTelInvalid } =
-    useContext(ResumeContext);
+  const {
+    setNameInvalid,
+    setLastnameInvalid,
+    setEmailInvalid,
+    setTelInvalid,
+    currentEpxId,
+    setCurrentExpId,
+    currentEduId,
+    setCurrentEduId,
+  } = useContext(ResumeContext);
   return (
     <Wrapper>
       <div className="form-ct">
@@ -257,7 +265,8 @@ export const FormikStep = ({ children }) => {
 export const Stepper = ({ children, ...props }) => {
   const { firstN, lastN, emailAd, aboutG, phoneN, img, setImgEmpty } =
     useContext(ResumeContext);
-  const { exp } = useContext(ResumeContext);
+  const { exp, currentEpxId, setCurrentExpId, currentEduId, setCurrentEduId } =
+    useContext(ResumeContext);
   const { nextHandlerGenerals } = useGeneral();
   const arrChildren = React.Children.toArray(children);
   const [step, setStep] = useState(0);
@@ -279,11 +288,11 @@ export const Stepper = ({ children, ...props }) => {
         image: img,
         experiences: [
           {
-            position: exp[0].positionN,
-            employer: exp[0].employerN,
-            start_date: exp[0].startDate,
-            due_date: exp[0].dueDate,
-            description: exp[0].descr,
+            position: exp[currentEduId].positionN,
+            employer: exp[currentEduId].employerN,
+            start_date: exp[currentEduId].startDate,
+            due_date: exp[currentEduId].dueDate,
+            description: exp[currentEduId].descr,
           },
         ],
       }}

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useMenuState } from "@chakra-ui/react";
 const ResumeContext = React.createContext();
 const URL = "https://resume.redberryinternship.ge/api";
 const ResumeProvider = ({ children }) => {
@@ -10,6 +11,8 @@ const ResumeProvider = ({ children }) => {
   const [phoneN, setPhoneN] = useState("");
   const [img, setImg] = useState("");
   const [selectedDegree, setSelectedDegree] = useState(null);
+  const [currentEpxId, setCurrentExpId] = useState(0);
+  const [currentEduId, setCurrentEduId] = useState(0);
   useEffect(() => {
     console.log(selectedDegree);
   }, [selectedDegree]);
@@ -19,28 +22,14 @@ const ResumeProvider = ({ children }) => {
       positionN: "",
       employerN: "",
       descr: "",
-      startDate: null,
-      dueDate: null,
-    },
-    {
-      id: 1,
-      positionN: "",
-      employerN: "",
-      descr: "",
-      startDate: null,
-      dueDate: null,
+      startDate: new Date(),
+      dueDate: new Date(),
     },
   ]);
+  console.log(exp);
   const [edu, setEdu] = useState([
     {
       id: 0,
-      instituteN: "",
-      degreeID: 0,
-      descrEdu: "",
-      dueDateEdu: null,
-    },
-    {
-      id: 1,
       instituteN: "",
       degreeID: 0,
       descrEdu: "",
@@ -110,6 +99,10 @@ const ResumeProvider = ({ children }) => {
         degrees,
         selectedDegree,
         setSelectedDegree,
+        currentEpxId,
+        setCurrentExpId,
+        currentEduId,
+        setCurrentEduId,
       }}
     >
       {children}
