@@ -9,6 +9,10 @@ const ResumeProvider = ({ children }) => {
   const [aboutG, setAboutG] = useState("");
   const [phoneN, setPhoneN] = useState("");
   const [img, setImg] = useState("");
+  const [selectedDegree, setSelectedDegree] = useState(null);
+  useEffect(() => {
+    console.log(selectedDegree);
+  }, [selectedDegree]);
   const [exp, setExp] = useState([
     {
       id: 0,
@@ -62,7 +66,7 @@ const ResumeProvider = ({ children }) => {
   useEffect(() => {
     getDegrees();
   }, []);
-  console.log(degrees);
+
   //fetch degrees data
   const getDegrees = async () => {
     const response = await axios(`${URL}/degrees`).catch((err) =>
@@ -103,6 +107,9 @@ const ResumeProvider = ({ children }) => {
         setTelInvalid,
         edu,
         setEdu,
+        degrees,
+        selectedDegree,
+        setSelectedDegree,
       }}
     >
       {children}

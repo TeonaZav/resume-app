@@ -221,6 +221,7 @@ const useExperience = () => {
     setExperienceState((experiences) => [
       ...experiences,
       {
+        id: experienceState.length,
         position: "",
         employer: "",
         description: "",

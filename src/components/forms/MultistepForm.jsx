@@ -4,6 +4,7 @@ import { Form, Formik, useFormikContext } from "formik";
 import styled from "styled-components";
 import TextField from "./TextField";
 import TextArea from "./TextArea";
+import SelectComponent from "./SelectComponent";
 import FormHeader from "./FormHeader";
 import useGeneral from "../../hooks/useGeneral";
 import useExperience from "../../hooks/useExperience";
@@ -118,7 +119,7 @@ export const MultistepForm = () => {
               experienceState.length > 0 &&
               experienceState.map((el, index) => {
                 return (
-                  <div key={index} id={index} className="form">
+                  <div key={`${index}_experience`} id={index} className="form">
                     <div className="exp-part1">
                       <TextField
                         onChange={(e) => handlePosition(e, index)}
@@ -196,7 +197,7 @@ export const MultistepForm = () => {
             {educationsState &&
               educationsState.map((el, index) => {
                 return (
-                  <div key={index} id={index} className="form">
+                  <div key={`${index}_education`} id={index} className="form">
                     <div className="exp-part1">
                       <TextField
                         onChange={(e) => handleIstitute(e, index)}
@@ -213,6 +214,7 @@ export const MultistepForm = () => {
                       />
                     </div>
                     <div className="exp-part2">
+                      <SelectComponent size="sm" label="ხარისხი" />
                       <DateInput
                         name={`educations.${index}.due-date`}
                         label="დამთავრების რიცხვი"
