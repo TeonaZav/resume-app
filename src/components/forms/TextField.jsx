@@ -50,7 +50,7 @@ const TextField = ({ hint, size, setInvalid, label, changedVal, ...props }) => {
               : null
           }`}
         />
-        {setInvalid(meta.error)}
+        {setInvalid ? setInvalid(meta.error) : null}
         {console.log(meta)}
         {console.log(blurControl)}
         {meta.touched && meta.error ? (

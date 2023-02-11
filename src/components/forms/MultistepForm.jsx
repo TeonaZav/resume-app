@@ -20,7 +20,6 @@ export const MultistepForm = () => {
     handleEmail,
     handleAbout,
     handlePhone,
-    nextHandlerGenerals,
   } = useGeneral();
   const {
     experienceState,
@@ -32,7 +31,7 @@ export const MultistepForm = () => {
     addExpHandler,
   } = useExperience();
   console.log(generalsState);
-  const { exp } = useContext(ResumeContext);
+
   const { setNameInvalid, setLastnameInvalid, setEmailInvalid, setTelInvalid } =
     useContext(ResumeContext);
   return (
@@ -113,7 +112,7 @@ export const MultistepForm = () => {
                   <div key={index} id={index}>
                     <div className="info-part1">
                       <TextField
-                        onChange={(e) => handlePosition(e)}
+                        onChange={(e) => handlePosition(e, index)}
                         value={el.position}
                         name={`experiences.${index}.position`}
                         placeholder="დეველოპერი, დიზაინერი, ა.შ."
@@ -123,10 +122,11 @@ export const MultistepForm = () => {
                         hint="მინიმუმ 2 სიმბოლო"
                         size="lg"
                         changedVal={el.position}
+                        id={index}
                       />
 
                       <TextField
-                        onChange={(e) => handleEmployer(e)}
+                        onChange={(e) => handleEmployer(e, index)}
                         value={el.employer}
                         name={`experiences.${index}.employer`}
                         placeholder="დამსაქმებელი"
@@ -136,6 +136,7 @@ export const MultistepForm = () => {
                         hint="მინიმუმ 2 სიმბოლო"
                         size="lg"
                         changedVal={el.employer}
+                        id={index}
                       />
                     </div>
                     <div className="info-part3">
@@ -165,13 +166,14 @@ export const MultistepForm = () => {
                     </div>
                     <div className="info-part2">
                       <TextArea
-                        onChange={(e) => handleDescription(e)}
+                        onChange={(e) => handleDescription(e, index)}
                         value={el.description}
                         name={`experiences.${index}.description`}
                         placeholder="როლი თანამდებობაზე და ზოგადი აღწერა"
                         label="აღწერა"
                         size="lg"
                         changedVal={el.description}
+                        id={index}
                       />
                     </div>
                   </div>
@@ -192,19 +194,9 @@ export const FormikStep = ({ children }) => {
   return <>{children}</>;
 };
 export const Stepper = ({ children, ...props }) => {
-  const {
-    firstN,
-    lastN,
-    emailAd,
-    aboutG,
-    phoneN,
-    img,
-    setImgEmpty,
-    nameInvalid,
-    lastnameInvalid,
-    emailInvalid,
-    telInvalid,
-  } = useContext(ResumeContext);
+  const { firstN, lastN, emailAd, aboutG, phoneN, img, setImgEmpty } =
+    useContext(ResumeContext);
+  const { exp } = useContext(ResumeContext);
   const { nextHandlerGenerals } = useGeneral();
   const arrChildren = React.Children.toArray(children);
   const [step, setStep] = useState(0);
@@ -226,11 +218,11 @@ export const Stepper = ({ children, ...props }) => {
         image: img,
         experiences: [
           {
-            position: "",
-            employer: "",
-            start_date: "",
-            due_date: "",
-            description: "",
+            position: exp[0].positionN,
+            employer: exp[0].employerN,
+            start_date: exp[0].startDate,
+            due_date: exp[0].dueDate,
+            description: exp[0].descr,
           },
         ],
       }}

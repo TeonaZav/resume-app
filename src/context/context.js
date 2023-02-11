@@ -15,16 +15,16 @@ const ResumeProvider = ({ children }) => {
       positionN: "",
       employerN: "",
       descr: "",
-      startDate: new Date(),
-      dueDate: new Date(),
+      startDate: null,
+      dueDate: null,
     },
     {
       id: 1,
       positionN: "",
       employerN: "",
       descr: "",
-      startDate: new Date(),
-      dueDate: new Date(),
+      startDate: null,
+      dueDate: null,
     },
   ]);
   //errors
@@ -41,7 +41,9 @@ const ResumeProvider = ({ children }) => {
       "telInvalid:" + telInvalid
     );
   }, [nameInvalid, lastnameInvalid, emailInvalid, telInvalid]);
-
+  useEffect(() => {
+    console.log(exp);
+  }, []);
   return (
     <ResumeContext.Provider
       value={{

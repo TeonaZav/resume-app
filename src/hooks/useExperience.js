@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { ResumeContext } from "../context/context";
+import { dateIsValid } from "../utils/HelperFunctions";
 const useExperience = () => {
   const [experienceState, setExperienceState] = useState([
     {
@@ -21,15 +22,45 @@ const useExperience = () => {
   ]);
 
   const { setExp } = useContext(ResumeContext);
+  useEffect(() => {
+    let data = getLocalExperiences();
+    if (data) {
+      setExperienceState(data);
+    }
+  }, []);
+
+  const getLocalExperiences = () => {
+    saveLocal("experiences");
+    const experiences = localStorage.getItem("experiences");
+    if (experiences) {
+      console.log(JSON.parse(experiences));
+      return JSON.parse(experiences);
+    }
+  };
+  const saveLocal = (name) => {
+    let existing = localStorage.getItem(name);
+    existing = existing
+      ? JSON.parse(existing)
+      : [
+          {
+            id: 0,
+            position: "",
+            employer: "",
+            description: "",
+            start_date: null,
+            due_date: null,
+          },
+        ];
+    localStorage.setItem(name, JSON.stringify(existing));
+  };
   /*================
  Handle Position Change
   ================== */
-  const handlePosition = (e) => {
+  const handlePosition = (e, index) => {
     const position = e.target.value;
-    const formId = e.target.closest("form").id;
     setExperienceState((prevExperiences) => {
       return prevExperiences.map((el) => {
-        if (el.id == formId) {
+        if (el.id == index) {
           return { ...el, position: position };
         } else {
           return el;
@@ -38,23 +69,31 @@ const useExperience = () => {
     });
     setExp((prevExp) => {
       return prevExp.map((el) => {
-        if (el.id == formId) {
+        if (el.id == index) {
           return { ...el, positionN: position };
         } else {
           return el;
         }
       });
     });
+    let data = getLocalExperiences();
+    data &&
+      data.forEach((element) => {
+        if (element.id == index) {
+          element["position"] = position;
+          localStorage.setItem("experiences", JSON.stringify(data));
+        }
+      });
   };
+
   /*================
  Handle Employer Change
   ================== */
-  const handleEmployer = (e) => {
+  const handleEmployer = (e, index) => {
     const employer = e.target.value;
-    const formId = e.target.closest("form").id;
     setExperienceState((prevExperiences) => {
       return prevExperiences.map((el) => {
-        if (el.id == formId) {
+        if (el.id == index) {
           return { ...el, employer: employer };
         } else {
           return el;
@@ -63,23 +102,30 @@ const useExperience = () => {
     });
     setExp((prevExp) => {
       return prevExp.map((el) => {
-        if (el.id == formId) {
+        if (el.id == index) {
           return { ...el, employerN: employer };
         } else {
           return el;
         }
       });
     });
+    let data = getLocalExperiences();
+    data &&
+      data.forEach((element) => {
+        if (element.id == index) {
+          element["employer"] = employer;
+          localStorage.setItem("experiences", JSON.stringify(data));
+        }
+      });
   };
   /*================
  Handle Description Change
   ================== */
-  const handleDescription = (e) => {
+  const handleDescription = (e, index) => {
     const description = e.target.value;
-    const formId = e.target.closest("form").id;
     setExperienceState((prevExperiences) => {
       return prevExperiences.map((el) => {
-        if (el.id == formId) {
+        if (el.id == index) {
           return { ...el, description: description };
         } else {
           return el;
@@ -88,13 +134,21 @@ const useExperience = () => {
     });
     setExp((prevExp) => {
       return prevExp.map((el) => {
-        if (el.id == formId) {
+        if (el.id == index) {
           return { ...el, descr: description };
         } else {
           return el;
         }
       });
     });
+    let data = getLocalExperiences();
+    data &&
+      data.forEach((element) => {
+        if (element.id == index) {
+          element["description"] = description;
+          localStorage.setItem("experiences", JSON.stringify(data));
+        }
+      });
   };
   /*================
  Handle Start Date Change
@@ -118,6 +172,16 @@ const useExperience = () => {
         }
       });
     });
+
+    console.log(dateIsValid(date));
+    let data = getLocalExperiences();
+    data &&
+      data.forEach((element) => {
+        if (element.id == id) {
+          element["start_date"] = date;
+          localStorage.setItem("experiences", JSON.stringify(data));
+        }
+      });
   };
   /*================
  Handle Due Date Change
@@ -141,6 +205,14 @@ const useExperience = () => {
         }
       });
     });
+    let data = getLocalExperiences();
+    data &&
+      data.forEach((element) => {
+        if (element.id == id) {
+          element["due_date"] = date;
+          localStorage.setItem("experiences", JSON.stringify(data));
+        }
+      });
   };
   /*================
  

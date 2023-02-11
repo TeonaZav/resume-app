@@ -48,3 +48,7 @@ export const base64toFile = (dataurl, filename) => {
 export const convertDataToString = (date, countryISO) => {
   return date.toLocaleDateString(countryISO);
 };
+
+export const dateIsValid = (date) => {
+  return !Number.isNaN(new Date(date).getTime());
+};
