@@ -7,11 +7,13 @@ import TextArea from "./TextArea";
 import FormHeader from "./FormHeader";
 import useGeneral from "../../hooks/useGeneral";
 import useExperience from "../../hooks/useExperience";
+import useEducation from "../../hooks/useEducation";
 import { schema } from "../schemas/schema";
 import ImgInput from "./ImgInput";
 import BtnGoHome from "../BtnGoHome";
 import DateInput from "./DateInput";
 import { ResumeContext } from "../../context/context";
+
 export const MultistepForm = () => {
   const {
     generalsState,
@@ -30,7 +32,14 @@ export const MultistepForm = () => {
     handleDueDate,
     addExpHandler,
   } = useExperience();
-  console.log(generalsState);
+
+  const {
+    educationsState,
+    handleIstitute,
+    handleEduDescription,
+    handleDueDateEdu,
+    addEduHandler,
+  } = useEducation();
 
   const { setNameInvalid, setLastnameInvalid, setEmailInvalid, setTelInvalid } =
     useContext(ResumeContext);
@@ -183,7 +192,57 @@ export const MultistepForm = () => {
               მეტი გამოცდილების დამატება
             </button>
           </FormikStep>
-          <FormikStep></FormikStep>
+          <FormikStep>
+            {educationsState &&
+              educationsState.map((el, index) => {
+                return (
+                  <div key={index} id={index} className="form">
+                    <div className="exp-part1">
+                      <TextField
+                        onChange={(e) => handleIstitute(e, index)}
+                        value={el.institute}
+                        name={`educations.${index}.institute`}
+                        placeholder="სასწავლებელი"
+                        autoComplete="off"
+                        label="სასწავლებელი"
+                        type="text"
+                        hint="მინიმუმ 2 სიმბოლო"
+                        size="lg"
+                        changedVal={el.institute}
+                        id={index}
+                      />
+                    </div>
+                    <div className="exp-part2">
+                      <DateInput
+                        name={`educations.${index}.due-date`}
+                        label="დამთავრების რიცხვი"
+                        due_date={el.due_date}
+                        handleDate={handleDueDateEdu}
+                        value={el.due_date}
+                        selected={el.due_date}
+                        id={index}
+                      />
+                    </div>
+                    <div className="exp-part3">
+                      <TextArea
+                        onChange={(e) => handleEduDescription(e, index)}
+                        value={el.description}
+                        name={`educations.${index}.description`}
+                        placeholder="განათლების აღწერა"
+                        label="აღწერა"
+                        size="lg"
+                        changedVal={el.description}
+                        id={index}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+
+            <button className="btn btn-add" onClick={addEduHandler}>
+              სხვა სასწავლებლის დამატება
+            </button>
+          </FormikStep>
         </Stepper>
       </div>
     </Wrapper>

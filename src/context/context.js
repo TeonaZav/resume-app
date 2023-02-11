@@ -27,6 +27,22 @@ const ResumeProvider = ({ children }) => {
       dueDate: null,
     },
   ]);
+  const [edu, setEdu] = useState([
+    {
+      id: 0,
+      instituteN: "",
+      degreeID: 0,
+      descrEdu: "",
+      dueDateEdu: null,
+    },
+    {
+      id: 1,
+      instituteN: "",
+      degreeID: 0,
+      descrEdu: "",
+      dueDateEdu: null,
+    },
+  ]);
   //degrees data
   const [degrees, setDegrees] = useState([]);
   //errors
@@ -85,6 +101,8 @@ const ResumeProvider = ({ children }) => {
         setEmailInvalid,
         telInvalid,
         setTelInvalid,
+        edu,
+        setEdu,
       }}
     >
       {children}
