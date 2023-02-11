@@ -46,3 +46,50 @@ export const schemaExperience = Yup.object({
   employer: Yup.string().min(2, "მინიმუმ 2 სიმბოლო").required("სავალდებულო"),
   description: Yup.string().required("სავალდებულო"),
 });
+
+export const schema = Yup.object({
+  name: Yup.string()
+    .min(2, "მინიმუმ 2 ასო")
+    .matches(geoSymbols, "ქართული ასოები")
+    .required("სახელის მითითება სავალდებულოა!"),
+  surname: Yup.string()
+    .min(2, "მინიმუმ 2 ასო")
+    .matches(geoSymbols, "ქართული ასოები")
+    .required("გვარის მითითება სავალდებულოა!"),
+  about_me: Yup.string().notRequired(),
+  email: Yup.string()
+    .email("არასწორი ფორმატი")
+    .required("ელ. ფოსტის მითითება სავალდებულოა")
+    .test(
+      "",
+      "უნდა მთავრდებოდეს @redberry.ge-ით",
+      (val) => `${val}`.slice(-12) === "@redberry.ge"
+    ),
+  phone_number: Yup.string()
+    .test((val) => `${val}`.replace(/\s/g, "").slice(0, -8) === "+9955")
+    .test((val) =>
+      `${val}`
+        .replace(/\s/g, "")
+        .slice(-6)
+        .match(/^[0-9]+$/g)
+    )
+    .test((val) =>
+      mobileIndexes.includes(Number(`${val}`.replace(/\s/g, "").slice(5, 7)))
+    )
+    .min(17)
+    .max(17)
+    .required(""),
+
+  image: Yup.mixed().required("Required Field"),
+  experiences: Yup.array().of(
+    Yup.object().shape({
+      position: Yup.string()
+        .min(2, "მინიმუმ 2 სიმბოლო")
+        .required("სავალდებულო"),
+      employer: Yup.string()
+        .min(2, "მინიმუმ 2 სიმბოლო")
+        .required("სავალდებულო"),
+      description: Yup.string().required("სავალდებულო"),
+    })
+  ),
+});

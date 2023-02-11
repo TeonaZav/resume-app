@@ -7,7 +7,7 @@ import TextArea from "./TextArea";
 import FormHeader from "./FormHeader";
 import useGeneral from "../../hooks/useGeneral";
 import useExperience from "../../hooks/useExperience";
-import { schemaGeneral } from "../schemas/schema";
+import { schema } from "../schemas/schema";
 import ImgInput from "./ImgInput";
 import BtnGoHome from "../BtnGoHome";
 import DateInput from "./DateInput";
@@ -28,14 +28,16 @@ export const MultistepForm = () => {
     handleDescription,
     handleStartDate,
     handleDueDate,
+    addExpHandler,
   } = useExperience();
   console.log(generalsState);
+  const { exp } = useContext(ResumeContext);
 
   return (
     <Wrapper>
       <div className="form-ct">
         <Stepper>
-          <div className="page-1-3">
+          <FormikStep className="page-1-3" validationSchema={schema}>
             <div className="info-part1">
               <TextField
                 onChange={(e) => handleFirstName(e)}
@@ -96,78 +98,92 @@ export const MultistepForm = () => {
                 changedVal={generalsState.phone_number}
               />
             </div>
-          </div>
-          <div className="page-2-3">
-            {" "}
-            <div className="info-part1">
-              <TextField
-                onChange={(e) => handlePosition(e)}
-                value={experienceState.position}
-                name="position"
-                placeholder="დეველოპერი, დიზაინერი, ა.შ."
-                autoComplete="off"
-                label="თანამდებობა"
-                type="text"
-                hint="მინიმუმ 2 სიმბოლო"
-                size="lg"
-                changedVal={experienceState.position}
-              />
+          </FormikStep>
+          <FormikStep className="page-2-3 form-ct" validationSchema={schema}>
+            {experienceState &&
+              experienceState.length > 0 &&
+              experienceState.map((el, index) => {
+                return (
+                  <div key={index} id={index}>
+                    <div className="info-part1">
+                      <TextField
+                        onChange={(e) => handlePosition(e)}
+                        value={el.position}
+                        name={`experiences.${index}.position`}
+                        placeholder="დეველოპერი, დიზაინერი, ა.შ."
+                        autoComplete="off"
+                        label="თანამდებობა"
+                        type="text"
+                        hint="მინიმუმ 2 სიმბოლო"
+                        size="lg"
+                        changedVal={el.position}
+                      />
 
-              <TextField
-                onChange={(e) => handleEmployer(e)}
-                value={experienceState.employer}
-                name="employer"
-                placeholder="დამსაქმებელი"
-                autoComplete="off"
-                label="დამსაქმებელი"
-                type="text"
-                hint="მინიმუმ 2 სიმბოლო"
-                size="lg"
-                changedVal={experienceState.employer}
-              />
-            </div>
-            <div className="info-part3">
-              <DateInput
-                name="start_date"
-                label="დაწყების რიცხვი"
-                start_date={experienceState.start_date}
-                due_date={experienceState.due_date}
-                handleDate={handleStartDate}
-                value={experienceState.start_date}
-                selected={experienceState.start_date}
-                minDate={new Date(5, 13, 1900)}
-                maxDate={experienceState.due_date}
-                // id={id}
-              />
-              <DateInput
-                name="due-date"
-                label="დამთავრების რიცხვი"
-                start_date={experienceState.start_date}
-                due_date={experienceState.due_date}
-                handleDate={handleDueDate}
-                value={experienceState.due_date}
-                selected={experienceState.due_date}
-                minDate={experienceState.start_date}
-                // id={id}
-              />
-            </div>
-            <div className="info-part2">
-              <TextArea
-                onChange={(e) => handleDescription(e)}
-                value={experienceState.description}
-                name="description"
-                placeholder="როლი თანამდებობაზე და ზოგადი აღწერა"
-                label="აღწერა"
-                size="lg"
-                changedVal={experienceState.description}
-              />
-            </div>
-          </div>
-          <div></div>
+                      <TextField
+                        onChange={(e) => handleEmployer(e)}
+                        value={el.employer}
+                        name={`experiences.${index}.employer`}
+                        placeholder="დამსაქმებელი"
+                        autoComplete="off"
+                        label="დამსაქმებელი"
+                        type="text"
+                        hint="მინიმუმ 2 სიმბოლო"
+                        size="lg"
+                        changedVal={el.employer}
+                      />
+                    </div>
+                    <div className="info-part3">
+                      <DateInput
+                        name={`experiences.${index}.start_date`}
+                        label="დაწყების რიცხვი"
+                        start_date={el.start_date}
+                        due_date={el.due_date}
+                        handleDate={handleStartDate}
+                        value={el.start_date}
+                        selected={el.start_date}
+                        minDate={new Date(5, 13, 1900)}
+                        maxDate={el.due_date}
+                        id={index}
+                      />
+                      <DateInput
+                        name={`experiences.${index}.due-date`}
+                        label="დამთავრების რიცხვი"
+                        start_date={el.start_date}
+                        due_date={el.due_date}
+                        handleDate={handleDueDate}
+                        value={el.due_date}
+                        selected={el.due_date}
+                        minDate={el.start_date}
+                        id={index}
+                      />
+                    </div>
+                    <div className="info-part2">
+                      <TextArea
+                        onChange={(e) => handleDescription(e)}
+                        value={el.description}
+                        name={`experiences.${index}.description`}
+                        placeholder="როლი თანამდებობაზე და ზოგადი აღწერა"
+                        label="აღწერა"
+                        size="lg"
+                        changedVal={el.description}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            <button className="btn btn-add" onClick={addExpHandler}>
+              მეტი გამოცდილების დამატება
+            </button>
+          </FormikStep>
+          <FormikStep></FormikStep>
         </Stepper>
       </div>
     </Wrapper>
   );
+};
+
+export const FormikStep = ({ children }) => {
+  return <>{children}</>;
 };
 export const Stepper = ({ children, ...props }) => {
   const { firstN, lastN, emailAd, aboutG, phoneN, img, setImgEmpty } =
@@ -175,11 +191,17 @@ export const Stepper = ({ children, ...props }) => {
   const arrChildren = React.Children.toArray(children);
   const [step, setStep] = useState(0);
   const currentCh = arrChildren[step];
-
+  const nextHandler = () => {
+    !img && setImgEmpty(true);
+    window.setTimeout(() => {
+      setStep((s) => s + 1);
+    }, 2000);
+  };
   return (
     <Formik
       {...props}
       enableReinitialize
+      validationSchema={schema}
       initialValues={{
         name: firstN,
         surname: lastN,
@@ -189,8 +211,7 @@ export const Stepper = ({ children, ...props }) => {
         image: img,
         experiences: [
           {
-            id: 0,
-            position: "position",
+            position: "",
             employer: "",
             start_date: "",
             due_date: "",
@@ -198,9 +219,9 @@ export const Stepper = ({ children, ...props }) => {
           },
         ],
       }}
-      validationSchema={schemaGeneral}
       onSubmit={(values, helpers) => {
         const vals = { ...values };
+        alert(JSON.stringify(values, null, 2));
         console.log(vals);
         !img && setImgEmpty(true);
         window.setTimeout(() => {
@@ -233,9 +254,19 @@ export const Stepper = ({ children, ...props }) => {
           </Button>
         )}
 
-        <Button type="submit" className="btn submit-btn">
-          {step <= 1 ? "ᲨᲔᲛᲓᲔᲒᲘ" : "ᲓᲐᲡᲠᲣᲚᲔᲑᲐ"}
-        </Button>
+        {step <= 1 ? (
+          <Button
+            type="button"
+            className="btn submit-btn"
+            onClick={nextHandler}
+          >
+            ᲨᲔᲛᲓᲔᲒᲘ
+          </Button>
+        ) : step === 2 ? (
+          <Button type="button" className="btn submit-btn">
+            ᲓᲐᲡᲠᲣᲚᲔᲑᲐ
+          </Button>
+        ) : null}
       </VStack>
     </Formik>
   );

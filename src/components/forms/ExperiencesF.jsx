@@ -7,7 +7,7 @@ import TextField from "./TextField";
 import TextArea from "./TextArea";
 import DateInput from "./DateInput";
 import useExperience from "../../hooks/useExperience";
-import BtnGoBack from "../BtnGoBack";
+
 import { ResumeContext } from "../../context/context";
 const ExperienceF = ({ id, position, employer }) => {
   const {
@@ -105,7 +105,6 @@ const ExperienceF = ({ id, position, employer }) => {
             />
           </div>
 
-          <BtnGoBack />
           <Button type="submit" className="btn submit-btn">
             ᲨᲔᲛᲓᲔᲒᲘ
           </Button>
