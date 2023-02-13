@@ -1,10 +1,14 @@
+import React, { useContext } from "react";
 import styled from "styled-components";
 import BtnGoHome from "../BtnGoHome";
+import { ResumeContext } from "../../context/context";
+
 function FormHeader({ heading, pageN }) {
+  const { refreshForm } = useContext(ResumeContext);
   return (
     <Wrapper>
       <div>
-        <BtnGoHome />
+        <BtnGoHome onClick={refreshForm} />
         <h2>{heading}</h2>
         <p>{pageN}</p>
       </div>

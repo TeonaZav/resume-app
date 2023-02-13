@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { useMenuState } from "@chakra-ui/react";
 const ResumeContext = React.createContext();
 const URL = "https://resume.redberryinternship.ge/api";
@@ -19,8 +20,8 @@ const ResumeProvider = ({ children }) => {
   const [arrAdded, setArrAdded] = useState([]);
   const [arrEduId, setArrEduId] = useState([]);
   const [responseData, setResponseData] = useState({});
-  console.log(expError);
-
+  const [page, setPage] = useState(0);
+  const navigate = useNavigate();
   useEffect(() => {
     console.log(responseData);
   }, [responseData]);
@@ -96,6 +97,68 @@ const ResumeProvider = ({ children }) => {
       console.log("something went wrong");
     }
   };
+  const refreshForm = () => {
+    localStorage.clear();
+    localStorage.removeItem("generals");
+    localStorage.removeItem("addedExp");
+    localStorage.removeItem("arrInitEdu");
+    localStorage.removeItem("educations");
+    localStorage.removeItem("experiences");
+    localStorage.removeItem("arrInitEx");
+    setFirstN("");
+    setLastN("");
+    setEmailAd("");
+    setAboutG("");
+    setPhoneN("");
+    setImg("");
+    setImgBinary(null);
+    setSelected(null);
+    setSelectedDegree(null);
+    setCurrentExpId(0);
+    setCurrentEduId(0);
+    setExpError({});
+    setArrAdded([]);
+    setArrEduId([]);
+    setResponseData({});
+    setEduInitial([
+      {
+        institute: edu[0].instituteN,
+        degree_id: edu[0].degreeID,
+        description: edu[0].descrEdu,
+        due_date: edu[0].dueDateEdu,
+      },
+    ]);
+    setExp([
+      {
+        id: 0,
+        positionN: "",
+        employerN: "",
+        descr: "",
+        startDate: new Date(),
+        dueDate: new Date(),
+      },
+    ]);
+    setEdu([
+      {
+        id: 0,
+        instituteN: "",
+        degreeID: selected,
+        descrEdu: "",
+        dueDateEdu: new Date(),
+        degreeStatus: "",
+      },
+    ]);
+    setExpInitial([
+      {
+        position: exp[0].positionN,
+        employer: exp[0].employerN,
+        start_date: exp[0].startDate,
+        due_date: exp[0].dueDate,
+        description: exp[0].descr,
+      },
+    ]);
+    navigate("/");
+  };
   return (
     <ResumeContext.Provider
       value={{
@@ -150,6 +213,7 @@ const ResumeProvider = ({ children }) => {
         setSelected,
         responseData,
         setResponseData,
+        refreshForm,
       }}
     >
       {children}

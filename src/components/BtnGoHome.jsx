@@ -4,7 +4,7 @@ function BtnGoHome() {
   const navigate = useNavigate();
   return (
     <Wrapper>
-      <button type="button" className="btn" onClick={() => navigate("/")}>
+      <button type="button" className="btn">
         <img
           src={process.env.PUBLIC_URL + "/assets/icon-back.png"}
           alt="back-icon"

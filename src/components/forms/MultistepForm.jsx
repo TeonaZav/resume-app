@@ -326,17 +326,8 @@ export const Stepper = ({ children, ...props }) => {
       }}
       onSubmit={(values, actions) => {
         const vals = { ...values };
+        actions.resetForm();
         alert(JSON.stringify(values, null, 2));
-        // console.log({
-        //   name: values.name,
-        //   surname: values.surname,
-        //   email: values.email,
-        //   phone_number: values.phone_number,
-        //   experiences: values.experiences,
-        //   educations: values.educations,
-        //   image: imgBinary,
-        // });
-
         axios
           .post(
             "https://resume.redberryinternship.ge/api/cvs",
