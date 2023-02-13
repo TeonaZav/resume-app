@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import useExperience from "../hooks/useExperience";
-const SectionExperience = ({
+const ResumeSection = ({
   position,
   employer,
   text,
@@ -19,16 +19,18 @@ const SectionExperience = ({
           data.length == id ? "section-ct border-bottom" : "section-ct"
         }
       >
-        <div className="textbox">
-          <h4 className="resume-section-title">{heading}</h4>
-          <h6 className="position-title">
-            {position}, {employer}
-          </h6>
-          <p className="working-period">
-            {workStart} - {workEnd}
-          </p>
-          <p className="resume-text">{text}</p>
-        </div>
+        {position || employer || text || workStart || workEnd ? (
+          <div className="textbox">
+            <h4 className="resume-section-title">{heading}</h4>
+            <h6 className="position-title">
+              {position}, {employer}
+            </h6>
+            <p className="working-period">
+              {workStart} - {workEnd}
+            </p>
+            <p className="resume-text">{text}</p>
+          </div>
+        ) : null}
       </div>
     </Wrapper>
   );
@@ -54,4 +56,4 @@ const Wrapper = styled.div`
     }
   }
 `;
-export default SectionExperience;
+export default ResumeSection;

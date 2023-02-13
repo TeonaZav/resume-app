@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import styled from "styled-components";
-import ResumeSection from "./SectionExperience";
+import ResumeSection from "./ResumeSection";
 import { convertDataToString } from "../utils/HelperFunctions";
 import { ResumeContext } from "../context/context";
 import useExperience from "../hooks/useExperience";
