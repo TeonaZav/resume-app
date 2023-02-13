@@ -4,23 +4,20 @@ import Select from "react-select";
 import { ResumeContext } from "../../context/context";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { useField } from "formik";
-
+import useEducation from "../../hooks/useEducation";
 const SelectComponent = ({ formId, value, name, size, label, ...props }) => {
   const [field, meta, helpers] = useField(props);
   const { isMulti, placeholder, handleOnChange } = props;
   const { edu, setEdu, degrees, selected, setSelected } =
     useContext(ResumeContext);
-  const handleChange = (selectedOption) => {
-    setSelected(selectedOption);
-    console.log(`Option selected:`, selectedOption);
-    setEdu((prevEdu) => [
-      ...prevEdu,
-      {
-        id: formId,
-        degreeID: selected,
-      },
-    ]);
-  };
+  const { educationsState, handleDegreeStatus, handleDegreeId } =
+    useEducation();
+
+  // const handleChange = (selectedOption) => {
+  //   // setSelected(selectedOption);
+  //   // console.log(`Option selected:`, selectedOption);
+  //
+  // };
 
   const [touchedS, setTouchedS] = useState(false);
   const options = degrees.map((obj) => {
@@ -89,7 +86,14 @@ const SelectComponent = ({ formId, value, name, size, label, ...props }) => {
           <select id={name} name={name} {...props} {...field}>
             {options.map((el, index) => {
               return (
-                <option key={index} value={el.value}>
+                <option
+                  key={index}
+                  value={el.value}
+                  onChange={(e) => {
+                    handleDegreeId(formId, el.value);
+                    handleDegreeStatus(formId, el.label);
+                  }}
+                >
                   {el.label}
                 </option>
               );

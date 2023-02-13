@@ -154,3 +154,27 @@ body {
 .input:focus::placeholder {
   opacity: 0;
 }
+.border-bottom {
+  border-bottom: 1px solid #c8c8c8;
+}
+.border-bottom-dark {
+  border-bottom: 1px solid #524f4f;
+}
+.margin-bottom-md {
+  margin-bottom: 5.3rem;
+}
+.margin-bottom-lg {
+  margin-bottom: 8.5rem;
+}
+.margin-top-xlg {
+  margin-top: 29rem;
+}
+.ct-md {
+  min-height: 56rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3.2rem;
+}
+.padding-bottom-md {
+  padding-bottom: 5.3rem;
+}

@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useNavigate, NavLink } from "react-router-dom";
 import axios from "axios";
 import { Button, VStack } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
@@ -15,6 +16,7 @@ import ImgInput from "./ImgInput";
 import BtnGoHome from "../BtnGoHome";
 import DateInput from "./DateInput";
 import { ResumeContext } from "../../context/context";
+
 export const MultistepForm = () => {
   const {
     generalsState,
@@ -50,73 +52,75 @@ export const MultistepForm = () => {
     selectedDegree,
   } = useContext(ResumeContext);
   return (
-    <Wrapper>
-      <div className="form-ct">
+    <Wrapper className="form-ct ">
+      <div className="form-content ">
         <Stepper validateOnChange>
-          <FormikStep className="page page-1-3" validationSchema={schema}>
-            <div className="info-part1">
-              <TextField
-                onChange={(e) => handleFirstName(e)}
-                value={generalsState.name}
-                name="name"
-                placeholder="ანზორ"
-                autoComplete="off"
-                label="სახელი"
-                hint="მინიმუმ 2 ასო, ქართული ასოები"
-                size="sm"
-                changedVal={generalsState.name}
-                setInvalid={setNameInvalid}
-              />
-              <TextField
-                onChange={(e) => handleLastName(e)}
-                value={generalsState.surname}
-                name="surname"
-                placeholder="მუმლაძე"
-                autoComplete="off"
-                label="გვარი"
-                type="text"
-                hint="მინიმუმ 2 ასო, ქართული ასოები"
-                size="sm"
-                changedVal={generalsState.surname}
-                setInvalid={setLastnameInvalid}
-              />
-            </div>
-            <ImgInput />
-            <div className="info-part2">
-              <TextArea
-                onChange={(e) => handleAbout(e)}
-                value={generalsState.about_me}
-                name="about_me"
-                placeholder="ზოგადი ინფო შენ შესახებ"
-                label="ჩემ შესახებ (არასავალდებულო)"
-                size="xlg"
-                changedVal={generalsState.about_me}
-              />
-              <TextField
-                onChange={(e) => handleEmail(e)}
-                value={generalsState.email}
-                name="email"
-                placeholder="anzorr666@redberry.ge"
-                autoComplete="off"
-                label="ელ.ფოსტა"
-                hint="უნდა მთავრდებოდეს @redberry.ge-ით"
-                size="lg"
-                changedVal={generalsState.email}
-                setInvalid={setEmailInvalid}
-              />
-              <TextField
-                onChange={(e) => handlePhone(e)}
-                value={generalsState.phone_number.replace(/\s/g, "")}
-                name="phone_number"
-                placeholder="+995 551 12 34 56"
-                autoComplete="off"
-                label="მობილურის ნომერი"
-                type="text"
-                hint="უნდა აკმაყოფილებდეს ქართული მობილურის ნომრის ფორმატს"
-                size="lg"
-                changedVal={generalsState.phone_number.replace(/\s/g, "")}
-                setInvalid={setTelInvalid}
-              />
+          <FormikStep className="page page-1-3 " validationSchema={schema}>
+            <div className="border-bottom margin-bottom-md ct-md">
+              <div className="info-part1 ">
+                <TextField
+                  onChange={(e) => handleFirstName(e)}
+                  value={generalsState.name}
+                  name="name"
+                  placeholder="ანზორ"
+                  autoComplete="off"
+                  label="სახელი"
+                  hint="მინიმუმ 2 ასო, ქართული ასოები"
+                  size="sm"
+                  changedVal={generalsState.name}
+                  setInvalid={setNameInvalid}
+                />
+                <TextField
+                  onChange={(e) => handleLastName(e)}
+                  value={generalsState.surname}
+                  name="surname"
+                  placeholder="მუმლაძე"
+                  autoComplete="off"
+                  label="გვარი"
+                  type="text"
+                  hint="მინიმუმ 2 ასო, ქართული ასოები"
+                  size="sm"
+                  changedVal={generalsState.surname}
+                  setInvalid={setLastnameInvalid}
+                />
+              </div>
+              <ImgInput />
+              <div className="info-part2 margin-bottom-md">
+                <TextArea
+                  onChange={(e) => handleAbout(e)}
+                  value={generalsState.about_me}
+                  name="about_me"
+                  placeholder="ზოგადი ინფო შენ შესახებ"
+                  label="ჩემ შესახებ (არასავალდებულო)"
+                  size="xlg"
+                  changedVal={generalsState.about_me}
+                />
+                <TextField
+                  onChange={(e) => handleEmail(e)}
+                  value={generalsState.email}
+                  name="email"
+                  placeholder="anzorr666@redberry.ge"
+                  autoComplete="off"
+                  label="ელ.ფოსტა"
+                  hint="უნდა მთავრდებოდეს @redberry.ge-ით"
+                  size="lg"
+                  changedVal={generalsState.email}
+                  setInvalid={setEmailInvalid}
+                />
+                <TextField
+                  onChange={(e) => handlePhone(e)}
+                  value={generalsState.phone_number.replace(/\s/g, "")}
+                  name="phone_number"
+                  placeholder="+995 551 12 34 56"
+                  autoComplete="off"
+                  label="მობილურის ნომერი"
+                  type="text"
+                  hint="უნდა აკმაყოფილებდეს ქართული მობილურის ნომრის ფორმატს"
+                  size="lg"
+                  changedVal={generalsState.phone_number.replace(/\s/g, "")}
+                  setInvalid={setTelInvalid}
+                />
+              </div>
             </div>
           </FormikStep>
           <FormikStep className="page-2-3 form-ct" validationSchema={schema}>
@@ -127,7 +131,7 @@ export const MultistepForm = () => {
                   <div
                     key={`${index}_experience`}
                     id={`form${index}`}
-                    className="form"
+                    className="form border-bottom margin-bottom-md"
                   >
                     <div className="exp-part1">
                       <TextField
@@ -186,7 +190,7 @@ export const MultistepForm = () => {
                         id={`due_date${index}`}
                       />
                     </div>
-                    <div className="exp-part3">
+                    <div className="exp-part3 ">
                       <TextArea
                         onChange={(e) => handleDescription(e, index)}
                         value={el.description}
@@ -202,7 +206,10 @@ export const MultistepForm = () => {
                   </div>
                 );
               })}
-            <button className="btn btn-add" onClick={addExpHandler}>
+            <button
+              className="btn btn-add margin-bottom-lg margin-top-xlg"
+              onClick={addExpHandler}
+            >
               მეტი გამოცდილების დამატება
             </button>
           </FormikStep>
@@ -210,7 +217,11 @@ export const MultistepForm = () => {
             {educationsState &&
               educationsState.map((el, index) => {
                 return (
-                  <div key={`${index}_education`} id={index} className="form">
+                  <div
+                    key={`${index}_education`}
+                    id={index}
+                    className="form border-bottom padding-bottom-md "
+                  >
                     <div className="exp-part1">
                       <TextField
                         onChange={(e) => handleIstitute(e, index)}
@@ -226,7 +237,7 @@ export const MultistepForm = () => {
                         formId={index}
                       />
                     </div>
-                    <div className="exp-part2">
+                    <div className="exp-part2 margin-bottom-md">
                       <SelectComponent
                         size="sm"
                         value={selectedDegree}
@@ -260,7 +271,10 @@ export const MultistepForm = () => {
                 );
               })}
 
-            <button className="btn btn-add" onClick={addEduHandler}>
+            <button
+              className="btn btn-add margin-bottom-lg margin-top-xlg"
+              onClick={addEduHandler}
+            >
               სხვა სასწავლებლის დამატება
             </button>
           </FormikStep>
@@ -274,9 +288,19 @@ export const FormikStep = ({ children }) => {
   return <>{children}</>;
 };
 export const Stepper = ({ children, ...props }) => {
-  const { firstN, lastN, emailAd, aboutG, phoneN, img } =
-    useContext(ResumeContext);
-  const { expInitial, eduInitial } = useContext(ResumeContext);
+  const {
+    firstN,
+    lastN,
+    emailAd,
+    aboutG,
+    phoneN,
+    img,
+    expInitial,
+    eduInitial,
+    responseData,
+    setResponseData,
+  } = useContext(ResumeContext);
+  const navigate = useNavigate();
   const { nextHandlerGenerals } = useGeneral();
   const { nextHandlerExperiences } = useExperience();
   const arrChildren = React.Children.toArray(children);
@@ -331,8 +355,13 @@ export const Stepper = ({ children, ...props }) => {
               },
             }
           )
-          .then((resp) => {
-            console.log(resp.data);
+          .then((response) => {
+            console.log(response.data);
+            setResponseData(response.data);
+            alert("Logged In Successfully");
+            window.setTimeout(() => {
+              navigate("/resume");
+            }, 2000);
           })
           .catch((err) => console.log(err));
       }}
@@ -388,7 +417,15 @@ export const Stepper = ({ children, ...props }) => {
 };
 const Wrapper = styled.div`
   .form-ct {
+    max-height: 108rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  .form-content {
     position: relative;
+    width: 79.8rem;
+    min-height: 140rem;
+    padding-bottom: 15rem;
   }
   .form {
     display: flex;
@@ -397,7 +434,7 @@ const Wrapper = styled.div`
     align-items: center;
     width: 79.8rem;
     gap: 4.6rem;
-    margin-bottom: 4.5rem;
+    padding-bottom: 5.3rem;
   }
 
   .info-part1 {
@@ -453,10 +490,10 @@ const Wrapper = styled.div`
     bottom: 8.8rem;
   }
   .submit-btn {
-    right: 15rem;
+    right: 0rem;
   }
   .btn-back {
-    left: 15rem;
+    left: 0rem;
   }
 
   .label {

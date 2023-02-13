@@ -13,6 +13,7 @@ const useEducation = () => {
       degree_id: selected,
       description: "",
       due_date: null,
+      degree_status: "",
     },
   ]);
   useEffect(() => {
@@ -50,6 +51,7 @@ const useEducation = () => {
             degreeID: selected,
             descrEdu: el.description,
             dueDateEdu: new Date(el.due_date),
+            degreeStatus: "",
           };
         })
       );
@@ -64,6 +66,7 @@ const useEducation = () => {
       degree_id: selected,
       description: "",
       due_date: null,
+      degree_status: "",
     });
     const educations = localStorage.getItem("educations");
     if (educations) {
@@ -85,6 +88,7 @@ const useEducation = () => {
       degree_id: selected,
       description: edu[0].descrEdu,
       due_date: edu[0].dueDateEdu,
+      degree_status: "",
     });
     let arrInitEdu = localStorage.getItem("arrInitEdu");
     if (arrInitEdu) {
@@ -195,6 +199,64 @@ const useEducation = () => {
       });
   };
 
+  const handleDegreeStatus = (formId, dStatus) => {
+    setEducationsState((prevEducations) => {
+      return prevEducations.map((el) => {
+        if (el.id == formId) {
+          return { ...el, degree_status: dStatus };
+        } else {
+          return el;
+        }
+      });
+    });
+
+    setEdu((prevEdu) => {
+      return prevEdu.map((el) => {
+        if (el.id == formId) {
+          return { ...el, degreeStatus: dStatus };
+        } else {
+          return el;
+        }
+      });
+    });
+    let data = getLocalEducations();
+    data &&
+      data.forEach((element) => {
+        if (element.id == formId) {
+          element["degree_status"] = dStatus;
+          localStorage.setItem("educations", JSON.stringify(data));
+        }
+      });
+  };
+  const handleDegreeId = (formId, degreeId) => {
+    setEducationsState((prevEducations) => {
+      return prevEducations.map((el) => {
+        if (el.id == formId) {
+          return { ...el, degree_id: degreeId };
+        } else {
+          return el;
+        }
+      });
+    });
+
+    setEdu((prevEdu) => {
+      return prevEdu.map((el) => {
+        if (el.id == formId) {
+          return { ...el, degreeId: degreeId };
+        } else {
+          return el;
+        }
+      });
+    });
+    let data = getLocalEducations();
+    data &&
+      data.forEach((element) => {
+        if (element.id == formId) {
+          element["degree_id"] = degreeId;
+          localStorage.setItem("educations", JSON.stringify(data));
+        }
+      });
+  };
   /*================== */
   const addEduHandler = () => {
     setEducationsState((educations) => [
@@ -205,6 +267,7 @@ const useEducation = () => {
         degree_id: selected,
         description: "",
         due_date: null,
+        degree_status: "",
       },
     ]);
     setEdu((prevEdu) => [
@@ -215,6 +278,7 @@ const useEducation = () => {
         degreeID: selected,
         descrEdu: "",
         dueDateEdu: new Date(),
+        degreeStatus: "",
       },
     ]);
     const arr = JSON.parse(localStorage.getItem("educations"));
@@ -224,6 +288,7 @@ const useEducation = () => {
       degree_id: selected,
       description: "",
       due_date: null,
+      degree_status: "",
     });
 
     localStorage.setItem("educations", JSON.stringify(arr));
@@ -238,6 +303,8 @@ const useEducation = () => {
     handleEduDescription,
     handleDueDateEdu,
     addEduHandler,
+    handleDegreeStatus,
+    handleDegreeId,
   };
 };
 

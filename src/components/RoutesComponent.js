@@ -9,7 +9,6 @@ const RoutesComponent = () => {
     <Routes location={location} key={location.pathname}>
       <Route path="/" exact={true} element={<Home />} />
       <Route path="/general" element={<GeneralInfo />} />
-
       <Route path="/resume" element={<ResumePage />} />
     </Routes>
   );

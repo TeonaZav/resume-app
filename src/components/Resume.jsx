@@ -4,6 +4,7 @@ import ResumeSection from "./SectionExperience";
 import { convertDataToString } from "../utils/HelperFunctions";
 import { ResumeContext } from "../context/context";
 import useExperience from "../hooks/useExperience";
+import useEducation from "../hooks/useEducation";
 const Resume = () => {
   const {
     firstN,
@@ -19,6 +20,8 @@ const Resume = () => {
     dueDate,
     imgBinary,
     setImgBinary,
+    exp,
+    edu,
   } = useContext(ResumeContext);
   const { experienceState } = useExperience();
   console.log(img);
@@ -47,7 +50,6 @@ const Resume = () => {
           <div className="about-text-ct">
             <div className="name-wrap">
               <h2 className="name">
-                {" "}
                 {firstN} {lastN}
               </h2>
             </div>
@@ -77,26 +79,56 @@ const Resume = () => {
             </div>
           </div>
           <div className="img-ct">
-            <img
-              // src={process.env.PUBLIC_URL + "/assets/profile-picture.png"}
-              src={preview}
-              alt="profile"
-            />
+            <img src={preview} alt="profile" />
           </div>
         </section>
 
-        {/* {experienceState.length > 0 &&
-          experienceState.map((el) => {
+        {exp.length > 0 &&
+          exp.map((el, index) => {
             return (
               <ResumeSection
-                position={el.position}
-                employer={el.employer}
-                workStart={convertDataToString(el.start_date, "sv")}
-                workEnd={convertDataToString(el.due_date, "sv")}
-                text={descr}
+                position={el.positionN}
+                employer={el.employerN}
+                workStart={
+                  el.startDate
+                    ? convertDataToString(new Date(el.startDate), "sv")
+                    : null
+                }
+                workEnd={
+                  el.dueDate
+                    ? convertDataToString(new Date(el.dueDate), "sv")
+                    : null
+                }
+                text={el.descr}
+                key={index}
+                id={index + 1}
+                data={exp}
               />
             );
-          })} */}
+          })}
+        {edu.length > 0 &&
+          edu.map((el, index) => {
+            return (
+              <ResumeSection
+                position={el.labelN}
+                employer={el.instituteN}
+                workStart={
+                  el.startDate
+                    ? convertDataToString(new Date(el.startDate), "sv")
+                    : null
+                }
+                workEnd={
+                  el.dueDate
+                    ? convertDataToString(new Date(el.dueDate), "sv")
+                    : null
+                }
+                text={el.descr}
+                key={index}
+                id={index + 1}
+                data={exp}
+              />
+            );
+          })}
         {/* {console.log(convertDataToString(startDate, "en-ZA"))} */}
         <img
           src={process.env.PUBLIC_URL + "/assets/resume-logo.png"}
@@ -111,10 +143,13 @@ const Wrapper = styled.div`
   .resume {
     width: 82.2rem;
     height: 108rem;
+    max-height: 108rem;
+    overflow-y: auto;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
     background-color: #ffffff;
     padding: 4.8rem 7.5rem 4.4rem 7.8rem;
     position: relative;

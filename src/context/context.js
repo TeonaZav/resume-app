@@ -18,11 +18,12 @@ const ResumeProvider = ({ children }) => {
   const [expError, setExpError] = useState({});
   const [arrAdded, setArrAdded] = useState([]);
   const [arrEduId, setArrEduId] = useState([]);
+  const [responseData, setResponseData] = useState({});
   console.log(expError);
 
   useEffect(() => {
-    console.log(arrAdded);
-  }, [arrAdded]);
+    console.log(responseData);
+  }, [responseData]);
   const [exp, setExp] = useState([
     {
       id: 0,
@@ -41,6 +42,7 @@ const ResumeProvider = ({ children }) => {
       degreeID: selected,
       descrEdu: "",
       dueDateEdu: new Date(),
+      degreeStatus: "",
     },
   ]);
   //degrees data
@@ -146,6 +148,8 @@ const ResumeProvider = ({ children }) => {
         setImgBinary,
         selected,
         setSelected,
+        responseData,
+        setResponseData,
       }}
     >
       {children}
