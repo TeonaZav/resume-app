@@ -2,10 +2,7 @@
   font-family: "HelveticaNeue";
   src: url("./assets/fonts/HelveticaNeue.ttc");
 }
-@font-face {
-  font-family: "BPG Nino Mtavruli Bold";
-  src: url("./assets/fonts/bpg-nino-mtavruli-bold-webfont.ttf");
-}
+
 *,
 *:before,
 *:after {
