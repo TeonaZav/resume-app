@@ -10,6 +10,8 @@ const ResumeProvider = ({ children }) => {
   const [aboutG, setAboutG] = useState("");
   const [phoneN, setPhoneN] = useState("");
   const [img, setImg] = useState("");
+  const [imgBinary, setImgBinary] = useState(null);
+  const [selected, setSelected] = useState(null);
   const [selectedDegree, setSelectedDegree] = useState(null);
   const [currentEpxId, setCurrentExpId] = useState(0);
   const [currentEduId, setCurrentEduId] = useState(0);
@@ -17,9 +19,7 @@ const ResumeProvider = ({ children }) => {
   const [arrAdded, setArrAdded] = useState([]);
   const [arrEduId, setArrEduId] = useState([]);
   console.log(expError);
-  useEffect(() => {
-    console.log(selectedDegree);
-  }, [selectedDegree]);
+
   useEffect(() => {
     console.log(arrAdded);
   }, [arrAdded]);
@@ -38,9 +38,9 @@ const ResumeProvider = ({ children }) => {
     {
       id: 0,
       instituteN: "",
-      degreeID: 0,
+      degreeID: selected,
       descrEdu: "",
-      dueDateEdu: null,
+      dueDateEdu: new Date(),
     },
   ]);
   //degrees data
@@ -140,6 +140,12 @@ const ResumeProvider = ({ children }) => {
         setMetaExp,
         arrEduId,
         setArrEduId,
+        eduInitial,
+        setEduInitial,
+        imgBinary,
+        setImgBinary,
+        selected,
+        setSelected,
       }}
     >
       {children}

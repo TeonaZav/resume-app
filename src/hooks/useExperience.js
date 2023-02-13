@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import { ResumeContext } from "../context/context";
-import { setLocal } from "../utils/HelperFunctions";
+
+import { convertDataToString, setLocal } from "../utils/HelperFunctions";
 const useExperience = () => {
   const [experienceState, setExperienceState] = useState([
     {
@@ -37,8 +38,8 @@ const useExperience = () => {
         initExpLocal.map((el) => {
           return {
             ...el,
-            start_date: new Date(el.start_date),
-            due_date: new Date(el.due_date),
+            start_date: convertDataToString(new Date(el.start_date), "en-ZA"),
+            due_date: convertDataToString(new Date(el.due_date), "en-ZA"),
           };
         })
       );
@@ -60,8 +61,8 @@ const useExperience = () => {
             id: el.id,
             positionN: el.position,
             descr: el.description,
-            startDate: new Date(el.start_date),
-            dueDate: new Date(el.due_date),
+            startDate: convertDataToString(new Date(el.start_date), "en-ZA"),
+            dueDate: convertDataToString(new Date(el.due_date), "en-ZA"),
           };
         })
       );
@@ -295,8 +296,8 @@ const useExperience = () => {
         positionN: "",
         employerN: "",
         descr: "",
-        startDate: new Date(),
-        dueDate: new Date(),
+        startDate: convertDataToString(new Date(), "en-ZA"),
+        dueDate: convertDataToString(new Date(), "en-ZA"),
       },
     ]);
     const arr = JSON.parse(localStorage.getItem("experiences"));

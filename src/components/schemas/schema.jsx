@@ -39,7 +39,7 @@ export const schemaGeneral = Yup.object({
     .min(17)
     .max(17)
     .required(""),
-  image: Yup.mixed().required("Required Field"),
+  image: Yup.mixed().required("Required Field").nullable(),
 });
 
 export const schemaExperience = Yup.object({
@@ -66,20 +66,21 @@ export const schema = Yup.object({
       "უნდა მთავრდებოდეს @redberry.ge-ით",
       (val) => `${val}`.slice(-12) === "@redberry.ge"
     ),
-  phone_number: Yup.string()
-    .test((val) => `${val}`.replace(/\s/g, "").slice(0, -8) === "+9955")
-    .test((val) =>
-      `${val}`
-        .replace(/\s/g, "")
-        .slice(-6)
-        .match(/^[0-9]+$/g)
-    )
-    .test((val) =>
-      mobileIndexes.includes(Number(`${val}`.replace(/\s/g, "").slice(5, 7)))
-    )
-    .min(17)
-    .max(17)
-    .required(""),
+  // phone_number: Yup.string()
+  //   .test((val) => `${val}`.replace(/\s/g, "").slice(0, -8) === "+9955")
+  //   .test((val) =>
+  //     `${val}`
+  //       .replace(/\s/g, "")
+  //       .slice(-6)
+  //       .match(/^[0-9]+$/g)
+  //   )
+  // .test((val) =>
+  //   mobileIndexes.includes(Number(`${val}`.replace(/\s/g, "").slice(5, 7)))
+  // )
+  // .min(17)
+  // .max(17)
+  // .required(""),
+  phone_number: Yup.string().required(""),
 
   image: Yup.mixed().required("Required Field"),
   experiences: Yup.array().of(

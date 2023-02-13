@@ -57,3 +57,12 @@ export const setLocal = (name, obj) => {
   existing = existing ? JSON.parse(existing) : [obj];
   localStorage.setItem(name, JSON.stringify(existing));
 };
+
+export const imgConverter = (img) => {
+  const reader = new FileReader();
+  img && reader.readAsDataURL(img);
+
+  reader.onload = () => {
+    return reader.result;
+  };
+};

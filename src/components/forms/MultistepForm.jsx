@@ -1,4 +1,6 @@
 import React, { useContext, useState } from "react";
+import axios from "axios";
+import { imgConverter } from "../../utils/HelperFunctions";
 import { Button, VStack } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import styled from "styled-components";
@@ -14,7 +16,7 @@ import ImgInput from "./ImgInput";
 import BtnGoHome from "../BtnGoHome";
 import DateInput from "./DateInput";
 import { ResumeContext } from "../../context/context";
-
+import { convertDataToString } from "../../utils/HelperFunctions";
 export const MultistepForm = () => {
   const {
     generalsState,
@@ -42,8 +44,15 @@ export const MultistepForm = () => {
     addEduHandler,
   } = useEducation();
 
-  const { setNameInvalid, setLastnameInvalid, setEmailInvalid, setTelInvalid } =
-    useContext(ResumeContext);
+  const {
+    setNameInvalid,
+    setLastnameInvalid,
+    setEmailInvalid,
+    setTelInvalid,
+    selectedDegree,
+    selected,
+    setSelected,
+  } = useContext(ResumeContext);
   return (
     <Wrapper>
       <div className="form-ct">
@@ -101,7 +110,7 @@ export const MultistepForm = () => {
               />
               <TextField
                 onChange={(e) => handlePhone(e)}
-                value={generalsState.phone_number}
+                value={generalsState.phone_number.replace(/\s/g, "")}
                 name="phone_number"
                 placeholder="+995 551 12 34 56"
                 autoComplete="off"
@@ -109,7 +118,7 @@ export const MultistepForm = () => {
                 type="text"
                 hint="უნდა აკმაყოფილებდეს ქართული მობილურის ნომრის ფორმატს"
                 size="lg"
-                changedVal={generalsState.phone_number}
+                changedVal={generalsState.phone_number.replace(/\s/g, "")}
                 setInvalid={setTelInvalid}
               />
             </div>
@@ -222,7 +231,13 @@ export const MultistepForm = () => {
                       />
                     </div>
                     <div className="exp-part2">
-                      <SelectComponent size="sm" label="ხარისხი" />
+                      <SelectComponent
+                        size="sm"
+                        value={selectedDegree}
+                        name={`educations.${index}.degree_id`}
+                        // name={`degree_id`}
+                        formId={index}
+                      />
                       <DateInput
                         name={`educations.${index}.due-date`}
                         label="დამთავრების რიცხვი"
@@ -267,6 +282,7 @@ export const Stepper = ({ children, ...props }) => {
     useContext(ResumeContext);
   const {
     exp,
+    edu,
     currentEpxId,
     setCurrentExpId,
     currentEduId,
@@ -275,6 +291,8 @@ export const Stepper = ({ children, ...props }) => {
     setExpInitial,
     eduInitial,
     setEduInitial,
+    imgBinary,
+    setImgBinary,
   } = useContext(ResumeContext);
   const { nextHandlerGenerals } = useGeneral();
   const { nextHandlerExperiences } = useExperience();
@@ -294,20 +312,46 @@ export const Stepper = ({ children, ...props }) => {
         surname: lastN,
         email: emailAd,
         about_me: aboutG,
-        phone_number: phoneN,
+        phone_number: phoneN.replace(/\s/g, ""),
         image: img,
         experiences: expInitial,
         educations: eduInitial,
       }}
-      onSubmit={(values, helpers) => {
+      onSubmit={(values, actions) => {
         const vals = { ...values };
         alert(JSON.stringify(values, null, 2));
-        console.log(vals);
-        !img && setImgEmpty(true);
-        window.setTimeout(() => {
-          setStep((s) => s + 1);
-        }, 2000);
-        console.log(helpers);
+        // console.log({
+        //   name: values.name,
+        //   surname: values.surname,
+        //   email: values.email,
+        //   phone_number: values.phone_number,
+        //   experiences: values.experiences,
+        //   educations: values.educations,
+        //   image: imgBinary,
+        // });
+
+        axios
+          .post(
+            "https://resume.redberryinternship.ge/api/cvs",
+            {
+              name: values.name,
+              surname: values.surname,
+              email: values.email,
+              phone_number: values.phone_number,
+              experiences: values.experiences,
+              educations: values.educations,
+              image: values.image,
+            },
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          )
+          .then((resp) => {
+            console.log(resp.data);
+          })
+          .catch((err) => console.log(err));
       }}
     >
       <VStack as={Form} className="form" autoComplete="off">

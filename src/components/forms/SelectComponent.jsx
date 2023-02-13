@@ -4,16 +4,29 @@ import Select from "react-select";
 import { ResumeContext } from "../../context/context";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Field, useField } from "formik";
-const SelectComponent = ({ size, label, ...props }) => {
+
+const SelectComponent = ({ formId, value, name, size, label, ...props }) => {
   const [field, meta, helpers] = useField(props);
-  const { setValue } = helpers;
-  const { degrees, selectedDegree, setSelectedDegree } =
+  const { isMulti, placeholder, handleOnChange } = props;
+  // const { setValue } = helpers;
+  const { edu, setEdu, degrees, selected, setSelected } =
     useContext(ResumeContext);
+  const handleChange = (selectedOption) => {
+    setSelected(selectedOption);
+    console.log(`Option selected:`, selectedOption);
+    setEdu((prevEdu) => [
+      ...prevEdu,
+      {
+        id: formId,
+        degreeID: selected,
+      },
+    ]);
+  };
+
   const [touchedS, setTouchedS] = useState(false);
   const options = degrees.map((obj) => {
     return { value: obj.id, label: obj.title };
   });
-
   const colourStyles = {
     menuList: (styles) => ({
       ...styles,
@@ -35,34 +48,35 @@ const SelectComponent = ({ size, label, ...props }) => {
       zIndex: 100,
     }),
   };
+
   return (
     <Wrapper>
-      <FormControl
-        isInvalid={meta.touched && meta.error}
-        className={`text-ct `}
-      >
+      <FormControl className={`text-ct `}>
         <FormLabel
-          className={`label  ${
-            touchedS && !selectedDegree ? "label-error" : null
-          }`}
+          className={`label  ${touchedS && !selected ? "label-error" : null}`}
         >
           {label}
         </FormLabel>
 
-        <div id="options" className="section">
-          <Select
-            name="Phone"
-            id="Phone"
-            options={options}
+        <div id="options" class="section">
+          {/* <Select
             {...props}
+            {...field}
+            name={name}
+            id={name}
+            options={options}
+            label={selected.label}
+            onChange={handleChange}
+            autoFocus={true}
+            value={selected.value}
             placeholder="აირჩიეთ ხარისხი"
             classNames={{
               control: (state) =>
                 state.isFocused
                   ? "box-sm select"
-                  : touchedS && !selectedDegree
+                  : touchedS && !selected
                   ? "box-sm is-invalid select"
-                  : selectedDegree
+                  : selected
                   ? "box-sm valid select"
                   : "box-sm select",
             }}
@@ -70,19 +84,29 @@ const SelectComponent = ({ size, label, ...props }) => {
             onBlur={() => {
               setTouchedS(true);
             }}
-            onChange={(e) => setSelectedDegree(e.value)}
-          ></Select>
+          >
+            {console.log(selected, selected.value)}
+          </Select> */}
+          <select id={name} name={name} {...props} {...field}>
+            {options.map((el, index) => {
+              return (
+                <option key={index} value={el.value}>
+                  {el.label}
+                </option>
+              );
+            })}
+          </select>
         </div>
 
-        {console.log(meta)}
+        {/* {console.log(meta)} */}
 
-        {touchedS && !selectedDegree ? (
+        {touchedS && !selected ? (
           <img
             src={process.env.PUBLIC_URL + "/assets/error-icon.png"}
             className="error-icon"
             alt="error icon"
           />
-        ) : selectedDegree ? (
+        ) : selected ? (
           <img
             src={process.env.PUBLIC_URL + "/assets/success-icon.png"}
             className="success-icon"

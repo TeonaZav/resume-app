@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import { ResumeContext } from "../context/context";
 import { setLocal } from "../utils/HelperFunctions";
+import { convertDataToString } from "../utils/HelperFunctions";
 const useEducation = () => {
   const {
     edu,
@@ -10,13 +11,16 @@ const useEducation = () => {
     setEduInitial,
     arrEduId,
     setArrEduId,
+    selectedDegree,
+    selected,
+    setSelected,
   } = useContext(ResumeContext);
 
   const [educationsState, setEducationsState] = useState([
     {
       id: 0,
       institute: "",
-      degree_id: 0,
+      degree_id: selected,
       description: "",
       due_date: null,
     },
@@ -33,7 +37,7 @@ const useEducation = () => {
         initEduLocal.map((el) => {
           return {
             ...el,
-            due_date: new Date(el.due_date),
+            due_date: convertDataToString(new Date(el.due_date), "en-ZA"),
           };
         })
       );
@@ -53,7 +57,7 @@ const useEducation = () => {
           return {
             id: el.id,
             instituteN: el.institute,
-            degreeID: el.degree_id,
+            degreeID: selected,
             descrEdu: el.description,
             dueDateEdu: new Date(el.due_date),
           };
@@ -67,7 +71,7 @@ const useEducation = () => {
     setLocal("educations", {
       id: 0,
       institute: "",
-      degree_id: 0,
+      degree_id: selected,
       description: "",
       due_date: null,
     });
@@ -88,7 +92,7 @@ const useEducation = () => {
   const getLocalEduInitial = () => {
     setLocal("arrInitEdu", {
       institute: edu[0].instituteN,
-      degree_id: edu[0].degreeID,
+      degree_id: selected,
       description: edu[0].descrEdu,
       due_date: edu[0].dueDateEdu,
     });
@@ -208,7 +212,7 @@ const useEducation = () => {
       {
         id: educationsState.length,
         institute: "",
-        degree_id: 0,
+        degree_id: selected,
         description: "",
         due_date: null,
       },
@@ -218,7 +222,7 @@ const useEducation = () => {
       {
         id: edu.length,
         instituteN: "",
-        degreeID: 0,
+        degreeID: selected,
         descrEdu: "",
         dueDateEdu: new Date(),
       },
@@ -227,7 +231,7 @@ const useEducation = () => {
     arr.push({
       id: educationsState.length,
       institute: "",
-      degree_id: 0,
+      degree_id: selected,
       description: "",
       due_date: null,
     });

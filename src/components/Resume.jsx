@@ -17,6 +17,8 @@ const Resume = () => {
     descr,
     startDate,
     dueDate,
+    imgBinary,
+    setImgBinary,
   } = useContext(ResumeContext);
   const { experienceState } = useExperience();
   console.log(img);
@@ -31,6 +33,7 @@ const Resume = () => {
     };
   }, [img]);
   console.log(preview);
+  setImgBinary(preview);
   return (
     <Wrapper>
       <div className="resume">

@@ -50,7 +50,7 @@ const useGeneral = () => {
       setLastN(data.surname);
       setEmailAd(data.email);
       setAboutG(data.about_me);
-      setPhoneN(data.phone_number);
+      setPhoneN(data.phone_number.replace(/\s/g, ""));
     }
   }, []);
 
@@ -133,7 +133,7 @@ const useGeneral = () => {
       ...generalsState,
       phone_number: e.target.value,
     });
-    setPhoneN(e.target.value);
+    setPhoneN(e.target.value.replace(/\s/g, ""));
     saveLocal("generals", "phone_number", e.target.value);
   };
   /*================
