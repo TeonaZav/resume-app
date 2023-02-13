@@ -3,18 +3,8 @@ import { ResumeContext } from "../context/context";
 import { setLocal } from "../utils/HelperFunctions";
 import { convertDataToString } from "../utils/HelperFunctions";
 const useEducation = () => {
-  const {
-    edu,
-    setEdu,
-    setCurrentEduId,
-    eduInitial,
-    setEduInitial,
-    arrEduId,
-    setArrEduId,
-    selectedDegree,
-    selected,
-    setSelected,
-  } = useContext(ResumeContext);
+  const { edu, setEdu, setCurrentEduId, setEduInitial, setArrEduId, selected } =
+    useContext(ResumeContext);
 
   const [educationsState, setEducationsState] = useState([
     {

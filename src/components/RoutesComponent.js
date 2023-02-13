@@ -1,6 +1,6 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import Home from "../pages/Home";
-import GeneralInfo from "../pages/GeneralInfo";
+import GeneralInfo from "../pages/FormPage";
 import ResumePage from "../pages/ResumePage";
 const RoutesComponent = () => {
   const location = useLocation();

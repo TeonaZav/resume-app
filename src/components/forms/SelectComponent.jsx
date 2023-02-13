@@ -3,12 +3,11 @@ import styled from "styled-components";
 import Select from "react-select";
 import { ResumeContext } from "../../context/context";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
-import { Field, useField } from "formik";
+import { useField } from "formik";
 
 const SelectComponent = ({ formId, value, name, size, label, ...props }) => {
   const [field, meta, helpers] = useField(props);
   const { isMulti, placeholder, handleOnChange } = props;
-  // const { setValue } = helpers;
   const { edu, setEdu, degrees, selected, setSelected } =
     useContext(ResumeContext);
   const handleChange = (selectedOption) => {

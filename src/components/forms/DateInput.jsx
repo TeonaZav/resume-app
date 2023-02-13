@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp, faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { getMonth } from "date-fns";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styled from "styled-components";
-import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { useField } from "formik";
 import { ResumeContext } from "../../context/context";
 
@@ -34,9 +33,8 @@ const DateInput = ({
     "November",
     "December",
   ];
-  const [field, meta, helpers] = useField(props);
-  const { setValue } = helpers;
-  const { expError, setExpError, setMetaExp } = useContext(ResumeContext);
+  const [field, meta] = useField(props);
+  const { setExpError, setMetaExp } = useContext(ResumeContext);
   useEffect(() => {
     setExpError(meta.error);
     setMetaExp(meta.value.experiences);

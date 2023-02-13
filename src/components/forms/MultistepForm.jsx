@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import axios from "axios";
-import { imgConverter } from "../../utils/HelperFunctions";
 import { Button, VStack } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import styled from "styled-components";
@@ -16,7 +15,6 @@ import ImgInput from "./ImgInput";
 import BtnGoHome from "../BtnGoHome";
 import DateInput from "./DateInput";
 import { ResumeContext } from "../../context/context";
-import { convertDataToString } from "../../utils/HelperFunctions";
 export const MultistepForm = () => {
   const {
     generalsState,
@@ -50,8 +48,6 @@ export const MultistepForm = () => {
     setEmailInvalid,
     setTelInvalid,
     selectedDegree,
-    selected,
-    setSelected,
   } = useContext(ResumeContext);
   return (
     <Wrapper>
@@ -278,22 +274,9 @@ export const FormikStep = ({ children }) => {
   return <>{children}</>;
 };
 export const Stepper = ({ children, ...props }) => {
-  const { firstN, lastN, emailAd, aboutG, phoneN, img, setImgEmpty } =
+  const { firstN, lastN, emailAd, aboutG, phoneN, img } =
     useContext(ResumeContext);
-  const {
-    exp,
-    edu,
-    currentEpxId,
-    setCurrentExpId,
-    currentEduId,
-    setCurrentEduId,
-    expInitial,
-    setExpInitial,
-    eduInitial,
-    setEduInitial,
-    imgBinary,
-    setImgBinary,
-  } = useContext(ResumeContext);
+  const { expInitial, eduInitial } = useContext(ResumeContext);
   const { nextHandlerGenerals } = useGeneral();
   const { nextHandlerExperiences } = useExperience();
   const arrChildren = React.Children.toArray(children);

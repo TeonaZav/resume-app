@@ -19,19 +19,11 @@ const useGeneral = () => {
     setPhoneN,
     setImg,
     img,
-
-    imgEmpty,
     setImgEmpty,
-    exp,
-    setExp,
     nameInvalid,
-    setNameInvalid,
     lastnameInvalid,
-    setLastnameInvalid,
     emailInvalid,
-    setEmailInvalid,
     telInvalid,
-    setTelInvalid,
   } = useContext(ResumeContext);
   useEffect(() => {
     let data = getLocalGenerals();
@@ -146,7 +138,6 @@ const useGeneral = () => {
       image: e.target.files[0],
     });
     setImg(e.target.files[0]);
-    console.log(e.target.value);
     const file = e.target.files[0];
     getBase64(file).then((base64) => {
       saveLocal("generals", "image", base64);
@@ -164,12 +155,6 @@ const useGeneral = () => {
       (nameInvalid || lastnameInvalid || emailInvalid || telInvalid || !img) &&
       step === 0
     ) {
-      console.log(
-        "nameInvalid:" + nameInvalid,
-        "lastnameInvalid:" + lastnameInvalid,
-        "emailInvalid:" + emailInvalid,
-        "telInvalid:" + telInvalid
-      );
       return;
     } else {
       window.setTimeout(() => {

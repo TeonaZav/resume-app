@@ -24,7 +24,6 @@ const useExperience = () => {
     arrAdded,
     setArrAdded,
     metaExp,
-    setMetaExp,
   } = useContext(ResumeContext);
   useEffect(() => {
     let extraExp = getLocalAddedExp();
@@ -321,7 +320,6 @@ const useExperience = () => {
     document.getElementById(`employer${0}`).blur();
     document.getElementById(`description${0}`).focus();
     document.getElementById(`description${0}`).blur();
-    console.log(metaExp);
     let count = 0;
     metaExp.map((el, i) => {
       if (
@@ -337,8 +335,6 @@ const useExperience = () => {
         document.getElementById(`employer${i}`).blur();
         document.getElementById(`description${i}`).focus();
         document.getElementById(`description${i}`).blur();
-        console.log(metaExp);
-        console.log(document.getElementById(`position${i}`));
 
         count++;
       }
