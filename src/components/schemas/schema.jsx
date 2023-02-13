@@ -4,6 +4,7 @@ const mobileIndexes = [
   59, 58, 57, 55, 52, 51, 14, 11, 99, 98, 96, 95, 93, 91, 77, 79, 68, 71, 70,
   74, 92, 97,
 ];
+const yupSelect = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 const SUPPORTED_FORMATS = ["image/jpg", "image/png", "image/jpeg", "image/gif"];
 // const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/gif"];
 export const schemaGeneral = Yup.object({
@@ -89,9 +90,22 @@ export const schema = Yup.object({
       employer: Yup.string()
         .min(2, "მინიმუმ 2 სიმბოლო")
         .required("სავალდებულო"),
-      description: Yup.string().required("აღწერის მითითება სავალდებულო").min(1),
+      description: Yup.string().required("აღწერის მითითება სავალდებულო"),
       start_date: Yup.date().required("თარიღის მითითება სავალდებულოა"),
       due_date: Yup.date().required("თარიღის მითითება სავალდებულოა"),
+    })
+  ),
+  educations: Yup.array().of(
+    Yup.object().shape({
+      institute: Yup.string()
+        .min(2, "მინიმუმ 2 სიმბოლო")
+        .required("სავალდებულო"),
+      degree_id: Yup.number()
+        .required()
+        .oneOf(yupSelect)
+        .required("სავალდებულო"),
+      due_date: Yup.date().required("თარიღის მითითება სავალდებულოა"),
+      description: Yup.string().required("აღწერის მითითება სავალდებულო"),
     })
   ),
 });

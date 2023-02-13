@@ -13,6 +13,7 @@ const SelectComponent = ({ size, label, ...props }) => {
   const options = degrees.map((obj) => {
     return { value: obj.id, label: obj.title };
   });
+
   const colourStyles = {
     menuList: (styles) => ({
       ...styles,
