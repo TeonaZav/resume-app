@@ -8,6 +8,7 @@ const SectionExperience = ({
   workEnd,
   id,
   data,
+  heading,
 }) => {
   console.log(id);
   const { experienceState } = useExperience();
@@ -19,7 +20,7 @@ const SectionExperience = ({
         }
       >
         <div className="textbox">
-          <h4 className="resume-section-title">ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ</h4>
+          <h4 className="resume-section-title">{heading}</h4>
           <h6 className="position-title">
             {position}, {employer}
           </h6>

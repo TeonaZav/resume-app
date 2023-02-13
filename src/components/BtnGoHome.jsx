@@ -14,20 +14,18 @@ function BtnGoHome() {
     </Wrapper>
   );
 }
-const Wrapper = styled.div`
-  button {
-    border: none;
-    display: inline-block;
-    width: 4rem;
-    height: 4rem;
-    background-color: #ffffff;
-    border-radius: 50%;
-    border: none;
-    text-decoration: none;
-    position: absolute;
-    left: 4.8rem;
-    top: 0rem;
-  }
+const Wrapper = styled.button`
+  border: none;
+  display: inline-block;
+  width: 4rem;
+  height: 4rem;
+  background-color: #ffffff;
+  border-radius: 50%;
+  border: none;
+  text-decoration: none;
+  position: absolute;
+  left: -8rem;
+  top: 50%;
 `;
 
 export default BtnGoHome;

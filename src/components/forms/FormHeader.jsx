@@ -1,8 +1,10 @@
 import styled from "styled-components";
+import BtnGoHome from "../BtnGoHome";
 function FormHeader({ heading, pageN }) {
   return (
     <Wrapper>
       <div>
+        <BtnGoHome />
         <h2>{heading}</h2>
         <p>{pageN}</p>
       </div>
@@ -10,9 +12,9 @@ function FormHeader({ heading, pageN }) {
   );
 }
 const Wrapper = styled.div`
-  width: 79.8rem;
   div {
-    width: 100%;
+    position: relative;
+    width: 79.8rem;
     height: 8.5rem;
     display: flex;
     flex-direction: row;

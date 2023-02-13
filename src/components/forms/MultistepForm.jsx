@@ -358,7 +358,7 @@ export const Stepper = ({ children, ...props }) => {
           .then((response) => {
             console.log(response.data);
             setResponseData(response.data);
-            alert("Logged In Successfully");
+            alert("თქვენი რეზიუმე წარმატებით დაგენრირდა");
             window.setTimeout(() => {
               navigate("/resume");
             }, 2000);
@@ -367,8 +367,6 @@ export const Stepper = ({ children, ...props }) => {
       }}
     >
       <VStack as={Form} className="form" autoComplete="off">
-        <BtnGoHome />
-
         <FormHeader
           heading={
             step === 0

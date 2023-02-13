@@ -45,15 +45,17 @@ const ResumeComponent = () => {
   //     ],
   //     "image": "/storage/images/9Fgf7BmxBpFh4LUsQHkibJZkZc5JJu0Q35m4gE8m.jpg"
   // }
+
   const {
     name,
     surname,
     email,
-    about_me,
+
     phone_number,
     experiences,
     educations,
     image,
+    about_me,
   } = responseData;
   console.log(name);
   return (
@@ -72,7 +74,7 @@ const ResumeComponent = () => {
                   <img
                     src={process.env.PUBLIC_URL + "/assets/email-icon.png"}
                     alt="profile"
-                    className={`${email ? "email-icon" : "email-icon hidden"}`}
+                    className={`email-icon`}
                   />
                   <p className="email">{email}</p>
                 </div>
@@ -81,23 +83,22 @@ const ResumeComponent = () => {
                   <img
                     src={process.env.PUBLIC_URL + "/assets/phone-icon.png"}
                     alt="profile"
-                    className={`${
-                      phone_number ? "phone-icon" : "phone-icon hidden"
-                    }`}
+                    className={`phone-icon`}
                   />
                   <p className="tel">{phone_number}</p>
                 </div>
               </div>
               <div className="about-textbox">
-                {about_me && (
-                  <h2 className="resume-section-title">ᲩᲔᲛ ᲨᲔᲡᲐᲮᲔᲑ</h2>
-                )}
-
+                <h2 className="resume-section-title">ᲩᲔᲛ ᲨᲔᲡᲐᲮᲔᲑ</h2>
                 <p className="resume-text">{about_me}</p>
               </div>
             </div>
             <div className="img-ct">
-              <img src={image} alt="profile" />
+              <img
+                src={`https://resume.redberryinternship.ge${image}`}
+                alt="profile"
+              />
+              s
             </div>
           </section>
 
@@ -105,22 +106,15 @@ const ResumeComponent = () => {
             experiences.map((el, index) => {
               return (
                 <ResumeSection
-                  position={el.positionN}
-                  employer={el.employerN}
-                  workStart={
-                    el.startDate
-                      ? convertDataToString(new Date(el.startDate), "sv")
-                      : null
-                  }
-                  workEnd={
-                    el.dueDate
-                      ? convertDataToString(new Date(el.dueDate), "sv")
-                      : null
-                  }
-                  text={el.descr}
-                  key={index}
+                  position={el.position}
+                  employer={el.employer}
+                  workStart={el.start_date}
+                  workEnd={el.due_date}
+                  text={el.description}
+                  key={el.id}
                   id={index + 1}
                   data={experiences}
+                  heading={"ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ"}
                 />
               );
             })}
@@ -128,22 +122,15 @@ const ResumeComponent = () => {
             educations.map((el, index) => {
               return (
                 <ResumeSection
-                  position={el.labelN}
-                  employer={el.instituteN}
-                  workStart={
-                    el.startDate
-                      ? convertDataToString(new Date(el.startDate), "sv")
-                      : null
-                  }
-                  workEnd={
-                    el.dueDate
-                      ? convertDataToString(new Date(el.dueDate), "sv")
-                      : null
-                  }
-                  text={el.descr}
-                  key={index}
+                  position={el.degree}
+                  employer={el.institute}
+                  workStart=""
+                  workEnd={el.due_date}
+                  text={el.description}
+                  key={el.id}
                   id={index + 1}
                   data={educations}
+                  heading={"ᲒᲐᲜᲐᲗᲚᲔᲑᲐ"}
                 />
               );
             })}
