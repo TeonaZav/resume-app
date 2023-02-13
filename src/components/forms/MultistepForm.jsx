@@ -273,6 +273,8 @@ export const Stepper = ({ children, ...props }) => {
     setCurrentEduId,
     expInitial,
     setExpInitial,
+    eduInitial,
+    setEduInitial,
   } = useContext(ResumeContext);
   const { nextHandlerGenerals } = useGeneral();
   const { nextHandlerExperiences } = useExperience();
@@ -295,6 +297,7 @@ export const Stepper = ({ children, ...props }) => {
         phone_number: phoneN,
         image: img,
         experiences: expInitial,
+        educations: eduInitial,
       }}
       onSubmit={(values, helpers) => {
         const vals = { ...values };

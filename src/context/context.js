@@ -15,6 +15,7 @@ const ResumeProvider = ({ children }) => {
   const [currentEduId, setCurrentEduId] = useState(0);
   const [expError, setExpError] = useState({});
   const [arrAdded, setArrAdded] = useState([]);
+  const [arrEduId, setArrEduId] = useState([]);
   console.log(expError);
   useEffect(() => {
     console.log(selectedDegree);
@@ -60,6 +61,16 @@ const ResumeProvider = ({ children }) => {
       description: exp[0].descr,
     },
   ]);
+
+  const [eduInitial, setEduInitial] = useState([
+    {
+      institute: edu[0].instituteN,
+      degree_id: edu[0].degreeID,
+      description: edu[0].descrEdu,
+      due_date: edu[0].dueDateEdu,
+    },
+  ]);
+
   useEffect(() => {
     console.log(
       "nameInvalid:" + nameInvalid,
@@ -127,6 +138,8 @@ const ResumeProvider = ({ children }) => {
         setArrAdded,
         metaExp,
         setMetaExp,
+        arrEduId,
+        setArrEduId,
       }}
     >
       {children}
