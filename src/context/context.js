@@ -13,9 +13,15 @@ const ResumeProvider = ({ children }) => {
   const [selectedDegree, setSelectedDegree] = useState(null);
   const [currentEpxId, setCurrentExpId] = useState(0);
   const [currentEduId, setCurrentEduId] = useState(0);
+  const [expError, setExpError] = useState({});
+  const [arrAdded, setArrAdded] = useState([]);
+  console.log(expError);
   useEffect(() => {
     console.log(selectedDegree);
   }, [selectedDegree]);
+  useEffect(() => {
+    console.log(arrAdded);
+  }, [arrAdded]);
   const [exp, setExp] = useState([
     {
       id: 0,
@@ -44,6 +50,16 @@ const ResumeProvider = ({ children }) => {
   const [imgEmpty, setImgEmpty] = useState(undefined);
   const [emailInvalid, setEmailInvalid] = useState(undefined);
   const [telInvalid, setTelInvalid] = useState(undefined);
+  const [metaExp, setMetaExp] = useState([]);
+  const [expInitial, setExpInitial] = useState([
+    {
+      position: exp[0].positionN,
+      employer: exp[0].employerN,
+      start_date: exp[0].startDate,
+      due_date: exp[0].dueDate,
+      description: exp[0].descr,
+    },
+  ]);
   useEffect(() => {
     console.log(
       "nameInvalid:" + nameInvalid,
@@ -103,6 +119,14 @@ const ResumeProvider = ({ children }) => {
         setCurrentExpId,
         currentEduId,
         setCurrentEduId,
+        expError,
+        setExpError,
+        expInitial,
+        setExpInitial,
+        arrAdded,
+        setArrAdded,
+        metaExp,
+        setMetaExp,
       }}
     >
       {children}

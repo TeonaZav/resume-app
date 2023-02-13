@@ -89,7 +89,9 @@ export const schema = Yup.object({
       employer: Yup.string()
         .min(2, "მინიმუმ 2 სიმბოლო")
         .required("სავალდებულო"),
-      description: Yup.string().required("სავალდებულო"),
+      description: Yup.string().required("აღწერის მითითება სავალდებულო").min(1),
+      start_date: Yup.date().required("თარიღის მითითება სავალდებულოა"),
+      due_date: Yup.date().required("თარიღის მითითება სავალდებულოა"),
     })
   ),
 });

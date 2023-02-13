@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { ResumeContext } from "../context/context";
+import { setLocal } from "../utils/HelperFunctions";
 const useExperience = () => {
   const [experienceState, setExperienceState] = useState([
     {
@@ -7,39 +8,49 @@ const useExperience = () => {
       position: "",
       employer: "",
       description: "",
-      start_date: new Date(),
-      due_date: new Date(),
+      start_date: null,
+      due_date: null,
     },
   ]);
-  console.log(experienceState);
-  const { exp, setExp, setCurrentExpId } = useContext(ResumeContext);
-  useEffect(() => {
-    let data = getLocalExperiences();
-    console.log(experienceState);
-    console.log(exp);
-    if (data) {
-      data.map((el) => {
-        return setExperienceState((prevExperiences) => {
-          return prevExperiences.map((experience) => {
-            if (el.id == experience.id) {
-              return {
-                ...experience,
-                start_date: new Date(el.start_date),
-                due_date: new Date(el.due_date),
-              };
-            } else {
-              return el;
-            }
-          });
-        });
-      });
 
-      setExperienceState(
-        data.map((el) => {
+  const {
+    exp,
+    setExp,
+    setCurrentExpId,
+    expError,
+    expInitial,
+    setExpInitial,
+    arrAdded,
+    setArrAdded,
+    metaExp,
+    setMetaExp,
+  } = useContext(ResumeContext);
+  useEffect(() => {
+    let extraExp = getLocalAddedExp();
+    if (extraExp) {
+      setArrAdded(extraExp);
+    }
+
+    let initExpLocal = getLocalExpInitial();
+    if (initExpLocal) {
+      setExpInitial(
+        initExpLocal.map((el) => {
           return {
             ...el,
             start_date: new Date(el.start_date),
             due_date: new Date(el.due_date),
+          };
+        })
+      );
+    }
+    let data = getLocalExperiences();
+    if (data) {
+      setExperienceState(
+        data.map((el) => {
+          return {
+            ...el,
+            start_date: el.start_date ? new Date(el.start_date) : null,
+            due_date: el.due_date ? new Date(el.due_date) : null,
           };
         })
       );
@@ -57,31 +68,48 @@ const useExperience = () => {
     }
   }, []);
 
+  /*================ LOCALSTORAGE ============*/
+
   const getLocalExperiences = () => {
-    saveLocal("experiences");
+    setLocal("experiences", {
+      id: 0,
+      position: "",
+      employer: "",
+      description: "",
+      start_date: null,
+      due_date: null,
+    });
+
     const experiences = localStorage.getItem("experiences");
     if (experiences) {
-      console.log(JSON.parse(experiences));
       return JSON.parse(experiences);
     }
   };
-  const saveLocal = (name) => {
-    let existing = localStorage.getItem(name);
-    existing = existing
-      ? JSON.parse(existing)
-      : [
-          {
-            id: 0,
-            position: "",
-            employer: "",
-            description: "",
-            start_date: new Date(),
-            due_date: new Date(),
-          },
-        ];
-    localStorage.setItem(name, JSON.stringify(existing));
+
+  const getLocalAddedExp = () => {
+    setLocal("addedExp", 0);
+    const added = localStorage.getItem("addedExp");
+    if (added) {
+      return JSON.parse(added);
+    }
   };
-  /*================
+
+  const getLocalExpInitial = () => {
+    setLocal("arrInitEx", {
+      position: exp[0].positionN,
+      employer: exp[0].employerN,
+      start_date: exp[0].startDate,
+      due_date: exp[0].dueDate,
+      description: exp[0].descr,
+    });
+    let arrInitEx = localStorage.getItem("arrInitEx");
+    if (arrInitEx) {
+      return JSON.parse(arrInitEx);
+    }
+  };
+
+  /*===============================================/*
+  /*===================
  Handle Position Change
   ================== */
   const handlePosition = (e, index) => {
@@ -184,10 +212,10 @@ const useExperience = () => {
   /*================
  Handle Start Date Change
   ================== */
-  const handleStartDate = (date, id) => {
+  const handleStartDate = (date, formId) => {
     setExperienceState((prevExperiences) => {
       return prevExperiences.map((el) => {
-        if (el.id == id) {
+        if (el.id == formId) {
           return { ...el, start_date: date };
         } else {
           return el;
@@ -196,18 +224,18 @@ const useExperience = () => {
     });
     setExp((prevExp) => {
       return prevExp.map((el) => {
-        if (el.id == id) {
+        if (el.id == formId) {
           return { ...el, startDate: date };
         } else {
           return el;
         }
       });
     });
-    setCurrentExpId(id);
+    setCurrentExpId(formId);
     let data = getLocalExperiences();
     data &&
       data.forEach((element) => {
-        if (element.id == id) {
+        if (element.id == formId) {
           element["start_date"] = date;
           localStorage.setItem("experiences", JSON.stringify(data));
         }
@@ -216,10 +244,10 @@ const useExperience = () => {
   /*================
  Handle Due Date Change
   ================== */
-  const handleDueDate = (date, id) => {
+  const handleDueDate = (date, formId) => {
     setExperienceState((prevExperiences) => {
       return prevExperiences.map((el) => {
-        if (el.id == id) {
+        if (el.id == formId) {
           return { ...el, due_date: date };
         } else {
           return el;
@@ -228,18 +256,18 @@ const useExperience = () => {
     });
     setExp((prevExp) => {
       return prevExp.map((el) => {
-        if (el.id == id) {
+        if (el.id == formId) {
           return { ...el, dueDate: date };
         } else {
           return el;
         }
       });
     });
-    setCurrentExpId(id);
+    setCurrentExpId(formId);
     let data = getLocalExperiences();
     data &&
       data.forEach((element) => {
-        if (element.id == id) {
+        if (element.id == formId) {
           element["due_date"] = date;
           localStorage.setItem("experiences", JSON.stringify(data));
         }
@@ -260,6 +288,17 @@ const useExperience = () => {
         due_date: null,
       },
     ]);
+    setExp((prevExp) => [
+      ...prevExp,
+      {
+        id: exp.length,
+        positionN: "",
+        employerN: "",
+        descr: "",
+        startDate: new Date(),
+        dueDate: new Date(),
+      },
+    ]);
     const arr = JSON.parse(localStorage.getItem("experiences"));
     arr.push({
       id: experienceState.length,
@@ -271,14 +310,95 @@ const useExperience = () => {
     });
 
     localStorage.setItem("experiences", JSON.stringify(arr));
+  };
 
-    console.log(experienceState);
+  const nextHandlerExperiences = (step, setStep) => {
+    handleExtraForms();
+    document.getElementById(`position${0}`).focus();
+    document.getElementById(`position${0}`).blur();
+    document.getElementById(`employer${0}`).focus();
+    document.getElementById(`employer${0}`).blur();
+    document.getElementById(`description${0}`).focus();
+    document.getElementById(`description${0}`).blur();
+    console.log(metaExp);
+    let count = 0;
+    metaExp.map((el, i) => {
+      if (
+        el.position ||
+        el.employer ||
+        el.description ||
+        el.start_date ||
+        el.due_date
+      ) {
+        document.getElementById(`position${i}`).focus();
+        document.getElementById(`position${i}`).blur();
+        document.getElementById(`employer${i}`).focus();
+        document.getElementById(`employer${i}`).blur();
+        document.getElementById(`description${i}`).focus();
+        document.getElementById(`description${i}`).blur();
+        console.log(metaExp);
+        console.log(document.getElementById(`position${i}`));
 
-    console.log(experienceState);
+        count++;
+      }
+    });
+    // let timeOut = window.setTimeout(() => {
+    //   document.querySelector(".btn-next").click();
+    // }, 500);
+    // if (count === 3) {
+    //   window.clearTimeout(timeOut);
+    // }
+    if (!expError.hasOwnProperty("experiences")) {
+      window.setTimeout(() => {
+        setStep((s) => s + 1);
+      }, 2000);
+    }
+  };
+
+  const handleExtraForms = () => {
+    if (expError && expError.hasOwnProperty("experiences")) {
+      expError.experiences.map((el, index) => {
+        if (index !== 0) {
+          if (!arrAdded.includes(index) && exp[index]) {
+            setExpInitial((prev) => {
+              return [
+                ...prev,
+                {
+                  position: exp[index].positionN,
+                  employer: exp[index].employerN,
+                  start_date: exp[index].startDate,
+                  due_date: exp[index].dueDate,
+                  description: exp[index].descr,
+                },
+              ];
+            });
+            setArrAdded((prev) => {
+              return [...prev, index];
+            });
+            const arr = JSON.parse(localStorage.getItem("addedExp"));
+            arr.push(index);
+            localStorage.setItem("addedExp", JSON.stringify(arr));
+            const arrInitEx = JSON.parse(localStorage.getItem("arrInitEx"));
+            arrInitEx.push({
+              position: exp[index].positionN,
+              employer: exp[index].employerN,
+              start_date: exp[index].startDate,
+              due_date: exp[index].dueDate,
+              description: exp[index].descr,
+            });
+            localStorage.setItem("arrInitEx", JSON.stringify(arrInitEx));
+          }
+        }
+      });
+    } else {
+      return;
+    }
   };
   useEffect(() => {
-    console.log(experienceState);
-  }, [experienceState]);
+    console.log(expError);
+    console.log(arrAdded);
+    console.log(expInitial);
+  }, [expInitial]);
   return {
     experienceState,
     handlePosition,
@@ -287,6 +407,7 @@ const useExperience = () => {
     handleStartDate,
     handleDueDate,
     addExpHandler,
+    nextHandlerExperiences,
   };
 };
 

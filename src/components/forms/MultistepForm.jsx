@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Button, VStack } from "@chakra-ui/react";
-import { Form, Formik, useFormikContext } from "formik";
+import { Form, Formik } from "formik";
 import styled from "styled-components";
 import TextField from "./TextField";
 import TextArea from "./TextArea";
@@ -42,21 +42,13 @@ export const MultistepForm = () => {
     addEduHandler,
   } = useEducation();
 
-  const {
-    setNameInvalid,
-    setLastnameInvalid,
-    setEmailInvalid,
-    setTelInvalid,
-    currentEpxId,
-    setCurrentExpId,
-    currentEduId,
-    setCurrentEduId,
-  } = useContext(ResumeContext);
+  const { setNameInvalid, setLastnameInvalid, setEmailInvalid, setTelInvalid } =
+    useContext(ResumeContext);
   return (
     <Wrapper>
       <div className="form-ct">
-        <Stepper>
-          <FormikStep className="page-1-3" validationSchema={schema}>
+        <Stepper validateOnChange>
+          <FormikStep className="page page-1-3" validationSchema={schema}>
             <div className="info-part1">
               <TextField
                 onChange={(e) => handleFirstName(e)}
@@ -127,7 +119,11 @@ export const MultistepForm = () => {
               experienceState.length > 0 &&
               experienceState.map((el, index) => {
                 return (
-                  <div key={`${index}_experience`} id={index} className="form">
+                  <div
+                    key={`${index}_experience`}
+                    id={`form${index}`}
+                    className="form"
+                  >
                     <div className="exp-part1">
                       <TextField
                         onChange={(e) => handlePosition(e, index)}
@@ -140,9 +136,9 @@ export const MultistepForm = () => {
                         hint="მინიმუმ 2 სიმბოლო"
                         size="lg"
                         changedVal={el.position}
-                        id={index}
+                        formId={index}
+                        id={`position${index}`}
                       />
-
                       <TextField
                         onChange={(e) => handleEmployer(e, index)}
                         value={el.employer}
@@ -154,7 +150,8 @@ export const MultistepForm = () => {
                         hint="მინიმუმ 2 სიმბოლო"
                         size="lg"
                         changedVal={el.employer}
-                        id={index}
+                        formId={index}
+                        id={`employer${index}`}
                       />
                     </div>
                     <div className="exp-part2">
@@ -168,7 +165,8 @@ export const MultistepForm = () => {
                         selected={el.start_date}
                         minDate={new Date(5, 13, 1900)}
                         maxDate={el.due_date}
-                        id={index}
+                        formId={index}
+                        id={`start_date${index}`}
                       />
                       <DateInput
                         name={`experiences.${index}.due-date`}
@@ -179,7 +177,8 @@ export const MultistepForm = () => {
                         value={el.due_date}
                         selected={el.due_date}
                         minDate={el.start_date}
-                        id={index}
+                        formId={index}
+                        id={`due_date${index}`}
                       />
                     </div>
                     <div className="exp-part3">
@@ -191,7 +190,8 @@ export const MultistepForm = () => {
                         label="აღწერა"
                         size="lg"
                         changedVal={el.description}
-                        id={index}
+                        formId={index}
+                        id={`description${index}`}
                       />
                     </div>
                   </div>
@@ -218,7 +218,7 @@ export const MultistepForm = () => {
                         hint="მინიმუმ 2 სიმბოლო"
                         size="lg"
                         changedVal={el.institute}
-                        id={index}
+                        formId={index}
                       />
                     </div>
                     <div className="exp-part2">
@@ -230,7 +230,7 @@ export const MultistepForm = () => {
                         handleDate={handleDueDateEdu}
                         value={el.due_date}
                         selected={el.due_date}
-                        id={index}
+                        formId={index}
                       />
                     </div>
                     <div className="exp-part3">
@@ -242,7 +242,7 @@ export const MultistepForm = () => {
                         label="აღწერა"
                         size="lg"
                         changedVal={el.description}
-                        id={index}
+                        formId={index}
                       />
                     </div>
                   </div>
@@ -265,9 +265,17 @@ export const FormikStep = ({ children }) => {
 export const Stepper = ({ children, ...props }) => {
   const { firstN, lastN, emailAd, aboutG, phoneN, img, setImgEmpty } =
     useContext(ResumeContext);
-  const { exp, currentEpxId, setCurrentExpId, currentEduId, setCurrentEduId } =
-    useContext(ResumeContext);
+  const {
+    exp,
+    currentEpxId,
+    setCurrentExpId,
+    currentEduId,
+    setCurrentEduId,
+    expInitial,
+    setExpInitial,
+  } = useContext(ResumeContext);
   const { nextHandlerGenerals } = useGeneral();
+  const { nextHandlerExperiences } = useExperience();
   const arrChildren = React.Children.toArray(children);
   const [step, setStep] = useState(0);
   const currentCh = arrChildren[step];
@@ -286,15 +294,7 @@ export const Stepper = ({ children, ...props }) => {
         about_me: aboutG,
         phone_number: phoneN,
         image: img,
-        experiences: [
-          {
-            position: exp[currentEduId].positionN,
-            employer: exp[currentEduId].employerN,
-            start_date: exp[currentEduId].startDate,
-            due_date: exp[currentEduId].dueDate,
-            description: exp[currentEduId].descr,
-          },
-        ],
+        experiences: expInitial,
       }}
       onSubmit={(values, helpers) => {
         const vals = { ...values };
@@ -336,8 +336,14 @@ export const Stepper = ({ children, ...props }) => {
         {step <= 1 ? (
           <Button
             type="button"
-            className="btn submit-btn"
-            onClick={() => nextHandlerGenerals(step, setStep)}
+            className="btn submit-btn btn-next"
+            onClick={
+              step === 0
+                ? () => nextHandlerGenerals(step, setStep)
+                : step === 1
+                ? () => nextHandlerExperiences(step, setStep)
+                : null
+            }
           >
             ᲨᲔᲛᲓᲔᲒᲘ
           </Button>

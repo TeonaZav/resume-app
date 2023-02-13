@@ -48,7 +48,7 @@ const SelectComponent = ({ size, label, ...props }) => {
           {label}
         </FormLabel>
 
-        <div id="options" class="section">
+        <div id="options" className="section">
           <Select
             name="Phone"
             id="Phone"

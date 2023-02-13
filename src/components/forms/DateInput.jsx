@@ -1,14 +1,16 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp, faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { getMonth } from "date-fns";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styled from "styled-components";
+import { FormControl, FormLabel } from "@chakra-ui/form-control";
+import { useField } from "formik";
 import { ResumeContext } from "../../context/context";
 
 const DateInput = ({
-  id,
+  formId,
   name,
   label,
   value,
@@ -16,6 +18,7 @@ const DateInput = ({
   handleDate,
   minDate,
   maxDate,
+  ...props
 }) => {
   const months = [
     "January",
@@ -31,12 +34,38 @@ const DateInput = ({
     "November",
     "December",
   ];
-  const { currentEpxId, setCurrentExpId } = useContext(ResumeContext);
+  const [field, meta, helpers] = useField(props);
+  const { setValue } = helpers;
+  const { expError, setExpError, setMetaExp } = useContext(ResumeContext);
+  useEffect(() => {
+    setExpError(meta.error);
+    setMetaExp(meta.value.experiences);
+  }, [meta]);
+  const handleToday = () => {
+    handleDate(new Date(), formId);
+  };
+  const handleClear = () => {
+    handleDate(null, formId);
+  };
   return (
     <Wrapper>
       <div className="date-wrap ">
-        <label className="label label-md">{label} </label>
+        <label
+          className={`label label-md ${
+            meta.error &&
+            meta.error.experiences &&
+            (meta.error.experiences.hasOwnProperty("start_date") ||
+              meta.error.experiences.hasOwnProperty("due_date")) &&
+            !value
+              ? "error"
+              : null
+          }`}
+        >
+          {label}
+        </label>
         <DatePicker
+          {...field}
+          {...props}
           renderCustomHeader={({
             date,
             monthDate,
@@ -98,16 +127,26 @@ const DateInput = ({
           selected={value}
           minDate={minDate}
           maxDate={maxDate}
-          onChange={(date) => handleDate(date, id)}
-          className="input box-sm"
+          onChange={(date) => handleDate(date, formId)}
+          className={`input box-sm ${
+            meta.error &&
+            meta.error.experiences &&
+            (meta.error.experiences.hasOwnProperty("start_date") ||
+              meta.error.experiences.hasOwnProperty("due_date")) &&
+            !value
+              ? "is-invalid"
+              : meta.error && value
+              ? "valid"
+              : null
+          }`}
           calendarClassName="rasta-stripes"
           dateFormat="MM/dd/yyyy"
           monthsShown={1}
           formatWeekDay={(day) => day.toString().substr(0, 1)}
         >
           <div className="calendar-btn-ct">
-            <p onClick={() => handleDate(null)}>Clear</p>
-            <p onClick={() => handleDate(new Date())}>Today</p>
+            <p onClick={handleClear}>Clear</p>
+            <p onClick={handleToday}>Today</p>
           </div>
         </DatePicker>
         <img
@@ -115,6 +154,27 @@ const DateInput = ({
           alt="calendar-icon"
           className="calendar-icon"
         />
+        {meta.error &&
+        meta.error.experiences &&
+        (meta.error.experiences.hasOwnProperty("start_date") ||
+          meta.error.experiences.hasOwnProperty("due_date")) &&
+        !value ? (
+          <img
+            src={process.env.PUBLIC_URL + "/assets/error-icon.png"}
+            className="error-icon"
+            alt="error icon"
+          />
+        ) : meta.error && value ? (
+          <img
+            src={process.env.PUBLIC_URL + "/assets/success-icon.png"}
+            className="success-icon"
+            alt="success icon"
+          />
+        ) : null}
+        {console.log(meta)}
+
+        {console.log(meta.error)}
+        {console.log({ ...field })}
       </div>
     </Wrapper>
   );
@@ -124,6 +184,7 @@ const Wrapper = styled.div`
   .box-sm {
     width: 37.1rem;
     height: 4.8rem;
+    position: relative;
   }
   .box-lg {
     width: 79.8rem;
@@ -223,6 +284,32 @@ const Wrapper = styled.div`
   }
   .label-md {
     line-height: 3.4rem;
+  }
+  .error {
+    color: var(--error-color);
+  }
+  .is-invalid,
+  .valid {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 2rem;
+  }
+  .is-invalid {
+    border: 1px solid var(--error-color);
+  }
+  .valid {
+    border: 1px solid var(--success-color);
+  }
+  .error-icon,
+  .success-icon {
+    position: absolute;
+    top: 50%;
+  }
+  .success-icon {
+    right: -3rem;
+  }
+  .error-icon {
+    right: -3rem;
   }
 `;
 export default DateInput;

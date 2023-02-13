@@ -52,3 +52,8 @@ export const convertDataToString = (date, countryISO) => {
 export const dateIsValid = (date) => {
   return !Number.isNaN(new Date(date).getTime());
 };
+export const setLocal = (name, obj) => {
+  let existing = localStorage.getItem(name);
+  existing = existing ? JSON.parse(existing) : [obj];
+  localStorage.setItem(name, JSON.stringify(existing));
+};

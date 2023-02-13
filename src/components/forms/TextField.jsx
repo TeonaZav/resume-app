@@ -10,25 +10,32 @@ import {
 import useGeneral from "../../hooks/useGeneral";
 import { Input } from "@chakra-ui/input";
 import { Field, useField } from "formik";
-const TextField = ({ hint, size, setInvalid, label, changedVal, ...props }) => {
+const TextField = ({
+  formId,
+  hint,
+  size,
+  setInvalid,
+  label,
+  changedVal,
+  ...props
+}) => {
   const [field, meta, helpers] = useField(props);
   const { setValue, setTouched } = helpers;
   const { generalsState } = useGeneral();
-  const [blurControl, setBlurControl] = useState(false);
-
+  const { currentEpxId, setCurrentExpId, setMetaExp } =
+    useContext(ResumeContext);
+  // useEffect(() => {
+  //   setMetaExp(meta.value.experiences);
+  // }, [meta]);
   return (
-    <Wrapper>
+    <Wrapper onClick={(e) => formId && setCurrentExpId(formId)}>
       <FormControl
         isInvalid={meta.touched && meta.error}
         className={`text-ct `}
       >
         <FormLabel
           className={`label  ${
-            meta.touched && meta.error
-              ? "label-error"
-              : !meta.touched && meta.error && blurControl
-              ? "label-error"
-              : null
+            meta.touched && meta.error ? "label-error" : null
           }`}
         >
           {label}
@@ -37,6 +44,13 @@ const TextField = ({ hint, size, setInvalid, label, changedVal, ...props }) => {
           as={Field}
           {...field}
           {...props}
+          onFocus={() => {
+            setTouched(true);
+            setValue(changedVal);
+          }}
+          onClick={() => {
+            setValue(changedVal);
+          }}
           onKeyUp={() => {
             setValue(changedVal);
           }}
@@ -50,9 +64,10 @@ const TextField = ({ hint, size, setInvalid, label, changedVal, ...props }) => {
               : null
           }`}
         />
+
         {setInvalid && setInvalid(meta.error)}
-        {/* {console.log(meta)} */}
-        {console.log(blurControl)}
+
+        {console.log(meta)}
         {meta.touched && meta.error ? (
           <img
             src={process.env.PUBLIC_URL + "/assets/error-icon.png"}
@@ -66,7 +81,6 @@ const TextField = ({ hint, size, setInvalid, label, changedVal, ...props }) => {
             alt="success icon"
           />
         ) : null}
-        {/* <FormErrorMessage className="error">{meta.error}</FormErrorMessage> */}
         <FormHelperText>{hint}</FormHelperText>
       </FormControl>
     </Wrapper>
